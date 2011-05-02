@@ -1,0 +1,476 @@
+﻿<#@ template language="C#v3.5" debug="true" hostspecific="true" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="Microsoft.VisualStudio.Shell.Interop.8.0" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="EnvDTE80" #>
+<#@ assembly name="VSLangProj" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="Microsoft.VisualStudio.Shell.Interop" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="EnvDTE80" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
+<#@ Include File="../Manager.tt" #>
+<# Initialize(this); #>
+<# Manager manager = Manager.Create(Host, GenerationEnvironment); #>
+<#
+
+    for(int i = 0; i < MaxParams; i++)
+    {
+        manager.StartNewFile("ProcedureWrapper[TResult" + GetTypeListName(i) + "].cs");
+
+#>/*
+
+ This file is part of VoltDB.
+ Copyright (C) 2008-2011 VoltDB Inc.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+using System;
+using System.Threading;
+using VoltDB.Data.Client.Properties;
+
+namespace VoltDB.Data.Client
+{
+    /// <summary>
+    /// Defines a command that take <#= i #> parameters.
+    /// </summary>
+    /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i) #>
+    public class ProcedureWrapper<TResult<#= GetTypeList(i) #>> : ProcedureWrapper
+    {
+        /// <summary>
+        /// Internal callback reference for asynchronous calls.
+        /// </summary>
+        private ExecuteAsyncCallback<TResult> Callback;
+
+        /// <summary>
+        /// Internal constructor: factory protocol only.
+        /// </summary>
+        /// <param name="executor">Connection that will execute requests for this procedure wrapper.</param>
+        /// <param name="name">Name of the procedure.</param>
+        /// <param name="timeout">Wrapper-specific command timeout.</param>
+        /// <param name="callback">Execution callback.</param>
+        internal ProcedureWrapper(VoltConnection executor, string name, int timeout, ExecuteAsyncCallback<TResult> callback)
+            : base(executor, name, timeout)
+        {
+            this.Callback = callback;
+        }
+
+        /// <summary>
+        /// Execute the procedure synchronously and return the result.
+        /// This call will use the connection's DefaultCommandTimeout to control execution.  Use overloaded methods to
+        /// specify a custom timeout value.
+        /// </summary><#= GetParamComments(i) #>
+        /// <returns>Result of the procedure call</returns>
+        public Response<TResult> Execute(<#= GetParameterDefinitionList(i,false) #>)
+        {
+            return this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes<#= GetParameterCallList(i,true) #>);
+        }
+
+        /// <summary>
+        /// Execute the procedure asynchronously and return an AsyncResponse that can be used to abort execution
+        /// before it completes (using the Cancel method on the object itself).  This call will use the connection's
+        /// DefaultCommandTimeout to control execution.  Use overloaded methods to specify a custom timeout value.
+        /// Upon completion of the call (Success, failure, timeout or cancellation), the wrapper's Callback method will
+        /// be called with the resulting Response object.
+        /// </summary><#= GetParamComments(i) #>
+        /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
+        public IAsyncResult BeginExecute(<#= GetParameterDefinitionList(i,false) #>)
+        {
+            return this.Executor.BeginExecute<TResult>(this.Callback, null, this.CommandTimeout, this.Name, this.NameUtf8Bytes<#= GetParameterCallList(i,true) #>);
+        }
+        
+        /// <summary>
+        /// Execute the procedure asynchronously and return an AsyncResponse that can be used to abort execution
+        /// before it completes (using the Cancel method on the object itself).  This call will use the connection's
+        /// DefaultCommandTimeout to control execution.  Use overloaded methods to specify a custom timeout value.
+        /// Upon completion of the call (Success, failure, timeout or cancellation), the wrapper's Callback method will
+        /// be called with the resulting Response object.
+        /// </summary><#= GetParamComments(i) #>
+        /// <param name="state">A user-defined state object to be passed to your callback through the Response's
+        /// .AsyncState property</param>
+        /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
+        public IAsyncResult BeginExecute(<#= GetParameterDefinitionList(i,false) #><#= GetIf(i > 0, ", ") #>object state)
+        {
+            return this.Executor.BeginExecute<TResult>(this.Callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes<#= GetParameterCallList(i,true) #>);
+        }
+        
+        /// <summary>
+        /// Execute the procedure asynchronously and return an AsyncResponse that can be used to abort execution
+        /// before it completes (using the Cancel method on the object itself).  This call will use the connection's
+        /// DefaultCommandTimeout to control execution.  Use overloaded methods to specify a custom timeout value.
+        /// Upon completion of the call (Success, failure, timeout or cancellation), the wrapper's Callback method will
+        /// be called with the resulting Response object.
+        /// </summary><#= GetParamComments(i) #>
+        /// <param name="callback">Execution callback (overrides any default provided when the wraper was
+        /// created).</param>
+        /// <param name="state">A user-defined state object to be passed to your callback through the Response's
+        /// .AsyncState property</param>
+        /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
+        public IAsyncResult BeginExecute(<#= GetParameterDefinitionList(i,false) #><#= GetIf(i > 0, ", ") #>ExecuteAsyncCallback<TResult> callback, object state)
+        {
+            return this.Executor.BeginExecute<TResult>(callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes<#= GetParameterCallList(i,true) #>);
+        }
+
+        /// <summary>
+        /// Wait for completion of the request and return the result (or throw an exception if there was a failure).
+        /// </summary>
+        /// <param name="asyncResponse">The execution handle for the request</param>
+        /// <returns>The request's response</returns>
+        private AsyncResponse<TResult> EndExecute(AsyncResponse<TResult> asyncResponse)
+        {
+            if (asyncResponse.Procedure != this.Name)
+                throw new ArgumentException(Resources.AsyncResponseMismatch);
+            return VoltConnection.EndExecute<TResult>(asyncResponse);
+        }
+
+        /// <summary>
+        /// Wait for completion of the request and return the result (or throw an exception if there was a failure).
+        /// </summary>
+        /// <param name="asyncResult">The IAsyncResult for the request</param>
+        /// <returns>The request's response</returns>
+        public AsyncResponse<TResult> EndExecute(IAsyncResult asyncResult)
+        {
+            return this.EndExecute(asyncResult as AsyncResponse<TResult>);
+        }
+        
+        /// <summary>
+        /// Cancels the request associated to this execution, causing triggerring of the Asynchronous callback with a
+        /// VoltClientAbortException result.  Understand that this process merely lets you decide to "forget" about
+        /// the request, however, the execution has been posted to the server and will be completed all the same.
+        /// </summary>
+        /// <param name="asyncResponse">The execution handle for the request</param>
+        private void ExecuteCancelAsync(AsyncResponse<TResult> asyncResponse)
+        {
+            asyncResponse.Cancel();
+        }
+
+        /// <summary>
+        /// Cancels the request associated to this execution, causing triggerring of the Asynchronous callback with a
+        /// VoltClientAbortException result.  Understand that this process merely lets you decide to "forget" about
+        /// the request, however, the execution has been posted to the server and will be completed all the same.
+        /// </summary>
+        /// <param name="asyncResult">The IAsyncResult for the request</param>
+        public void ExecuteCancelAsync(IAsyncResult asyncResult)
+        {
+            this.ExecuteCancelAsync(asyncResult as AsyncResponse<TResult>);
+        }
+
+        /// <summary>
+        /// Execute the procedure synchronously and return the result.
+        /// This call will use the connection's DefaultCommandTimeout to control execution.  Use overloaded methods to
+        /// specify a custom timeout value.  Convenience TryMethod-style execution: the method wraps the underlying
+        /// call into a try/catch block so you don't have to and will return false in case of failure.
+        /// </summary>
+        /// <remarks>You will ONLY get an exception in case the connection dies on you.  Actual execution errors (such
+        /// as a constraint violation while executing a procedure on the server) are packaged into the response object.
+        /// While you may prefer this method to writing your own try/catch block, you should keep in mind that a
+        /// failure prior to actually shipping out the request to the server usually means your application is in no
+        /// suitable shape to function; your catch or if(!proc.Exec(...)) block will have to adequately deal with the
+        /// situation.
+        /// </remarks><#= GetParamComments(i) #>
+        /// <param name="response">Result of the procedure call</param>
+        /// <returns>True if the execution was successfully posted, false otherwise (will only happen if the connection died on you)</returns>
+        public bool TryExecute(<#= GetParameterDefinitionList(i,false) #><#= (i==0 ? "" : ", ") #>out Response<TResult> response)
+        {
+            try
+            {
+                response = this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes<#= GetParameterCallList(i,true) #>);
+                return true;
+            }
+            catch { response = null; }
+            return false;
+        }
+    }
+}
+<#
+        manager.EndBlock();
+    }
+
+    manager.StartNewFile("ProcedureAccess.cs");
+    
+#>/*
+
+ This file is part of VoltDB.
+ Copyright (C) 2008-2011 VoltDB Inc.
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+using System;
+using System.Text.RegularExpressions;
+using VoltDB.Data.Client.Properties;
+
+namespace VoltDB.Data.Client
+{
+    /// <summary>
+    /// Dedicated connection plugin class for procedure wrapper creation.
+    /// </summary>
+    public class ProcedureAccess
+    {
+        /// <summary>
+        /// Internal reference to the connection/executor that will run the requests.
+        /// </summary>
+        private VoltConnection Executor;
+
+        /// <summary>
+        /// Creates a new instance of this class using the provided executor.  Internal usage only: the executor
+        /// itselt will validate it has adhoc access before hooking up this class.
+        /// </summary>
+        /// <param name="executor">Connection that will execute the requests.</param>
+        internal ProcedureAccess(VoltConnection executor)
+        {
+            this.Executor = executor;
+        }
+
+        /// <summary>
+        /// Regular expression used to validate tokens (procedure names only for now) (will make sure the name doesn't
+        /// have any @ sign, or other invalid character for that matter).
+        /// </summary>
+        private Regex TokenValidator = new Regex("^[a-zA-Z0-9_]*$");
+        
+        /// <summary>
+        /// Validate the procedure name (alpahnumeric only, no @)
+        /// </summary>
+        /// <param name="procedureName">Name of the procedure</param>
+        private void ValidateProcedureName(string procedureName)
+        {
+            // Validate system procedure access
+            if (!TokenValidator.IsMatch(procedureName))
+                throw new VoltPermissionException(Resources.InvalidProcedureName, procedureName);
+        }    
+            
+<#
+
+    for(int i = 0; i < MaxParams; i++)
+    {
+
+#>
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName, int timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            this.ValidateProcedureName(procedureName);
+            return new ProcedureWrapper<TResult<#= GetTypeList(i) #>>(this.Executor, procedureName, timeout, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName, TimeSpan timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult<#= GetTypeList(i) #>>(procedureName, (int)timeout.TotalMilliseconds, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult<#= GetTypeList(i) #>>(procedureName, 0, callback);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName, int timeout)
+        {
+            return this.Wrap<TResult<#= GetTypeList(i) #>>(procedureName, timeout, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName, TimeSpan timeout)
+        {
+            return this.Wrap<TResult<#= GetTypeList(i) #>>(procedureName, (int)timeout.TotalMilliseconds, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes <#= i #> arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam><#= GetTypeParamComments(i,"    ") #>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult<#= GetTypeList(i) #>> Wrap<TResult<#= GetTypeList(i) #>>(string procedureName)
+        {
+            return this.Wrap<TResult<#= GetTypeList(i) #>>(procedureName, 0, null);
+        }
+
+<#
+    }
+#>
+    }
+}
+<#
+
+    manager.EndBlock();
+	
+    manager.Process(true);
+
+#>
+<#+
+	static TextTransformation TT;
+	static int MaxParams = 36;
+	void Initialize(TextTransformation tt)
+	{
+		// Initialize instance
+		TT = tt;
+    }
+    static string GetTypeListName(int count)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        if (count < 3)
+            for(int i = 1;i<count+1;i++)
+                result += string.Format(",T{0}", i);
+        else
+            result += string.Format(",T1,...,T{0}", count);
+        return result;
+    }
+    static string GetTypeList(int count)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format(", T{0}", i);
+        return result;
+    }
+    static string GetParameterDefinitionList(int count, bool withComma)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format(", T{0} parameter{0}", i);
+        return withComma ? result : result.Substring(2);
+    }
+    static string GetParameterCallList(int count, bool withComma)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format(", parameter{0}", i);
+        return withComma ? result : result.Substring(2);
+    }
+    static string GetTypeParamComments(int count)
+    {
+        return GetTypeParamComments(count, "");
+    }
+    static string GetTypeParamComments(int count, string prefix)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format("\r\n" + prefix + "    /// <typeparam name=\"T{0}\">Type of parameter {0} of the procedure.</typeparam>", i);
+        return result;
+    }
+    static string GetParamComments(int count)
+    {
+        if (count==0)
+            return "";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format("\r\n        /// <param name=\"parameter{0}\">Value of parameter {0}.</param>", i);
+        return result;
+    }
+    static string GetWriteProcParams(int count)
+    {
+        if (count==0)
+            return "\r\n";
+        string result = "";
+        for(int i = 1;i<count+1;i++)
+            result += string.Format("\r\n                                 .WriteParameter(parameter{0})", i);
+        return result;
+    }
+    static string GetIf(bool test, string value)
+    {
+        if (test)
+            return value;
+        return "";
+    }
+#>

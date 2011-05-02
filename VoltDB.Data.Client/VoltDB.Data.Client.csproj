@@ -1,0 +1,731 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F860E283-5A34-491B-A76B-B404D3CC3D47}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VoltDB.Data.Client</RootNamespace>
+    <AssemblyName>VoltDB.Data.Client</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>Properties\VoltDB.Data.Client.snk</AssemblyOriginatorKeyFile>
+    <ApplicationIcon>Properties\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Debug\VoltDB.Data.Client.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\VoltDB.Data.Client.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T10].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T11].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T12].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T13].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T14].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T15].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T16].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T17].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T18].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T19].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T20].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T21].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T22].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T23].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T24].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T25].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T26].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T27].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T28].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T29].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T30].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T31].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T32].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T33].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T34].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T35].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T3].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T4].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T5].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T6].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T7].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T8].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T9].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
+    <Compile Include="Connections\AdhocAccess.cs" />
+    <Compile Include="Connections\InfoAccess.cs" />
+    <Compile Include="Connections\Internal\CallbackExecutor.cs" />
+    <Compile Include="Connections\ProcedureAccess.cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\StatisticsAccess.cs" />
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1,T2].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult,T1].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\ProcedureWrapper[TResult].cs">
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\StatisticsExtensions.cs" />
+    <Compile Include="FormatExtensions.cs" />
+    <Compile Include="Types\AsyncResponse[T].cs" />
+    <Compile Include="Connections\ProcedureWrapper.cs" />
+    <Compile Include="Connections\ProcedureWrapper[T].cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
+    </Compile>
+    <Compile Include="Connections\VoltConnection.cs" />
+    <Compile Include="Enums\StatisticsSnapshot.cs" />
+    <Compile Include="Connections\VoltClusterConnection.cs" />
+    <Compile Include="Enums\StatisticsFormat.cs" />
+    <Compile Include="Exceptions\VoltClusterConnectionException.cs" />
+    <Compile Include="Protocol\Response[T].cs" />
+    <Compile Include="Protocol\Response.cs" />
+    <Compile Include="Protocol\VoltNodeConnection.cs" />
+    <Compile Include="Types\RowEnumerator[T1,...,T10].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T11].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T12].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T13].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T14].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T15].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T16].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T17].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T18].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T19].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T20].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T21].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T22].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T23].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T24].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T25].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T26].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T27].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T28].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T29].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T30].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T31].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T32].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T33].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T34].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T35].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T3].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T4].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T5].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T6].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T7].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T8].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\RowEnumerator[T1,...,T9].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T10].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T11].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T12].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T13].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T14].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T15].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T16].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T17].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T18].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T19].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T20].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T21].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T22].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T23].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T24].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T25].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T26].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T27].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T28].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T29].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T30].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T31].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T32].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T33].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T34].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T35].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T3].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T4].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T5].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T6].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T7].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T8].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,...,T9].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Row[T1,T2].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T10].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T11].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T12].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T13].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T14].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T15].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T16].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T17].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T18].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T19].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T20].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T21].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T22].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T23].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T24].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T25].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T26].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T27].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T28].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T29].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T30].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T31].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T32].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T33].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T34].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T35].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T3].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T4].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T5].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T6].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T7].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T8].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,...,T9].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T10].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T11].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T12].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T13].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T14].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T15].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T16].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T17].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T18].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T19].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T20].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T21].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T22].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T23].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T24].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T25].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T26].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T27].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T28].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T29].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T30].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T31].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T32].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T33].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T34].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T35].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T3].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T4].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T5].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T6].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T7].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T8].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,...,T9].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\VoltDecimal.cs" />
+    <Compile Include="Connections\Statistics.cs" />
+    <Compile Include="Enums\ConnectionStatus.cs" />
+    <Compile Include="Enums\DBType.cs" />
+    <Compile Include="Connections\ExecuteAsyncCallback.cs" />
+    <Compile Include="Connections\Internal\ExecutionCache.cs" />
+    <Compile Include="Enums\ResponseServerStatus.cs" />
+    <Compile Include="Enums\LoginResponseStatus.cs" />
+    <Compile Include="Protocol\Mono.DataConvert.cs" />
+    <Compile Include="Types\ThirdParty.BigDecimal.cs" />
+    <Compile Include="Types\Null.cs" />
+    <Compile Include="Types\Response.cs" />
+    <Compile Include="Enums\ResponseStatus.cs" />
+    <Compile Include="Types\RowCollection.cs" />
+    <Compile Include="Protocol\Serializer.cs" />
+    <Compile Include="Enums\ServiceType.cs" />
+    <Compile Include="Protocol\SingleRowTable.cs" />
+    <Compile Include="Types\RowEnumerator[T1,T2].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable.cs" />
+    <Compile Include="Connections\SnapshotReference.cs" />
+    <Compile Include="Enums\ServerStatistics.cs" />
+    <Compile Include="Protocol\Table.cs" />
+    <Compile Include="Protocol\TableBase.cs" />
+    <Compile Include="Protocol\TableBase.Factory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableBase.Factory.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable.Wrap.cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\SingleRowTable[T1,T2].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table.Wrap.cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\TableBase.cs" />
+    <Compile Include="Exceptions\VoltAbortException.cs" />
+    <Compile Include="Exceptions\VoltClientAbortException.cs" />
+    <Compile Include="Exceptions\VoltClientTimeoutException.cs" />
+    <Compile Include="Connections\VoltNodeConnection.cs" />
+    <Compile Include="Connections\ConnectionSettings.cs" />
+    <Compile Include="Protocol\Deserializer.cs" />
+    <Compile Include="Protocol\ManagedNetworkStream.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManagedNetworkStream.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Response[T].cs" />
+    <Compile Include="Exceptions\VoltConnectionException.cs" />
+    <Compile Include="Exceptions\VoltCriticalRequestFailureException.cs" />
+    <Compile Include="Exceptions\VoltException.cs" />
+    <Compile Include="Exceptions\VoltExecutionException.cs" />
+    <Compile Include="Exceptions\VoltInvalidCastException.cs" />
+    <Compile Include="Exceptions\VoltInvalidDataException.cs" />
+    <Compile Include="Exceptions\VoltPermissionException.cs" />
+    <Compile Include="Exceptions\VoltProtocolException.cs" />
+    <Compile Include="Exceptions\VoltRequestFailureException.cs" />
+    <Compile Include="Exceptions\VoltSerializationException.cs" />
+    <Compile Include="Connections\VoltTrace.cs" />
+    <Compile Include="Protocol\VoltProtocolStream.cs" />
+    <Compile Include="Connections\SystemAccess.cs" />
+    <Compile Include="Types\Table.cs" />
+    <Compile Include="Types\Column.cs" />
+    <Compile Include="Types\Row.cs" />
+    <Compile Include="Enums\VoltTraceEventType.cs" />
+    <Compile Include="Types\Internal\VoltType.cs" />
+    <Compile Include="Types\TableWrapper.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\Table[T1,T2].cs">
+      <DependentUpon>TableWrapper.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Types\ThirdParty.BigInteger.cs" />
+    <Compile Include="Types\VoltTypeExtensions.cs" />
+    <Compile Include="Exceptions\VoltUnsupportedTypeException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Manager.tt">
+      <LastGenOutput>Manager.cs</LastGenOutput>
+    </None>
+    <None Include="Connections\ProcedureWrapper[T].tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ProcedureWrapper[T].cs</LastGenOutput>
+    </None>
+    <None Include="Protocol\ManagedNetworkStream.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ManagedNetworkStream.cs</LastGenOutput>
+    </None>
+    <None Include="Protocol\TableBase.Factory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableBase.Factory.cs</LastGenOutput>
+    </None>
+    <None Include="Types\TableWrapper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TableWrapper.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\VoltDB.Data.Client.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+@del /Q "$(SolutionDir)ReleaseBuild\$(TargetName).*"
+@copy /Y "$(TargetDir)*.*" "$(SolutionDir)ReleaseBuild")
+@if EXIST "$(ProjectDir)Help\Build\$(TargetName).chm" (@copy /Y "$(ProjectDir)Help\Build\$(TargetName).chm" "$(SolutionDir)ReleaseBuild")
+  </Target>
+  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>@if "$(ConfigurationName)" NEQ "Release" GOTO End
+@del /Q "$(SolutionDir)ReleaseBuild\$(TargetName).*"
+@copy /Y "$(TargetDir)$(TargetName).*" "$(SolutionDir)ReleaseBuild"
+@if EXIST "$(ProjectDir)Help\Build\$(TargetName).chm" (@copy /Y "$(ProjectDir)Help\Build\$(TargetName).chm" "$(SolutionDir)ReleaseBuild")
+@REM 7z a -tzip -mx9 "$(SolutionDir)ReleaseBuild\ReleaseBuild.zip" "$(SolutionDir)ReleaseBuild\*.*" -x!*.svn -x!*.zip
+@:End</PostBuildEvent>
+  </PropertyGroup>
+</Project>

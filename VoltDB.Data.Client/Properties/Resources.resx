@@ -1,0 +1,570 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackgroundNetworkThreadDied" xml:space="preserve">
+    <value>The background thread processing server responses died.  Connection will be closed.</value>
+  </data>
+  <data name="CannotSpawnCallbackProcess" xml:space="preserve">
+    <value>Connection callback execution engine could not queue user work item (system threading overload)</value>
+  </data>
+  <data name="ConnectionFailure" xml:space="preserve">
+    <value>Connection to {0} failed: Exception while connecting to host.</value>
+  </data>
+  <data name="ConnectionTimeout" xml:space="preserve">
+    <value>Connection to {0} failed: Timeout while connecting to host.</value>
+  </data>
+  <data name="InvalidCastException" xml:space="preserve">
+    <value>Invalid Cast between underlying VoltDB data type '{0}' and requested .NET data type '{1}'</value>
+  </data>
+  <data name="InvalidColumnCount" xml:space="preserve">
+    <value>Invalid column count: {0} when requested result was a single-column table.</value>
+  </data>
+  <data name="InvalidConnectionStringValue" xml:space="preserve">
+    <value>The requested value '{0}' is invalid for the given keyword '{1}'.</value>
+  </data>
+  <data name="InvalidRowAndColumnCount" xml:space="preserve">
+    <value>Invalid row / column count: {0} / {1} when requested result was a single cell value.</value>
+  </data>
+  <data name="InvalidRowCount" xml:space="preserve">
+    <value>Invalid row count: {0} when requested result was a single-row table.</value>
+  </data>
+  <data name="InvalidValueForBoolean" xml:space="preserve">
+    <value>'{0}' is an illegal value for a boolean option.</value>
+  </data>
+  <data name="IOTimeout" xml:space="preserve">
+    <value>Timeout in IO operation.</value>
+  </data>
+  <data name="KeywordNotSupported" xml:space="preserve">
+    <value>Keyword not supported.</value>
+  </data>
+  <data name="LRS_ConnectionHandshakeTimeout" xml:space="preserve">
+    <value>Connection to {0} failed: Server rejected the connection after the client failed to send login request. (Status: {1})</value>
+  </data>
+  <data name="LRS_CorruptedHandshake" xml:space="preserve">
+    <value>Connection to {0} failed: Server received a corrupted login message. (Status: {1})</value>
+  </data>
+  <data name="LRS_InvalidCredentials" xml:space="preserve">
+    <value>Connection to {0} failed: Invalid credentials provided. (Status: {1})</value>
+  </data>
+  <data name="LRS_ServerTooBusy" xml:space="preserve">
+    <value>Connection to {0} failed: Server too busy. (Status: {1})</value>
+  </data>
+  <data name="LRS_Unknown" xml:space="preserve">
+    <value>Connection to {0} failed: Unknown login response provided by the server. (Status: {1})</value>
+  </data>
+  <data name="LR_FailedParsingResponse" xml:space="preserve">
+    <value>Connection to {0} failed: Failed parsing server login response.</value>
+  </data>
+  <data name="MaximumStringLengthViolation" xml:space="preserve">
+    <value>String data of length {0} exceeds maximum supported VoltDB length of {1} bytes.</value>
+  </data>
+  <data name="ProtocolMessageLengthInvalid" xml:space="preserve">
+    <value>Invalid Message Length: {0} (Maximum: {1})</value>
+  </data>
+  <data name="ProtocolVersionMismatch" xml:space="preserve">
+    <value>Protocol Version mismatch: Client: {0}, Server: {1}.</value>
+  </data>
+  <data name="ResponseDeserializationFailure" xml:space="preserve">
+    <value>Deserialization of server response failed.</value>
+  </data>
+  <data name="SystemCallNotAllowed" xml:space="preserve">
+    <value>System calls are not allowed on this connection.</value>
+  </data>
+  <data name="UnsupportedDBType" xml:space="preserve">
+    <value>VoltDB data type '{0}' is not supported by this version of the client library.</value>
+  </data>
+  <data name="UnsupportedNETTypeToDBType" xml:space="preserve">
+    <value>.NET data type '{0}' does not map to a supported VoltDB data type.</value>
+  </data>
+  <data name="UnsupportedParameterNETType" xml:space="preserve">
+    <value>.NET data type '{0}' does not map to a supported VoltDB procedure parameter data type.</value>
+  </data>
+  <data name="InvalidResultsetSize" xml:space="preserve">
+    <value>Invalid resultset: {0} tables are present.</value>
+  </data>
+  <data name="RequestAborted" xml:space="preserve">
+    <value>Request aborted: Status: {0}.\r\nServer message:\r\n{1}</value>
+  </data>
+  <data name="RequestFailure" xml:space="preserve">
+    <value>Request failure: Status: {0}.\r\nServer message:\r\n{1}</value>
+  </data>
+  <data name="ServerFailure" xml:space="preserve">
+    <value>Server failure while processing request: Status: {0}.\r\nServer message:\r\n{1}</value>
+  </data>
+  <data name="InvalidStringLength" xml:space="preserve">
+    <value>Invalid string length: {0}.</value>
+  </data>
+  <data name="AdHocParameterQueriesNotAllowed" xml:space="preserve">
+    <value>Cannot use parameters in ad-hoc query: {0}.</value>
+  </data>
+  <data name="CatalogProcedureCallNotAllowed" xml:space="preserve">
+    <value>Call to catalog procedure {0} not allowed on this connection.  System connections may not be used to access catalog-specific application procedures.  Use a standard connection.</value>
+  </data>
+  <data name="ExportConnectionNotSupported" xml:space="preserve">
+    <value>Export data connection not yet supported.</value>
+  </data>
+  <data name="TraceConnectionClosed" xml:space="preserve">
+    <value>{0}-{1}: Connection closed.</value>
+  </data>
+  <data name="TraceConnectionClosing" xml:space="preserve">
+    <value>{0}-{1}: Connection closing.</value>
+  </data>
+  <data name="TraceConnectionDrainingCompleted" xml:space="preserve">
+    <value>{0}-{1}: Connection draining completed.</value>
+  </data>
+  <data name="TraceConnectionDrainingStarted" xml:space="preserve">
+    <value>{0}-{1}: Connection draining started.</value>
+  </data>
+  <data name="TraceConnectionOpened" xml:space="preserve">
+    <value>{0}-{1}: Connection opened.
+ - HostId: {0}
+ - HostConnectionId: {1}
+ - Host EndPoint: {2}
+ - Leader EndPoint: {3}
+ - Cluster Start Time: {4}
+ - Server Build: {5}</value>
+  </data>
+  <data name="TraceExecutionCompleted" xml:space="preserve">
+    <value>{0}-{1}: Execution completed: #{1}.</value>
+  </data>
+  <data name="TraceExecutionStarted" xml:space="preserve">
+    <value>{0}-{1}: Execution started: #{1} (Procedure: {2})</value>
+  </data>
+  <data name="DefaultStatisticsFormat" xml:space="preserve">
+    <value>Elapsed Time:  {0,21}
+
+----------------------------------------
+ Transactions
+----------------------------------------
+              Out : {1,10:##,0}
+               In : {2,10:##,0}
+           Failed : {3,10:##,0}
+          Timeout : {4,10:##,0}
+          Aborted : {5,10:##,0}
+          Pending : {6,10:##,0}
+----------------------------------------
+ Throughput (TPS) : {7,10:##,0}
+
+
+----------------------------------------
+ Network IO
+----------------------------------------
+
+             In   : {21,10}
+             Out  : {20,10}
+
+----------------------------------------
+ Latency (ms)
+----------------------------------------
+
+             Min. : {8,10:0.00}
+             Avg. : {9,10:0.00}
+             Max. : {10,10:0.00}
+
+----------------------------------------
+
+         0 -  25  : {11,10:##,0}
+        25 -  50  : {12,10:##,0}
+        50 -  75  : {13,10:##,0}
+        75 - 100  : {14,10:##,0}
+       100 - 125  : {15,10:##,0}
+       125 - 150  : {16,10:##,0}
+       150 - 175  : {17,10:##,0}
+       175 - 200  : {18,10:##,0}
+             200+ : {19,10:##,0}
+
+----------------------------------------</value>
+  </data>
+  <data name="InvalidTimeoutValue" xml:space="preserve">
+    <value>Invalid Timeout value provided: {0}.  Use Timeout.Infinite or -1 for an infinite timeout, or a positive value.</value>
+  </data>
+  <data name="BackgroundTimeoutThreadDied" xml:space="preserve">
+    <value>The background thread processing timeout control died.  Connection will be closed.</value>
+  </data>
+  <data name="ExecutionTimeout" xml:space="preserve">
+    <value>Execution timed-out on the client-side (server did not reply within {0} ms), however the server has been sent the request and will execute it.</value>
+  </data>
+  <data name="InvalidConnectionStatus" xml:space="preserve">
+    <value>Invalid connection status: {0}.</value>
+  </data>
+  <data name="TraceExecutionFailed" xml:space="preserve">
+    <value>{0}-{1}: Execution failed: #{1} (Procedure: {2}) - Failure after {3} ms.</value>
+  </data>
+  <data name="TraceExecutionTimedout" xml:space="preserve">
+    <value>{0}-{1}: Execution timed-out: #{1} (Procedure: {2}) - Time-out after {3} ms.</value>
+  </data>
+  <data name="TraceExecutionAborted" xml:space="preserve">
+    <value>{0}-{1}: Execution aborted: #{1} (Procedure: {2}) - Abort called after {3} ms.</value>
+  </data>
+  <data name="ExecutionClientAbort" xml:space="preserve">
+    <value>Execution was aborted on the client-side (server did not reply within {0} ms), however the server has been sent the request and will execute it.</value>
+  </data>
+  <data name="DefaultStatisticsShortFormat" xml:space="preserve">
+    <value>{0,21} :: Txn: {2,10:##,0} (F:{3,10:##,0}, T:{4,10:##,0}, A:{5,10:##,0}, P:{6,10:##,0}) @ {7,10:##,0} TPS | Lat: {8,10:0.00} &lt; {9,10:0.00} &lt; {10,10:0.00} | I/O: {21,10} / {20,10}</value>
+  </data>
+  <data name="StatisticsDisabled" xml:space="preserve">
+    <value>Statistics are not enabled.  This function is not availble.</value>
+  </data>
+  <data name="UnsupportedServiceType" xml:space="preserve">
+    <value>Service Type '{0}' is not supported by this version of the client library.</value>
+  </data>
+  <data name="InvalidProcedureName" xml:space="preserve">
+    <value>Invalid characters in procedure name. (Note: for @ system procedures, use the connection's System property)</value>
+  </data>
+  <data name="TraceExecuteCancelAsyncLost" xml:space="preserve">
+    <value>AsyncResponse origin was lost (Execution Id: {0}).  The call cannot be cancelled.</value>
+  </data>
+  <data name="InvalidConnectionStringHostList" xml:space="preserve">
+    <value>Invalid connection settings: host list '{0}' cannot be resolved to available IP endpoints.</value>
+  </data>
+  <data name="ClusterConnectionFailure" xml:space="preserve">
+    <value>Cluster connection failed.  Details of connection errors below:
+{0}</value>
+  </data>
+  <data name="ClusterConnectionTimeout" xml:space="preserve">
+    <value>Cluster connection timeout.
+Connection Status Summary:
+{0}</value>
+  </data>
+  <data name="InconsistentClusterTarget" xml:space="preserve">
+    <value>Inconsistent cluster targets: the provided host list points to different applications or to servers running different engine versions.
+Connected Node(s):
+{0}
+Rejected Node:
+{1}
+Cluster connection will not be allowed.</value>
+  </data>
+  <data name="InconsistentClusterTargetListing" xml:space="preserve">
+    <value>{0}-{1}: Node Details:
+ - HostId: {0}
+ - HostConnectionId: {1}
+ - Host EndPoint: {2}
+ - Leader EndPoint: {3}
+ - Cluster Start Time: {4}
+ - Server Build: {5}</value>
+  </data>
+  <data name="ClusterConnectionFailureNoSingleHost" xml:space="preserve">
+    <value>Cluster connection failed.  No single host could be reached.  Details of errors below:
+{0}</value>
+  </data>
+  <data name="ClusterConnectionSummaryRow" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="TraceClusterConnectionOpened" xml:space="preserve">
+    <value>Cluster connection opened.
+ - Leader EndPoint: {0}
+ - Cluster Start Time: {1}
+ - Server Build: {2}
+
+Connection Status Summary:
+{3}</value>
+  </data>
+  <data name="ClusterConnectionUnknownFailure" xml:space="preserve">
+    <value>Cluster connection failed. Exception while dispatching connection requests.</value>
+  </data>
+  <data name="TraceClusterConnectionClosed" xml:space="preserve">
+    <value>Cluster connection closed.</value>
+  </data>
+  <data name="TraceClusterConnectionClosing" xml:space="preserve">
+    <value>Cluster connection closing.</value>
+  </data>
+  <data name="TraceClusterConnectionDrainingCompleted" xml:space="preserve">
+    <value>Cluster connection draining completed.</value>
+  </data>
+  <data name="TraceClusterConnectionDrainingStarted" xml:space="preserve">
+    <value>Cluster connection draining started.</value>
+  </data>
+  <data name="ConnectionClosedDuringAWrite" xml:space="preserve">
+    <value>Connection closed while posting request to the server.</value>
+  </data>
+  <data name="CS_Category_Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="CS_Category_Connection" xml:space="preserve">
+    <value>Connection</value>
+  </data>
+  <data name="CS_Category_Pooling" xml:space="preserve">
+    <value>Pooling</value>
+  </data>
+  <data name="CS_Category_Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="CS_Description_AllowMultipleHostConnections" xml:space="preserve">
+    <value>When false, the connection mechanism will only create one connection per host, even if a host exposes multiple IP addresses: the first returned IP address will be used.  To ensure connection to a specific network interface, the user should specific hosts by IP address.  When true, the connection mechanism will (possibly) create 1 connection per exposed IP address.  This can be useful when the server uses multiple Ethernet adapters.  Default: false</value>
+  </data>
+  <data name="CS_Description_AllowSystemCalls" xml:space="preserve">
+    <value>When true, access to system stored procedures (except ad-hoc queries) will be granted.  Default: false</value>
+  </data>
+  <data name="CS_Description_ConnectionTimeout" xml:space="preserve">
+    <value>Connection timeout (in ms).  Use a negative value for infinite timeout.  An exception will be raised if the connection to the server cannot be established within the requested timeout.  Default: 5000 ms</value>
+  </data>
+  <data name="CS_Description_ConnectToAllOrNone" xml:space="preserve">
+    <value>When true, a cluster connection will only succeed if it can open node connections to all the hosts/IPs in the provided host list. When false, it will connect to as many nodes as possible and be operational if at least one host could be connected to.  Default: false</value>
+  </data>
+  <data name="CS_Description_DefaultCommandTimeout" xml:space="preserve">
+    <value>The default command timeout (in ms) of execution requests.  Use a negative value for infinite timeout.  Default: 5000 ms</value>
+  </data>
+  <data name="CS_Description_HostList" xml:space="preserve">
+    <value>List of server to connect to, separated by commas or spaces (DNS names or IP addresses).  Default: localhost.</value>
+  </data>
+  <data name="CS_Description_LoadBalancingBatchSize" xml:space="preserve">
+    <value>Number of execution requests to send to each child connection in round-robin fashion.  A larger number maximizes network usage on open sockets, however in case of transient failure means that possibly a larger number of items will be returned as failed.  Too large a number can cause specific host connections to be fire-hosed while other connections are idle.  A number between 100 and MaxOutstandingTxns is usually best.  Default: 100</value>
+  </data>
+  <data name="CS_Description_Logging" xml:space="preserve">
+    <value>When true, the connection will issue Tracing messages that can be logged using a TraceListener.  This has an extremely negative impact on performance and should only be used for development and debugging.  Default: false</value>
+  </data>
+  <data name="CS_Description_MaxOutstandingTxns" xml:space="preserve">
+    <value>Maximum number of Queued transactions before blocking (pausing) execution requests.  Depending on your payload this number can be quite large, or small.  You can avoid performance degradation due to server 'fire-hosing' by decreasing this value.  Default: 3000</value>
+  </data>
+  <data name="CS_Description_Password" xml:space="preserve">
+    <value>Indicates the user ID to be used when connecting to the data source.  Default: empty</value>
+  </data>
+  <data name="CS_Description_PersistSecurityInfo" xml:space="preserve">
+    <value>When false, sensitive information (password), is not returned in the connection string.  Default: false</value>
+  </data>
+  <data name="CS_Description_Port" xml:space="preserve">
+    <value>Port to use for TCP/IP connections.  Default: 21212</value>
+  </data>
+  <data name="CS_Description_ServiceType" xml:space="preserve">
+    <value>Type of cluster connection to open, 'database' or 'export ('export' currently not supported).  Default: database.</value>
+  </data>
+  <data name="CS_Description_Statistics" xml:space="preserve">
+    <value>When true, the connection will monitor query execution performance (throughput and latency) and provide a framework for periodic reviews by a client application.  Impact on performance is minimal and the option is safe to use in production scenarios.  Default: false</value>
+  </data>
+  <data name="CS_Description_UserId" xml:space="preserve">
+    <value>Indicates the user ID to be used when connecting to the data source.  Default: empty</value>
+  </data>
+  <data name="CS_DisplayName_AllowMultipleHostConnections" xml:space="preserve">
+    <value>Allow Multiple Host Connections</value>
+  </data>
+  <data name="CS_DisplayName_AllowSystemCalls" xml:space="preserve">
+    <value>Root Access</value>
+  </data>
+  <data name="CS_DisplayName_ConnectionTimeout" xml:space="preserve">
+    <value>Connect Timeout</value>
+  </data>
+  <data name="CS_DisplayName_ConnectToAllOrNone" xml:space="preserve">
+    <value>Connect to All or None</value>
+  </data>
+  <data name="CS_DisplayName_DefaultCommandTimeout" xml:space="preserve">
+    <value>Default Command Timeout</value>
+  </data>
+  <data name="CS_DisplayName_HostList" xml:space="preserve">
+    <value>Host List</value>
+  </data>
+  <data name="CS_DisplayName_LoadBalancingBatchSize" xml:space="preserve">
+    <value>Load Balancing Batch Size</value>
+  </data>
+  <data name="CS_DisplayName_Logging" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="CS_DisplayName_MaxOutstandingTxns" xml:space="preserve">
+    <value>Maximum Outstanding Transactions</value>
+  </data>
+  <data name="CS_DisplayName_Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="CS_DisplayName_PersistSecurityInfo" xml:space="preserve">
+    <value>Persist Security Info</value>
+  </data>
+  <data name="CS_DisplayName_Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="CS_DisplayName_ServiceType" xml:space="preserve">
+    <value>Service Type</value>
+  </data>
+  <data name="CS_DisplayName_Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="CS_DisplayName_UserId" xml:space="preserve">
+    <value>User Id</value>
+  </data>
+  <data name="CS_ValidKeywords_AllowMultipleHostConnections" xml:space="preserve">
+    <value>massconnect</value>
+  </data>
+  <data name="CS_ValidKeywords_AllowSystemCalls" xml:space="preserve">
+    <value>allow system calls,root,system</value>
+  </data>
+  <data name="CS_ValidKeywords_ConnectionTimeout" xml:space="preserve">
+    <value>connection timeout</value>
+  </data>
+  <data name="CS_ValidKeywords_ConnectToAllOrNone" xml:space="preserve">
+    <value>fullconnect</value>
+  </data>
+  <data name="CS_ValidKeywords_DefaultCommandTimeout" xml:space="preserve">
+    <value>command timeout</value>
+  </data>
+  <data name="CS_ValidKeywords_HostList" xml:space="preserve">
+    <value>hosts,servers,server list,cluster,ips</value>
+  </data>
+  <data name="CS_ValidKeywords_LoadBalancingBatchSize" xml:space="preserve">
+    <value>balancing,multiplexing</value>
+  </data>
+  <data name="CS_ValidKeywords_Logging" xml:space="preserve">
+    <value>log,trace,tracing,logging</value>
+  </data>
+  <data name="CS_ValidKeywords_MaxOutstandingTxns" xml:space="preserve">
+    <value>transaction queue,txnq,maxq</value>
+  </data>
+  <data name="CS_ValidKeywords_Password" xml:space="preserve">
+    <value>pwd,pass</value>
+  </data>
+  <data name="CS_ValidKeywords_PersistSecurityInfo" xml:space="preserve">
+    <value>unsecured,unsecured credentials</value>
+  </data>
+  <data name="CS_ValidKeywords_Port" xml:space="preserve">
+    <value>portnumber,p</value>
+  </data>
+  <data name="CS_ValidKeywords_ServiceType" xml:space="preserve">
+    <value>type,service,service type</value>
+  </data>
+  <data name="CS_ValidKeywords_Statistics" xml:space="preserve">
+    <value>stats,perf,performance</value>
+  </data>
+  <data name="CS_ValidKeywords_UserId" xml:space="preserve">
+    <value>uid,username,user name,user</value>
+  </data>
+  <data name="CS_Description_AllowAdhocQueries" xml:space="preserve">
+    <value>When true, access to ad-hoc queries will be granted.  Default: false</value>
+  </data>
+  <data name="CS_DisplayName_AllowAdhocQueries" xml:space="preserve">
+    <value>Allows Adhoc Queries</value>
+  </data>
+  <data name="CS_ValidKeywords_AllowAdhocQueries" xml:space="preserve">
+    <value>adhoc,allow adhoc queries,pigin,pigout</value>
+  </data>
+  <data name="AdhocQueriesNotAllowed" xml:space="preserve">
+    <value>Ad-hoc queries are not allowed on this connection.</value>
+  </data>
+  <data name="AsyncResultSetAsCompletedAlreadyCalled" xml:space="preserve">
+    <value>Completion state was already set.</value>
+  </data>
+  <data name="RequestExecutionFailure" xml:space="preserve">
+    <value>Request could not be posted to the server.</value>
+  </data>
+  <data name="AsyncResponseMismatch" xml:space="preserve">
+    <value>The AsyncResponse did not originate from this procedure wrapper.</value>
+  </data>
+  <data name="AsyncResponseUsedUp" xml:space="preserve">
+    <value>Either EndExecute was called multiple times with the same AsyncResponse, or the response was consumed by an ExecuteAsyncCallback.</value>
+  </data>
+  <data name="VoltDecimalOutsideOfRange" xml:space="preserve">
+    <value>Value is outside of the VoltDecimal type acceptable range: '{0}'.</value>
+  </data>
+</root>
