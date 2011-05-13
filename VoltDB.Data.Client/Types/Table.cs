@@ -19,6 +19,7 @@
 */
 
 using System;
+using VoltDB.Data.Client.Properties;
 namespace VoltDB.Data.Client
 {
     /// <summary>
@@ -91,6 +92,63 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
+        /// Returns a strongly-type raw data array for the column.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnIndex">Name of the column for which to retrieve the raw data.</param>
+        /// <returns>Raw data array of the column content.</returns>
+        public object[] GetColumnData(short columnIndex)
+        {
+            object[] data = new object[this.RowCount];
+            switch (this.ColumnType[columnIndex])
+            {
+
+                case DBType.TINYINT:
+                    Array.Copy((sbyte?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.SMALLINT:
+                    Array.Copy((short?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.INTEGER:
+                    Array.Copy((int?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.BIGINT:
+                    Array.Copy((long?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.FLOAT:
+                    Array.Copy((double?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.DECIMAL:
+                    Array.Copy((VoltDecimal?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.TIMESTAMP:
+                    Array.Copy((DateTime?[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                case DBType.STRING:
+                    Array.Copy((string[])this.Column[columnIndex], data, this.RowCount);
+                    break;
+                default:
+                    throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, this.ColumnType[columnIndex]);
+            }
+            return data;
+        }
+
+        /// <summary>
+        /// Returns a strongly-type raw data array for the column.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnName">Name of the column for which to retrieve the raw data.</param>
+        /// <returns>Raw data array of the column content.</returns>
+        public object[] GetColumnData(string columnName)
+        {
+            return this.GetColumnData(this.GetColumnIndex(columnName));
+        }
+
+        /// <summary>
         /// Returns a specific element in the column, at the given row index.
         /// This method is provided for full-coverage, however, if you find yourself iterating through the column
         /// records this way, you are likely better off grabbing the raw data and iterating on a strongly-typed array.
@@ -122,6 +180,59 @@ namespace VoltDB.Data.Client
         public T GetValue<T>(string columnName, int rowIndex)
         {
             return ((T[])this.Column[this.GetColumnIndex(columnName)])[rowIndex];
+        }
+
+        /// <summary>
+        /// Returns a specific element in the column, at the given row index.
+        /// This method is provided for full-coverage, however, if you find yourself iterating through the column
+        /// records this way, you are likely better off grabbing the raw data and iterating on a strongly-typed array.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnIndex">Column index of the element to retrieve.</param>
+        /// <param name="rowIndex">Row index of the element to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(short columnIndex, int rowIndex)
+        {
+            switch (this.ColumnType[columnIndex])
+            {
+
+                case DBType.TINYINT:
+                    return ((sbyte?[])this.Column[columnIndex])[rowIndex];
+                case DBType.SMALLINT:
+                    return ((short?[])this.Column[columnIndex])[rowIndex];
+                case DBType.INTEGER:
+                    return ((int?[])this.Column[columnIndex])[rowIndex];
+                case DBType.BIGINT:
+                    return ((long?[])this.Column[columnIndex])[rowIndex];
+                case DBType.FLOAT:
+                    return ((double?[])this.Column[columnIndex])[rowIndex];
+                case DBType.DECIMAL:
+                    return ((VoltDecimal?[])this.Column[columnIndex])[rowIndex];
+                case DBType.TIMESTAMP:
+                    return ((DateTime?[])this.Column[columnIndex])[rowIndex];
+                case DBType.STRING:
+                    return ((string[])this.Column[columnIndex])[rowIndex];
+                default:
+                    throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, this.ColumnType[columnIndex]);
+            }
+        }
+
+        /// <summary>
+        /// Returns a specific element in the column, at the given row index.
+        /// This method is provided for full-coverage, however, if you find yourself iterating through the column
+        /// records this way, you are likely better off grabbing the raw data and iterating on a strongly-typed array.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnName">Column name of the element to retrieve.</param>
+        /// <param name="rowIndex">Row index of the element to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(string columnName, int rowIndex)
+        {
+            return this.GetValue(this.GetColumnIndex(columnName), rowIndex);
         }
     }
 }

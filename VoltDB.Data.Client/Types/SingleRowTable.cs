@@ -46,5 +46,25 @@ namespace VoltDB.Data.Client
         {
             return this.GetValue<T>(this.GetColumnIndex(columnName));
         }
+
+        /// <summary>
+        /// Returns the value of an element (field) for the given column index.
+        /// </summary>
+        /// <param name="columnIndex">Index of the column for the field to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(short columnIndex)
+        {
+            return this.Column[columnIndex];
+        }
+
+        /// <summary>
+        /// Returns the value of an element (field) for the given column name.
+        /// </summary>
+        /// <param name="columnName">Name of the column for the field to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(string columnName)
+        {
+            return this.GetValue(this.GetColumnIndex(columnName));
+        }
     }
 }

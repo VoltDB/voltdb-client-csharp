@@ -94,6 +94,18 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
+        /// Returns a strongly-type raw data array for the column.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <returns>Raw data array of the column content.</returns>
+        public object[] GetData()
+        {
+            return this.Table.GetColumnData(this.Index);
+        }
+
+        /// <summary>
         /// Returns a specific element in the column, at the given row index.
         /// This method is provided for full-coverage, however, if you find yourself ierating through the column
         /// records this way, you are likely better off grabbing the raw data and iterating on a strongly-typed array.
@@ -107,6 +119,21 @@ namespace VoltDB.Data.Client
         public T GetValue<T>(int rowIndex)
         {
             return this.Table.GetValue<T>(this.Index, rowIndex);
+        }
+
+        /// <summary>
+        /// Returns a specific element in the column, at the given row index.
+        /// This method is provided for full-coverage, however, if you find yourself ierating through the column
+        /// records this way, you are likely better off grabbing the raw data and iterating on a strongly-typed array.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="rowIndex">Row index of the element to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(int rowIndex)
+        {
+            return this.Table.GetValue(this.Index, rowIndex);
         }
 
         /// <summary>

@@ -76,6 +76,32 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
+        /// Returns the value of an element (field) for the given column index.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnIndex">Index of the column for the field to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(short columnIndex)
+        {
+            return this.Table.GetValue(columnIndex, this.Index);
+        }
+
+        /// <summary>
+        /// Returns the value of an element (field) for the given column name.
+        /// Conversion is not possible, thus you MUST request the exact nullable type corresponding to the underlying
+        /// data, or this call will fail.
+        /// Valid types are: sbyte?, short?, int?, long?, double?, DateTime?, string, BigDecimal
+        /// </summary>
+        /// <param name="columnName">Name of the column for the field to retrieve.</param>
+        /// <returns>The element (field) value.</returns>
+        public object GetValue(string columnName)
+        {
+            return this.Table.GetValue(columnName, this.Index);
+        }
+
+        /// <summary>
         /// Return the name of a column.
         /// </summary>
         /// <param name="columnIndex">Index of the column for which to retrieve the name.</param>
