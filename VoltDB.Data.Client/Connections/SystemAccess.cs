@@ -88,16 +88,14 @@ namespace VoltDB.Data.Client
         /// </summary>
         /// <param name="snapshotReference">Key <see cref="SnapshotReference"/> for the snapshot to restore, providing
         /// the path and unique ID.</param>
-        /// <param name="exportFlag">Whether restored data should be exported out.</param>
         /// <returns>Detailed status information on the initiated restore operation.</returns>
-        public Response<Table[]> SnapshotRestore(SnapshotReference snapshotReference, bool exportFlag)
+        public Response<Table[]> SnapshotRestore(SnapshotReference snapshotReference)
         {
             return this.Executor.Execute<Table[]>(
                                                    Timeout.Infinite
                                                  , "@SnapshotRestore"
                                                  , snapshotReference.DirectoryPath
                                                  , snapshotReference.UniqueId
-                                                 , exportFlag ? 1 : 0
                                                  );
         }
 
