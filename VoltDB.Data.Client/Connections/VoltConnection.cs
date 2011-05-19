@@ -74,7 +74,7 @@ namespace VoltDB.Data.Client
         /// <summary>
         /// Settigns for the connection.
         /// </summary>
-        protected readonly ConnectionSettings Settings;
+        protected internal readonly ConnectionSettings Settings;
 
         // Perf: Thse properties are checked a lot. Doing a dictionary lookup each time slows things down.
         /// <summary>

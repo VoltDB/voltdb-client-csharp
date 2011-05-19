@@ -176,5 +176,17 @@ namespace VoltDB.Data.Client
                     return this.Executor.Status == ConnectionStatus.Connected ? 1 : 0;
             }
         }
+
+        /// <summary>
+        /// Returns the UserId for the connection
+        /// </summary>
+        public string UserID
+        {
+            get
+            {
+                return this.Executor.Settings.UserID;
+            }
+        }
+
     }
 }

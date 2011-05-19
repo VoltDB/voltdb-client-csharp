@@ -79,5 +79,16 @@ namespace VoltDB.Data.Client
             this.NameUtf8Bytes = System.Text.Encoding.UTF8.GetBytes(this.Name);
             this.CommandTimeout = timeout;
         }
+
+        /// <summary>
+        /// Changes the connection against which the wrapper will execute (allows for wrapper re-use accross
+        /// multiple connections - posted executions in progress will not be impacted by the change as the
+        /// response will be managed on the original connection).
+        /// </summary>
+        /// <param name="connection">The new connection to which the wrapper should be tied.</param>
+        public void SetConnection(VoltConnection connection)
+        {
+            this.Executor = connection;
+        }
     }
 }
