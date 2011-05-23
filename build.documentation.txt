@@ -1,0 +1,39 @@
+Building the C# Client Library & Kits
+
+Software Requirements
+ - Visual Studio 2008 or 2010 C# Express Edition
+   http://www.microsoft.com/express/Downloads/
+
+ - Sandcastle Help File Builder
+   http://shfb.codeplex.com/releases/
+
+ - Tortoise SVN
+   http://tortoisesvn.net/downloads.html
+
+ - 7z Compressor
+   http://www.7-zip.org/download.html
+
+Building the Client Library
+
+1. SVN Checkout:
+   svn://clientapi/csharp/trunk
+
+2. Build Assemblies
+   Open ./VoltDB.ClientLibrary.VS2010.sln
+   Ensure "Release" build configuration is set
+   Build solution
+   (Close Visual Studio)
+    => Build output deployed to: ./ReleaseBuild
+
+3. Build Help
+   Open ./Help.shfbproj
+   Ensure "Release" build configuration is set
+   Build solution
+   (Close Sandcastle)
+
+    => Build output deployed to: ./ReleaseBuild
+
+4. Package Kit
+   Run package.kit.cmd
+
+    => Build output deployed to: ./voltdb-client-csharp-win-latest.zip
