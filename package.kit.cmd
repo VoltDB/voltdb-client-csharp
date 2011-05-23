@@ -1,0 +1,1 @@
+7z a -tzip -mx9 "voltdb-client-csharp-win-latest.zip " ReleaseBuild VoltDB.Examples LICENSE VoltDB.Examples.*.sln -xr!.svn -xr!bin -xr!obj
