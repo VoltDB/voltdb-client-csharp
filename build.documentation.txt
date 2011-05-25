@@ -1,39 +1,50 @@
 Building the C# Client Library & Kits
 
+
 Software Requirements
  - Visual Studio 2008 or 2010 C# Express Edition
    http://www.microsoft.com/express/Downloads/
 
  - Sandcastle Help File Builder
    http://shfb.codeplex.com/releases/
+     + install the "Recommended Download", SHFB 1.9.3.0 as of 05/25/2011
+     + the kit contains "HTML Help 1" (.chm) files, the Microsoft Help 2 Compiler is not needed
+     + "Microsoft Sandcastle Tools" -> install Sandcastle Tools
+     + "Sandcastle Styles Project" -> skip all
+     + "MAML Schema IntelliSense" -> skip
+     + "Sandcastle Help File Builder" -> install SHFB
 
  - Tortoise SVN
    http://tortoisesvn.net/downloads.html
+     + needed to grab source code from SVN in Windows
 
  - 7z Compressor
    http://www.7-zip.org/download.html
+
 
 Building the Client Library
 
 1. SVN Checkout:
    svn://clientapi/csharp/trunk
 
-2. Build Assemblies
+2. Build Assemblies (Visual Studio)
    Open ./VoltDB.ClientLibrary.VS2010.sln
-   Ensure "Release" build configuration is set
+   Ensure "Release" build configuration is set (this is visible in the toolbar, if not do the following 3 tasks).
+     + "Expert Settings" must be enabled, Tools -> Settings -> Expert Settings
+     + Go to Tools -> Options. In the dialog box, check the Show All Settings option in the bottom left.
+     + In the above dialog, now choose Projects and Solutions -> General. Check the option Show advanced build configurations. Click OK.
    Build solution
    (Close Visual Studio)
     => Build output deployed to: ./ReleaseBuild
 
-3. Build Help
+3. Build Help (Sandcastle)
    Open ./Help.shfbproj
-   Ensure "Release" build configuration is set
+   Ensure "Release" build configuration is set (this is visible in the toolbar)
    Build solution
    (Close Sandcastle)
-
     => Build output deployed to: ./ReleaseBuild
 
 4. Package Kit
-   Run package.kit.cmd
-
+   Edit and run package.kit.cmd
+     + 7z must be in your path or you must add path to it (probably "c:\program files\7-zip\7z.exe")
     => Build output deployed to: ./voltdb-client-csharp-win-latest.zip
