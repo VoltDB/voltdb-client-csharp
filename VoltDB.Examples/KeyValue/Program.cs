@@ -83,34 +83,34 @@ namespace VoltDB.Examples.KeyValue
         /// Tracking callback for GET operations.
         /// </summary>
         /// <param name="response">The response received from the server.</param>
-        public static void GetCallback(AsyncResponse<string> response)
+        public static void GetCallback(AsyncResponse<byte[]> response)
         {
             // Only track the Put if the request was successful!
             if (response.Status == ResponseStatus.Success)
             {
                 // Unpack result to retrieve compressed and uncompressed value sizes and increment counters.
-                long compressedSize = Encoding.UTF8.GetBytes(response.Result).LongLength;
+                long compressedSize = response.Result.Length; // Encoding.UTF8.GetBytes(response.Result).LongLength;
                 long uncompressedSize = 0;
                 switch (State.ValueEncoding)
                 {
-                    case ApplicationState.DataEncoding.Base64:
-                        uncompressedSize = response.Result.FromBase64().LongLength;
+                    case ApplicationState.DataEncoding.Gzip:
+                        uncompressedSize = response.Result.UnGzip().LongLength;
                         break;
-                    case ApplicationState.DataEncoding.Base64Gzip:
-                        uncompressedSize = response.Result.FromBase64().UnGzip().LongLength;
-                        break;
-                    case ApplicationState.DataEncoding.Base64Deflate:
-                        uncompressedSize = response.Result.FromBase64().UnDeflate().LongLength;
+                    case ApplicationState.DataEncoding.Deflate:
+                        uncompressedSize = response.Result.UnDeflate().LongLength;
                         break;
                     default:
                         uncompressedSize = compressedSize;
                         break;
                 }
-
                 // Increment tracking counters
                 Interlocked.Increment(ref State.GetCount);
                 Interlocked.Add(ref State.GetBytesCompressed, compressedSize);
                 Interlocked.Add(ref State.GetBytesUncompressed, uncompressedSize);
+            }
+            else
+            {
+                Console.WriteLine(response.ServerStatusString);
             }
         }
 
@@ -125,7 +125,7 @@ namespace VoltDB.Examples.KeyValue
             try
             {
                 // Read hosts from the command or use defaults
-                string hosts = "192.168.1.203";
+                string hosts = "10.10.180.98";
                 if (args.Length > 0)
                     hosts = string.Join(",", string.Join(",", args).Split(' ', ','));
 
@@ -136,7 +136,7 @@ namespace VoltDB.Examples.KeyValue
                         , 12000                             // Maximum Value Size (Max 1048576)
                         , 100000                            // Number of Pairs to put in store before benchmark
                         , 0.75                              // % of Get (vs Put) during benchmark
-                        , ApplicationState.DataEncoding.Raw // Type of data compression to use for benchmark
+                        , ApplicationState.DataEncoding.Gzip // Type of data compression to use for benchmark
                         , 0.5                               // Value target compression ratio (only for Gzip and
                                                             // Deflate: Raw will not compress, and Base64 will
                                                             // by design cause a +33% payload increase)
@@ -155,8 +155,8 @@ namespace VoltDB.Examples.KeyValue
                                  , State.PercentGet * 100
                                  , State.ValueEncoding.ToString()
                                  , (
-                                      State.ValueEncoding == ApplicationState.DataEncoding.Base64Deflate
-                                   || State.ValueEncoding == ApplicationState.DataEncoding.Base64Gzip
+                                      State.ValueEncoding == ApplicationState.DataEncoding.Deflate
+                                   || State.ValueEncoding == ApplicationState.DataEncoding.Gzip
                                    )
                                    ? string.Format("\r\n   Approx. Value Compression Rate : {0,15:#0.## %}", State.ValueTargetCompressionRatio)
                                    : ""
@@ -164,11 +164,11 @@ namespace VoltDB.Examples.KeyValue
 
 
                 // Create & open connection
-                using (VoltConnection voltDB = VoltConnection.Create("hosts=" + hosts + ";statistics=true;").Open())
+                using (VoltConnection voltDB = VoltConnection.Create("hosts=" + hosts + ";statistics=true;adhoc=true;").Open())
                 {
                     // Define procedures
                     var Put = voltDB.Procedures.Wrap<Null, string, byte[]>("Put", PutCallback);
-                    var Get = voltDB.Procedures.Wrap<string, string>("Get", GetCallback);
+                    var Get = voltDB.Procedures.Wrap<byte[], string>("Get", GetCallback);
 
                     // Initialize ticker
                     Timer ticker = new Timer(delegate(object state) { Console.WriteLine("{0,24}", string.Join("\r\n", (state as VoltConnection).Statistics.GetStatisticsSummaryByNode(StatisticsSnapshot.SnapshotOnly).Select(r => r.Key.ToString() + " :: " + r.Value.ToString(StatisticsFormat.Short)).ToArray())); }, voltDB, 5000, 5000);
@@ -184,7 +184,7 @@ namespace VoltDB.Examples.KeyValue
                     // done), we'll get an empty response form the server. An alternate solution would be to receive
                     // a string[] and then check the array length. Here we simply use TryExecute so we can perform the
                     // test without raising an exception.
-                    Response<string> checkResponse;
+                    Response<byte[]> checkResponse;
                     if (!Get.TryExecute((State.InitialDatasetSize - 1).ToString().PadLeft(State.KeySize, 'k'), out checkResponse))
                     {
                         Console.WriteLine("Initializing dataset.\r\n{0}", line);
@@ -205,14 +205,11 @@ namespace VoltDB.Examples.KeyValue
                             // Compress as needed
                             switch (State.ValueEncoding)
                             {
-                                case ApplicationState.DataEncoding.Base64:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.ToBase64());
+                                case ApplicationState.DataEncoding.Gzip:
+                                    compressedValue = value.Gzip();
                                     break;
-                                case ApplicationState.DataEncoding.Base64Gzip:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.Gzip().ToBase64());
-                                    break;
-                                case ApplicationState.DataEncoding.Base64Deflate:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.Deflate().ToBase64());
+                                case ApplicationState.DataEncoding.Deflate:
+                                    compressedValue = value.Deflate();
                                     break;
                                 default:
                                     compressedValue = value;
@@ -258,14 +255,11 @@ namespace VoltDB.Examples.KeyValue
                             // Compress as needed
                             switch (State.ValueEncoding)
                             {
-                                case ApplicationState.DataEncoding.Base64:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.ToBase64());
+                                case ApplicationState.DataEncoding.Gzip:
+                                    compressedValue = value.Gzip();
                                     break;
-                                case ApplicationState.DataEncoding.Base64Gzip:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.Gzip().ToBase64());
-                                    break;
-                                case ApplicationState.DataEncoding.Base64Deflate:
-                                    compressedValue = Encoding.UTF8.GetBytes(value.Deflate().ToBase64());
+                                case ApplicationState.DataEncoding.Deflate:
+                                    compressedValue = value.Deflate();
                                     break;
                                 default:
                                     compressedValue = value;

@@ -33,9 +33,8 @@ namespace VoltDB.Examples.KeyValue
         public enum DataEncoding : byte
         {
             Raw = 1,
-            Base64 = 2,
-            Base64Gzip = 3,
-            Base64Deflate = 4
+            Gzip = 3,
+            Deflate = 4
         }
 
         // Parameters
@@ -81,9 +80,8 @@ namespace VoltDB.Examples.KeyValue
             this.ValueTargetCompressionRatio = valueTargetCompressionRatio;
             this.BenchmarkDuration = benchmarkDuration;
 
-            // Define raw data - if using raw data, use a value that will traverse well between string and byte[]
-            // (without doubling of size since the UTF8 encoding will do that for non-ASCII characters)
-            if (valueEncoding == DataEncoding.Raw || valueEncoding == DataEncoding.Base64)
+            // Define raw data
+            if (valueEncoding == DataEncoding.Raw)
                 this.BaseValue = Encoding.UTF8.GetBytes(string.Empty.PadLeft(this.MaxValueSize, 'v'));
             else
             {
@@ -95,9 +93,9 @@ namespace VoltDB.Examples.KeyValue
                     this.Rand.NextBytes(pattern);
                     Buffer.BlockCopy(pattern, 0, this.BaseValue, 0, pattern.Length);
                     int compressedSize = (
-                                           valueEncoding == DataEncoding.Base64Deflate
-                                         ? this.BaseValue.Deflate().ToBase64()
-                                         : this.BaseValue.Gzip().ToBase64()
+                                           valueEncoding == DataEncoding.Deflate
+                                         ? this.BaseValue.Deflate()
+                                         : this.BaseValue.Gzip()
                                          ).Length;
                     if (1.0 - ((double)compressedSize / (double)this.MaxValueSize) < valueTargetCompressionRatio)
                         break;
