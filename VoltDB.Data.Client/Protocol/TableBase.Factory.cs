@@ -161,6 +161,12 @@ namespace VoltDB.Data.Client
                         dataNullableVoltDecimal[r] = input.Skip(4).ReadNullableVoltDecimal();
                     return dataNullableVoltDecimal;
 
+                case VoltType.NETType.Varbinary:
+                    byte[][] dataVarbinary = new byte[rowCount][];
+                    for (int r = 0; r < rowCount; r++)
+                        dataVarbinary[r] = input.Skip(4).ReadVarbinary();
+                    return dataVarbinary;
+
                 default:
                     throw new VoltUnsupportedTypeException(Resources.UnsupportedParameterNETType, TResult.ToString());
             }
@@ -248,6 +254,9 @@ namespace VoltDB.Data.Client
 
                 case VoltType.NETType.NullableVoltDecimal:
                     return (TResult)(object)input.Skip(4).ReadNullableVoltDecimal();
+
+                case VoltType.NETType.Varbinary:
+                    return (TResult)(object)input.Skip(4).ReadVarbinary();
 
                 default:
                     throw new VoltUnsupportedTypeException(

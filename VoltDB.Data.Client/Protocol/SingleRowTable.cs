@@ -68,6 +68,9 @@ namespace VoltDB.Data.Client
                     case DBType.TIMESTAMP:
                         Column.SetValue(input.ReadNullableDateTime(), c);
                         break;
+                    case DBType.VARBINARY:
+                        Column.SetValue(input.ReadVarbinary(), c);
+                        break;
                     default:
                         Column.SetValue(input.ReadString(), c);
                         break;

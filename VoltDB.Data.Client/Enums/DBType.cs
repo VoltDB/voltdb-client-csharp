@@ -70,6 +70,11 @@ namespace VoltDB.Data.Client
         /// DECIMAL type: corresponds to custom .NET data type BigDecimal
         /// (currently unsupported in .NET - will resolve to byte[16] upon which no manipulation is available).
         /// </summary>
-        DECIMAL = 22
+        DECIMAL = 22,
+
+        /// <summary>
+        /// VARBINARY type: corresponds to .NET datatype: byte[].
+        /// </summary>
+        VARBINARY = 25
     }
 }

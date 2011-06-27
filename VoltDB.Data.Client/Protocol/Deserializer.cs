@@ -280,7 +280,7 @@ namespace VoltDB.Data.Client
             int length = Cnv.GetInt32(this.Input, this.Position);
             this.Position += 4;
 
-            if (length == VoltType.NULL_STRING_INDICATOR)
+            if (length == VoltType.NULL_STRING_AND_VARBINARY_INDICATOR)
                 return null;
 
             if (length > VoltType.MAX_VALUE_LENGTH)
@@ -290,13 +290,41 @@ namespace VoltDB.Data.Client
                                                   , VoltType.MAX_VALUE_LENGTH
                                                   );
 
-            if (length < VoltType.NULL_STRING_INDICATOR)
+            if (length < VoltType.NULL_STRING_AND_VARBINARY_INDICATOR)
                 throw new VoltInvalidDataException(Resources.InvalidStringLength, length);
 
             byte[] buffer = new byte[length];
             Buffer.BlockCopy(this.Input, this.Position, buffer, 0, length);
             this.Position += buffer.Length;
             return Encoding.UTF8.GetString(buffer);
+        }
+
+        /// <summary>
+        /// Reads a varbinary (VoltDB::Varbinary).
+        /// </summary>
+        /// <returns>Value read from the underlying byte buffer.</returns>
+        public byte[] ReadVarbinary()
+        {
+            int length = Cnv.GetInt32(this.Input, this.Position);
+            this.Position += 4;
+
+            if (length == VoltType.NULL_STRING_AND_VARBINARY_INDICATOR)
+                return null;
+
+            if (length > VoltType.MAX_VALUE_LENGTH)
+                throw new VoltInvalidDataException(
+                                                    Resources.MaximumVarbinaryLengthViolation
+                                                  , length
+                                                  , VoltType.MAX_VALUE_LENGTH
+                                                  );
+
+            if (length < VoltType.NULL_STRING_AND_VARBINARY_INDICATOR)
+                throw new VoltInvalidDataException(Resources.InvalidVarbinaryLength, length);
+
+            byte[] buffer = new byte[length];
+            Buffer.BlockCopy(this.Input, this.Position, buffer, 0, length);
+            this.Position += buffer.Length;
+            return buffer;
         }
 
         /// <summary>
@@ -307,7 +335,7 @@ namespace VoltDB.Data.Client
         {
             int length = Cnv.GetInt32(this.Input, this.Position);
             this.Position += 4;
-            if (length != VoltType.NULL_STRING_INDICATOR)
+            if (length != VoltType.NULL_STRING_AND_VARBINARY_INDICATOR)
                 this.Position += length;
             return this;
         }

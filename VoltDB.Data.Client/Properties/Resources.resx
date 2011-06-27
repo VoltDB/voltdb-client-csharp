@@ -567,4 +567,10 @@ Connection Status Summary:
   <data name="VoltDecimalOutsideOfRange" xml:space="preserve">
     <value>Value is outside of the VoltDecimal type acceptable range: '{0}'.</value>
   </data>
+  <data name="InvalidVarbinaryLength" xml:space="preserve">
+    <value>Invalid binary data length: {0}.</value>
+  </data>
+  <data name="MaximumVarbinaryLengthViolation" xml:space="preserve">
+    <value>Binary data of length {0} exceeds maximum supported VoltDB length of {1} bytes.</value>
+  </data>
 </root>

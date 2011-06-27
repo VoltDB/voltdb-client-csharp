@@ -1,4 +1,6 @@
-﻿/*
+﻿#define PROTOCOL_BUFFERING
+
+/*
 
  This file is part of VoltDB.
  Copyright (C) 2008-2011 VoltDB Inc.
@@ -73,6 +75,7 @@ namespace VoltDB.Data.Client
         long lastWrite = DateTime.MaxValue.Ticks;
         System.Threading.Timer flushTimer;
         readonly byte[] lenBuffer = new byte[5];
+        Exception outException = null;
 #endif
 
         /// <summary>
@@ -93,10 +96,18 @@ namespace VoltDB.Data.Client
                 {
                     lock (this.Out)
                     {
+                         if (this.outException != null) return;
                          x = System.Threading.Interlocked.Read(ref lastWrite);
                          if (new TimeSpan(DateTime.UtcNow.Ticks - x).TotalMilliseconds > 1)
                          {
-                             this.Out.Flush();
+                             try
+                             {
+                                 this.Out.Flush();
+                             }
+                             catch (Exception ex)
+                             {
+                                 this.outException = ex;
+                             }
                              lastWrite = DateTime.MaxValue.Ticks;
                          }
                     }
@@ -214,13 +225,16 @@ namespace VoltDB.Data.Client
 #if PROTOCOL_BUFFERING
             lock (this.Out)
             {
+                if (this.outException != null)
+                {
+                    throw this.outException;
+                }
                 DataConverter.BigEndian.PutBytes(lenBuffer, 0, (int)(length + 1));
                 lenBuffer[4] = PROTOCOL_VERSION;
                 this.Out.Write(lenBuffer, 0, 5);
                 this.Out.Write(message, offset, length);
                 this.lastWrite = DateTime.UtcNow.Ticks;
             }
-            //flushTimer.Change(5, System.Threading.Timeout.Infinite);
 #else
             this.Out.Write(DataConverter.BigEndian.GetBytes((int)(length + 1)), 0, 4);
             this.Out.WriteByte(PROTOCOL_VERSION);

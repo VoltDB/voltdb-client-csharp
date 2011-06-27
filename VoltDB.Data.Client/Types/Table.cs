@@ -129,6 +129,9 @@ namespace VoltDB.Data.Client
                 case DBType.STRING:
                     Array.Copy((string[])this.Column[columnIndex], data, this.RowCount);
                     break;
+                case DBType.VARBINARY:
+                    Array.Copy((byte[][])this.Column[columnIndex], data, this.RowCount);
+                    break;
                 default:
                     throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, this.ColumnType[columnIndex]);
             }
@@ -214,6 +217,8 @@ namespace VoltDB.Data.Client
                     return ((DateTime?[])this.Column[columnIndex])[rowIndex];
                 case DBType.STRING:
                     return ((string[])this.Column[columnIndex])[rowIndex];
+                case DBType.VARBINARY:
+                    return ((byte[][])this.Column[columnIndex])[rowIndex];
                 default:
                     throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, this.ColumnType[columnIndex]);
             }

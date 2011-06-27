@@ -36,9 +36,9 @@ namespace VoltDB.Data.Client
         public const long TIMESTAMP_ORIGIN = 621355968000000000L;
 
         /// <summary>
-        /// Indicator for null string in Table serializations.
+        /// Indicator for null string/varbinary in Table serializations.
         /// </summary>
-        public const int NULL_STRING_INDICATOR = -1;
+        public const int NULL_STRING_AND_VARBINARY_INDICATOR = -1;
 
         /// <summary>
         /// Maximum string value length (or byte array length).
@@ -97,7 +97,8 @@ namespace VoltDB.Data.Client
             NullableDateTime = -2002782677,   // System.Nullable`1[System.DateTime]
             String = 1501690144,              // System.String
             VoltDecimal = -611454561,         // VoltDB.Data.Client.VoltDecimal
-            NullableVoltDecimal = 846517016   // System.Nullable`1[VoltDB.Data.Client.VoltDecimal]
+            NullableVoltDecimal = 846517016,  // System.Nullable`1[VoltDB.Data.Client.VoltDecimal]
+            Varbinary = -1273902537           // System.Byte[]
         }
 
         /// <summary>
@@ -163,7 +164,8 @@ namespace VoltDB.Data.Client
             NullableDateTime = 11,
             String = 9,            // STRING
             VoltDecimal = 22,      // DECIMAL
-            NullableVoltDecimal = 22
+            NullableVoltDecimal = 22,
+            Varbinary = 25         // VARBINARY
         }
 
         static VoltType()
@@ -186,6 +188,7 @@ namespace VoltDB.Data.Client
                 typeof(System.String),
                 typeof(VoltDB.Data.Client.VoltDecimal),
                 typeof(System.Nullable<VoltDB.Data.Client.VoltDecimal>),
+                typeof(System.Byte[]),
             };
 
             _toNETTypeCache =
@@ -259,6 +262,7 @@ namespace VoltDB.Data.Client
                 case DBType.TIMESTAMP: return typeof(DateTime?);
                 case DBType.STRING: return typeof(string);
                 case DBType.DECIMAL: return typeof(VoltDecimal?);
+                case DBType.VARBINARY: return typeof(byte[]);
                 default: throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, dbType);
             }
         }
@@ -282,6 +286,7 @@ namespace VoltDB.Data.Client
                 case DBType.TIMESTAMP: return typeof(DateTime?[]);
                 case DBType.STRING: return typeof(string[]);
                 case DBType.DECIMAL: return typeof(VoltDecimal?[]);
+                case DBType.VARBINARY: return typeof(byte[][]);
                 default: throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, dbType);
             }
         }

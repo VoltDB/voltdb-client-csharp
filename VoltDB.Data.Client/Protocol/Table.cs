@@ -63,6 +63,9 @@ namespace VoltDB.Data.Client
                     case DBType.STRING:
                         Column[c] = new string[this.RowCount];
                         break;
+                    case DBType.VARBINARY:
+                        Column[c] = new byte[this.RowCount][];
+                        break;
                     default:
                         throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, ColumnType[c]);
                 }
@@ -98,6 +101,9 @@ namespace VoltDB.Data.Client
                             break;
                         case DBType.TIMESTAMP:
                             (Column[c] as DateTime?[])[r] = input.ReadNullableDateTime();
+                            break;
+                        case DBType.VARBINARY:
+                            (Column[c] as byte[][])[r] = input.ReadVarbinary();
                             break;
                         default:
                             (Column[c] as string[])[r] = input.ReadString();
