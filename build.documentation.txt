@@ -29,6 +29,9 @@ Building the Client Library
 
 2. Build Assemblies (Visual Studio)
    Open ./VoltDB.ClientLibrary.VS2010.sln
+   Check/Set Version
+     Edit CommonAssemblyInfo.cs in VoltDB.Data.Client -> Properties
+     Modify 2 version numbers in "AssemblyVersion" and "AssemblyFileVersion"
    Ensure "Release" build configuration is set (this is visible in the toolbar, if not do the following 3 tasks).
      + "Expert Settings" must be enabled, Tools -> Settings -> Expert Settings
      + Go to Tools -> Options. In the dialog box, check the Show All Settings option in the bottom left.
