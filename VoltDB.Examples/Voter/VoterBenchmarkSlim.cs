@@ -63,11 +63,11 @@ namespace VoltDB.Examples.Voter
 
                 // Create strongly-typed procedure wrappers
                 var Vote = voltDB.Procedures.Wrap<int, long, sbyte, int>("Vote", VoterCallback);
-                var Initialize = voltDB.Procedures.Wrap<int, int, string[]>("Initialize", null);
+                var Initialize = voltDB.Procedures.Wrap<int, int, string>("Initialize", null);
                 var Results = voltDB.Procedures.Wrap<Table>("Results", null);
 
                 // Initialize application
-                int numContestants = Initialize.Execute(rand.Next(5, 10), new string[] { "Edwina Burnam", "Tabatha Gehling", "Kelly Clauss", "Jessie Alloway", "Alana Bregman", "Jessie Eichman", "Allie Rogalski", "Nita Coster", "Kurt Walser", "Ericka Dieter", "Loraine Nygren", "Tania Mattioli" }).Result;
+                int numContestants = Initialize.Execute(rand.Next(5, 10), "Edwina Burnam,Tabatha Gehling,Kelly Clauss,Jessie Alloway,Alana Bregman,Jessie Eichman,Allie Rogalski,Nita Coster,Kurt Walser,Ericka Dieter,Loraine Nygren,Tania Mattioli").Result;
 
                 Console.WriteLine("Voting for {0} Contestants\r\nTracking Live Statistics (Connection Aggregates)\r\n----------------------------------------------------------------------------------------------------", numContestants);
 

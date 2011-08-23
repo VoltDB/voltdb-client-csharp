@@ -142,27 +142,14 @@ Full Performance Statistics
                 //  - Voter will have a callback to track procedure results asynchronously.
                 //  - Initialize and Results don't because we will simply call them synchronously.
                 var Vote = voltDB.Procedures.Wrap<int, long, sbyte, int>("Vote", VoterCallback);
-                var Initialize = voltDB.Procedures.Wrap<int, int, string[]>("Initialize", null);
+                var Initialize = voltDB.Procedures.Wrap<int, int, string>("Initialize", null);
                 var Results = voltDB.Procedures.Wrap<Table>("Results", null);
 
                 // Initialize the catalog and request a random number of contestants to vote on.
                 // Notice the result is strongly-typed, so we can access it directly!
                 int numContestants = Initialize.Execute(
                                                          rand.Next(5, 10)
-                                                       , new string[] {
-                                                                        "Edwina Burnam"
-                                                                      , "Tabatha Gehling"
-                                                                      , "Kelly Clauss"
-                                                                      , "Jessie Alloway"
-                                                                      , "Alana Bregman"
-                                                                      , "Jessie Eichman"
-                                                                      , "Allie Rogalski"
-                                                                      , "Nita Coster"
-                                                                      , "Kurt Walser"
-                                                                      , "Ericka Dieter"
-                                                                      , "Loraine Nygren"
-                                                                      , "Tania Mattioli"
-                                                                      }
+                                                       , "Edwina Burnam,Tabatha Gehling,Kelly Clauss,Jessie Alloway,Alana Bregman,Jessie Eichman,Allie Rogalski,Nita Coster,Kurt Walser,Ericka Dieter,Loraine Nygren,Tania Mattioli"
                                                        ).Result;
 
                 // Print a startup message.
