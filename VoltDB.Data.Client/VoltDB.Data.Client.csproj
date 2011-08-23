@@ -151,6 +151,7 @@
     <Compile Include="Connections\ProcedureWrapper[TResult,T1,...,T9].cs">
       <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
     </Compile>
+    <Compile Include="Enums\ServerSysInfoSelector.cs" />
     <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Connections\AdhocAccess.cs" />
     <Compile Include="Connections\InfoAccess.cs" />

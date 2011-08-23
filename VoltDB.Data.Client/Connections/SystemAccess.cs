@@ -161,7 +161,18 @@ namespace VoltDB.Data.Client
         /// connection points.</returns>
         public Response<Table[]> SystemInformation()
         {
-            return this.Executor.Execute<Table[]>(Timeout.Infinite, "@SystemInformation");
+            return this.SystemInformation(ServerSysInfoSelector.OVERVIEW);
+        }
+
+        /// <summary>
+        /// Returns system information for each node of the database cluster.
+        /// </summary>
+        /// <param name="selector">The System Information item to retrieve (Overview or Deployment)</param>
+        /// <returns>Table containing the basic system information for each node in the cluster to which this
+        /// connection points.</returns>
+        public Response<Table[]> SystemInformation(ServerSysInfoSelector selector)
+        {
+            return this.Executor.Execute<Table[]>(Timeout.Infinite, "@SystemInformation", selector.ToString().ToUpper());
         }
 
         /// <summary>
