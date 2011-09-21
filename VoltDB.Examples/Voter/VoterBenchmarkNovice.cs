@@ -74,7 +74,7 @@ Full Performance Statistics
         /// Note it is strongly typed to receive a response that carries a single INTEGER
         /// </summary>
         /// <param name="response">The procedure response object</param>
-        static void VoterCallback(Response<int> response)
+        static void VoterCallback(Response<long> response)
         {
             // The response object carries a lot of information with it:
             //  - The name of the procedure and parameters passed
@@ -95,7 +95,7 @@ Full Performance Statistics
             // So here, we make sure we use the Interlocked model to increment our counters, a safe, lightweight
             // framework for updating shared values.
             if (response.Status == ResponseStatus.Success)
-                Interlocked.Increment(ref VoteResults[response.Result]);
+                Interlocked.Increment(ref VoteResults[(int)response.Result]);
             else
                 Interlocked.Increment(ref VoteResults[3]);
         }
@@ -141,13 +141,13 @@ Full Performance Statistics
                 // Create strongly-typed procedure wrappers for each procedure we will use.
                 //  - Voter will have a callback to track procedure results asynchronously.
                 //  - Initialize and Results don't because we will simply call them synchronously.
-                var Vote = voltDB.Procedures.Wrap<int, long, sbyte, int>("Vote", VoterCallback);
-                var Initialize = voltDB.Procedures.Wrap<int, int, string>("Initialize", null);
+                var Vote = voltDB.Procedures.Wrap<long, long, sbyte, int>("Vote", VoterCallback);
+                var Initialize = voltDB.Procedures.Wrap<long, int, string>("Initialize", null);
                 var Results = voltDB.Procedures.Wrap<Table>("Results", null);
 
                 // Initialize the catalog and request a random number of contestants to vote on.
                 // Notice the result is strongly-typed, so we can access it directly!
-                int numContestants = Initialize.Execute(
+                int numContestants = (int)Initialize.Execute(
                                                          rand.Next(5, 10)
                                                        , "Edwina Burnam,Tabatha Gehling,Kelly Clauss,Jessie Alloway,Alana Bregman,Jessie Eichman,Allie Rogalski,Nita Coster,Kurt Walser,Ericka Dieter,Loraine Nygren,Tania Mattioli"
                                                        ).Result;
@@ -240,14 +240,14 @@ Full Performance Statistics
                                                           .Select(r => string.Format(
                                                                                       "{0,21} => {1,12:##,#} votes(s)"
                                                                                     , r.GetValue<string>(0)
-                                                                                    , r.GetValue<long?>(1)
+                                                                                    , r.GetValue<long?>(2)
                                                                                     )
                                                                  ).ToArray()
                                                   )
                                      + string.Format(
                                                       "\r\n\r\n {0,21} was the winner!\r\n"
                                                     , result.Rows
-                                                            .OrderByDescending(r => r.GetValue<long?>(1))
+                                                            .OrderByDescending(r => r.GetValue<long?>(2))
                                                             .First()
                                                             .GetValue<string>(0)
                                                     );

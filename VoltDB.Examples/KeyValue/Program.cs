@@ -83,21 +83,22 @@ namespace VoltDB.Examples.KeyValue
         /// Tracking callback for GET operations.
         /// </summary>
         /// <param name="response">The response received from the server.</param>
-        public static void GetCallback(AsyncResponse<byte[]> response)
+        public static void GetCallback(AsyncResponse<Table> response)
         {
             // Only track the Put if the request was successful!
             if (response.Status == ResponseStatus.Success)
             {
                 // Unpack result to retrieve compressed and uncompressed value sizes and increment counters.
-                long compressedSize = response.Result.Length; // Encoding.UTF8.GetBytes(response.Result).LongLength;
+                byte[] data = response.Result.GetValue<byte[]>(1,0);
+                long compressedSize = data.Length; // Encoding.UTF8.GetBytes(response.Result).LongLength;
                 long uncompressedSize = 0;
                 switch (State.ValueEncoding)
                 {
                     case ApplicationState.DataEncoding.Gzip:
-                        uncompressedSize = response.Result.UnGzip().LongLength;
+                        uncompressedSize = data.UnGzip().LongLength;
                         break;
                     case ApplicationState.DataEncoding.Deflate:
-                        uncompressedSize = response.Result.UnDeflate().LongLength;
+                        uncompressedSize = data.UnDeflate().LongLength;
                         break;
                     default:
                         uncompressedSize = compressedSize;
@@ -125,22 +126,22 @@ namespace VoltDB.Examples.KeyValue
             try
             {
                 // Read hosts from the command or use defaults
-                string hosts = "10.10.180.98";
+                string hosts = "10.10.180.176";
                 if (args.Length > 0)
                     hosts = string.Join(",", string.Join(",", args).Split(' ', ','));
 
                 // Initialize application state
                 State = new ApplicationState(
-                          50                                // Key size (250 maximum)
-                        , 12000                             // Minimum Value Size (Max 1048576)
-                        , 12000                             // Maximum Value Size (Max 1048576)
-                        , 100000                            // Number of Pairs to put in store before benchmark
-                        , 0.75                              // % of Get (vs Put) during benchmark
+                          32                                 // Key size (250 maximum)
+                        , 1024                               // Minimum Value Size (Max 1048576)
+                        , 1024                               // Maximum Value Size (Max 1048576)
+                        , 100000                             // Number of Pairs to put in store before benchmark
+                        , 0.75                               // % of Get (vs Put) during benchmark
                         , ApplicationState.DataEncoding.Gzip // Type of data compression to use for benchmark
-                        , 0.5                               // Value target compression ratio (only for Gzip and
-                                                            // Deflate: Raw will not compress, and Base64 will
-                                                            // by design cause a +33% payload increase)
-                        , 120000                            // Benchmark duration
+                        , 0.5                                // Value target compression ratio (only for Gzip and
+                                                             // Deflate: Raw will not compress, and Base64 will
+                                                             // by design cause a +33% payload increase)
+                        , 120000                             // Benchmark duration
                         );
 
                 // Print out introduction message
@@ -167,68 +168,48 @@ namespace VoltDB.Examples.KeyValue
                 using (VoltConnection voltDB = VoltConnection.Create("hosts=" + hosts + ";statistics=true;adhoc=true;").Open())
                 {
                     // Define procedures
+                    var Initialize = voltDB.Procedures.Wrap<Null, int, int, string, byte[]>("Initialize", null);
                     var Put = voltDB.Procedures.Wrap<Null, string, byte[]>("Put", PutCallback);
-                    var Get = voltDB.Procedures.Wrap<byte[], string>("Get", GetCallback);
-
-                    // Initialize ticker
-                    Timer ticker = new Timer(delegate(object state) { Console.WriteLine("{0,24}", string.Join("\r\n", (state as VoltConnection).Statistics.GetStatisticsSummaryByNode(StatisticsSnapshot.SnapshotOnly).Select(r => r.Key.ToString() + " :: " + r.Value.ToString(StatisticsFormat.Short)).ToArray())); }, voltDB, 5000, 5000);
+                    var Get = voltDB.Procedures.Wrap<Table, string>("Get", GetCallback);
 
                     // Process variables
                     string key;
                     byte[] value;
                     byte[] compressedValue;
 
-                    // Initialize the data (if not already done)
-                    // Note: this call will fail because the return value is defined as "string" which *demands* a
-                    // single return value, however if the get fails (which will be the case if initialization isn't
-                    // done), we'll get an empty response form the server. An alternate solution would be to receive
-                    // a string[] and then check the array length. Here we simply use TryExecute so we can perform the
-                    // test without raising an exception.
-                    Response<byte[]> checkResponse;
-                    if (!Get.TryExecute((State.InitialDatasetSize - 1).ToString().PadLeft(State.KeySize, 'k'), out checkResponse))
+                    // Initialize the data
+                    Console.Write("Initializing data store... ");
+                    for (int i = 0; i < State.InitialDatasetSize; i += 1000)
                     {
-                        Console.WriteLine("Initializing dataset.\r\n{0}", line);
-                        for (int i = 0; i < State.InitialDatasetSize; i++)
+                        // Generate value
+                        if (State.MaxValueSize == State.MinValueSize)
+                            value = State.BaseValue;
+                        else
                         {
-                            // Generate a key of the requested size.
-                            key = i.ToString().PadLeft(State.KeySize, 'k');
-
-                            // Generate value
-                            if (State.MaxValueSize == State.MinValueSize)
-                                value = State.BaseValue;
-                            else
-                            {
-                                value = new byte[State.Rand.Next(State.MinValueSize, State.MaxValueSize)];
-                                Buffer.BlockCopy(State.BaseValue, 0, value, 0, value.Length);
-                            }
-
-                            // Compress as needed
-                            switch (State.ValueEncoding)
-                            {
-                                case ApplicationState.DataEncoding.Gzip:
-                                    compressedValue = value.Gzip();
-                                    break;
-                                case ApplicationState.DataEncoding.Deflate:
-                                    compressedValue = value.Deflate();
-                                    break;
-                                default:
-                                    compressedValue = value;
-                                    break;
-                            }
-
-                            // Push PUT call to server.  Note: Tracking ONLY performed upon successful completion of the call
-                            Put.BeginExecute(key, compressedValue, new SizeInfo(compressedValue.LongLength, value.LongLength));
+                            value = new byte[State.Rand.Next(State.MinValueSize, State.MaxValueSize)];
+                            Buffer.BlockCopy(State.BaseValue, 0, value, 0, value.Length);
                         }
 
-                        // Drain the connection until initialization is complete
-                        voltDB.Drain();
+                        // Compress as needed
+                        switch (State.ValueEncoding)
+                        {
+                            case ApplicationState.DataEncoding.Gzip:
+                                compressedValue = value.Gzip();
+                                break;
+                            case ApplicationState.DataEncoding.Deflate:
+                                compressedValue = value.Deflate();
+                                break;
+                            default:
+                                compressedValue = value;
+                                break;
+                        }
 
-                        Console.WriteLine("{0}\r\nConnection Statistics.\r\n{0}", line);
-                        // Print out initialization statistics and reset
-                        Console.WriteLine(voltDB.Statistics.GetStatisticsSummary(StatisticsSnapshot.SnapshotAndResetWithIgnorePendingExecutions).ToString());
+                        Initialize.Execute(i, Math.Min(i + 1000, State.InitialDatasetSize), "K%1$#" + (State.KeySize - 1) + "s", value);
                     }
-                    else
-                        Console.WriteLine("Initialization already done - skipping.", line);
+                    Console.WriteLine(" Done.");
+
+                    // Initialize ticker
+                    Timer ticker = new Timer(delegate(object state) { Console.WriteLine("{0,24}", string.Join("\r\n", (state as VoltConnection).Statistics.GetStatisticsSummaryByNode(StatisticsSnapshot.SnapshotOnly).Select(r => r.Key.ToString() + " :: " + r.Value.ToString(StatisticsFormat.Short)).ToArray())); }, voltDB, 5000, 5000);
 
                     // Now benchmark GET/PUT operations.
                     int end = Environment.TickCount + State.BenchmarkDuration;
@@ -284,29 +265,30 @@ namespace VoltDB.Examples.KeyValue
                     Console.WriteLine("{0}\r\nConnection Statistics.\r\n{0}", line);
                     // Print out statistics and reset (though pointless, since we'll close the connection next!)
                     Console.WriteLine(voltDB.Statistics.GetStatisticsSummary(StatisticsSnapshot.SnapshotAndResetWithIgnorePendingExecutions).ToString());
+
+                    Console.WriteLine("{0}\r\nApplication Statistics.\r\n{0}", line);
+                    // Print out application statistics
+                    Console.WriteLine(resultFormat
+                               , "GET"
+                               , State.GetCount
+                               , State.GetBytesUncompressed.ToByteSizeString()
+                               , State.GetBytesCompressed.ToByteSizeString()
+                               , (double)(State.GetBytesUncompressed - State.GetBytesCompressed) / (double)State.GetBytesUncompressed
+                               , ((double)State.GetBytesUncompressed / (double)State.GetCount).ToByteSizeString()
+                               , ((double)State.GetBytesCompressed / (double)State.GetCount).ToByteSizeString()
+                               );
+
+                    Console.WriteLine(resultFormat
+                               , "PUT"
+                               , State.PutCount
+                               , State.PutBytesUncompressed.ToByteSizeString()
+                               , State.PutBytesCompressed.ToByteSizeString()
+                               , (double)(State.PutBytesUncompressed - State.PutBytesCompressed) / (double)State.PutBytesUncompressed
+                               , ((double)State.PutBytesUncompressed / (double)State.PutCount).ToByteSizeString()
+                               , ((double)State.PutBytesCompressed / (double)State.PutCount).ToByteSizeString()
+                               );
+
                 }
-
-                Console.WriteLine("{0}\r\nApplication Statistics.\r\n{0}", line);
-                // Print out application statistics
-                Console.WriteLine(resultFormat
-                           , "GET"
-                           , State.GetCount
-                           , State.GetBytesUncompressed.ToByteSizeString()
-                           , State.GetBytesCompressed.ToByteSizeString()
-                           , (double)(State.GetBytesUncompressed - State.GetBytesCompressed) / (double)State.GetBytesUncompressed
-                           , ((double)State.GetBytesUncompressed / (double)State.GetCount).ToByteSizeString()
-                           , ((double)State.GetBytesCompressed / (double)State.GetCount).ToByteSizeString()
-                           );
-
-                Console.WriteLine(resultFormat
-                           , "PUT"
-                           , State.PutCount
-                           , State.PutBytesUncompressed.ToByteSizeString()
-                           , State.PutBytesCompressed.ToByteSizeString()
-                           , (double)(State.PutBytesUncompressed-State.PutBytesCompressed) / (double)State.PutBytesUncompressed
-                           , ((double)State.PutBytesUncompressed / (double)State.PutCount).ToByteSizeString()
-                           , ((double)State.PutBytesCompressed / (double)State.PutCount).ToByteSizeString()
-                           );
 
             }
             catch (Exception x)

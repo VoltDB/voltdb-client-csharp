@@ -35,10 +35,10 @@ namespace VoltDB.Examples.Voter
 
         // Voter procedure callback and counters
         static long[] VoteResults = new long[4];
-        static void VoterCallback(Response<int> response)
+        static void VoterCallback(Response<long> response)
         {
             if (response.Status == ResponseStatus.Success)
-                Interlocked.Increment(ref VoteResults[response.Result]);
+                Interlocked.Increment(ref VoteResults[(int)response.Result]);
             else
                 Interlocked.Increment(ref VoteResults[3]);
         }
@@ -62,12 +62,12 @@ namespace VoltDB.Examples.Voter
                 VoltConnection voltDB = VoltConnection.Create("hosts=" + hosts + ";statistics=true;").Open();
 
                 // Create strongly-typed procedure wrappers
-                var Vote = voltDB.Procedures.Wrap<int, long, sbyte, int>("Vote", VoterCallback);
-                var Initialize = voltDB.Procedures.Wrap<int, int, string>("Initialize", null);
+                var Vote = voltDB.Procedures.Wrap<long, long, sbyte, int>("Vote", VoterCallback);
+                var Initialize = voltDB.Procedures.Wrap<long, int, string>("Initialize", null);
                 var Results = voltDB.Procedures.Wrap<Table>("Results", null);
 
                 // Initialize application
-                int numContestants = Initialize.Execute(rand.Next(5, 10), "Edwina Burnam,Tabatha Gehling,Kelly Clauss,Jessie Alloway,Alana Bregman,Jessie Eichman,Allie Rogalski,Nita Coster,Kurt Walser,Ericka Dieter,Loraine Nygren,Tania Mattioli").Result;
+                int numContestants = (int)Initialize.Execute(rand.Next(5, 10), "Edwina Burnam,Tabatha Gehling,Kelly Clauss,Jessie Alloway,Alana Bregman,Jessie Eichman,Allie Rogalski,Nita Coster,Kurt Walser,Ericka Dieter,Loraine Nygren,Tania Mattioli").Result;
 
                 Console.WriteLine("Voting for {0} Contestants\r\nTracking Live Statistics (Connection Aggregates)\r\n----------------------------------------------------------------------------------------------------", numContestants);
 
@@ -104,12 +104,12 @@ namespace VoltDB.Examples.Voter
                 // Something new compared to the "Novice" version: you don't have to constantly when accessing data:
                 // use .GetValue<type>(columnIndex) - simply wrap your table into a strongly-typed accessor and things
                 // become a lot easier!
-                var resultData = Results.Execute().Result.Wrap<string,long?>();
+                var resultData = Results.Execute().Result.Wrap<string,int?, long?>();
                 voltDB.Close();
 
                 // Compile results & print summary
-                string resultDisplay = string.Join("\r\n", resultData.Rows.Select(r => string.Format("{0,21} => {1,12:##,#} votes(s)", r.Column1, r.Column2)).ToArray())
-                                     + string.Format("\r\n\r\n {0,21} was the winner!\r\n", resultData.Rows.OrderByDescending(r => r.Column2).First().Column1);
+                string resultDisplay = string.Join("\r\n", resultData.Rows.Select(r => string.Format("{0,21} => {1,12:##,#} votes(s)", r.Column1, r.Column3)).ToArray())
+                                     + string.Format("\r\n\r\n {0,21} was the winner!\r\n", resultData.Rows.OrderByDescending(r => r.Column3).First().Column1);
                 Console.Write(ResultFormat, resultDisplay, VoteResults[0], VoteResults[1], VoteResults[2], VoteResults[3]
                              , string.Format("{0,21} :: {1}", "Connection", voltDB.Statistics.GetLifetimeStatistics().ToString(StatisticsFormat.Short))
                              , string.Join("\r\n", voltDB.Statistics.GetLifetimeStatisticsByNode().Select(p => string.Format("{0,21} :: {1}", p.Key, p.Value.ToString(StatisticsFormat.Short))).ToArray())

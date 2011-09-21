@@ -155,6 +155,16 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
+        /// Returns system catalog information for the given element.
+        /// </summary>
+        /// <param name="component">The component to query (TABLES, COLUMNS, etc.)</param>
+        /// <returns>Table containing the catalog information for the selected element on the target cluster.</returns>
+        public Response<Table[]> SystemCatalog(SystemCatalogComponent component)
+        {
+            return this.Executor.Execute<Table[]>(Timeout.Infinite, "@SystemCatalog", component.ToString().ToUpper());
+        }
+
+        /// <summary>
         /// Returns system information for each node of the database cluster.
         /// </summary>
         /// <returns>Table containing the basic system information for each node in the cluster to which this

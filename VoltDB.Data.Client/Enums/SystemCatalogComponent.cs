@@ -17,17 +17,42 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 */
-using System.Reflection;
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+namespace VoltDB.Data.Client
+{
+    /// <summary>
+    /// Enumeration of available system catalog elements that can be queried by the @SystemCatalog system procedure.
+    /// </summary>
+    public enum SystemCatalogComponent : byte
+    {
+        /// <summary>
+        /// Table columns.
+        /// </summary>
+        COLUMNS = 1,
+
+        /// <summary>
+        /// Index information.
+        /// </summary>
+        INDEXINFO = 2,
+
+        /// <summary>
+        /// Primary Keys.
+        /// </summary>
+        PRIMARYKEYS = 3,
+
+        /// <summary>
+        /// Procedure columns
+        /// </summary>
+        PROCEDURECOLUMNS = 4,
+
+        /// <summary>
+        /// Procedures.
+        /// </summary>
+        PROCEDURES = 5,
+
+        /// <summary>
+        /// Tables.
+        /// </summary>
+        TABLES = 6,
+    }
+}
