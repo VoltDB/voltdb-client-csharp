@@ -75,6 +75,11 @@ namespace VoltDB.Data.Client
         /// <summary>
         /// Information about currently connected clients.
         /// </summary>
-        LIVECLIENTS = 10
+        LIVECLIENTS = 10,
+
+        /// <summary>
+        /// Information about replication
+        /// </summary>
+        DR = 11
     }
 }
