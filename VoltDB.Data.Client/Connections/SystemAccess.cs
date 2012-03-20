@@ -252,6 +252,15 @@ namespace VoltDB.Data.Client
         {
             this.Executor.Execute<long>(Timeout.Infinite, "@Resume");
         }
+        
+        /// <summary>
+        /// Promotes the cluster from a replica to a master
+        /// The cluster will start accepting write transactions
+        /// </summary>
+        public void Promote()
+        {
+            this.Executor.Execute<long>(Timeout.Infinite, "@Promote");
+        }
 
     }
 }
