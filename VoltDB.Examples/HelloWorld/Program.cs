@@ -28,9 +28,14 @@ namespace VoltDB.Examples.HelloWorld
         {
             try
             {
+                // Read hosts from the command or use defaults
+                string hosts = "10.10.180.176";
+                if (args.Length > 0)
+                    hosts = string.Join(",", string.Join(",", args).Split(' ', ','));
+
                 // Create a connection and open it immediately.
                 // Notice the "using" block that will ensure the connection is closed and disposed of at the end.
-                using (var connection = VoltConnection.Create("hosts=192.168.1.200").Open())
+                using (var connection = VoltConnection.Create("hosts=" + hosts).Open())
                 {
                     // Define the procedure wrappers we will use
                     var Insert = connection.Procedures.Wrap<Null, string, string, string>("Insert");
