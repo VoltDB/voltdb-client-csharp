@@ -20,6 +20,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 using System.Threading;
 using VoltDB.Data.Client.Properties;
@@ -111,7 +112,7 @@ namespace VoltDB.Data.Client
             try { ((AsyncResponse<TResult>)s).Callback((AsyncResponse<TResult>)s); }
             finally { ((AsyncResponse<TResult>)s).OnNotifyCompleted(false); }
         };
- 
+
         /// <summary>
         /// Trigger the user callback upon completion, by pushing a new work item to the ThreadPool (thus forking out
         /// the callback and ensuring long-running callbacks do not endanger the stability of the connection).

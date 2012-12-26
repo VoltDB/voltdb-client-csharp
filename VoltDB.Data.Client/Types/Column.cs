@@ -20,6 +20,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using System;
 
 namespace VoltDB.Data.Client
@@ -49,7 +50,7 @@ namespace VoltDB.Data.Client
             this.Table = table;
             this.Index = columnIndex;
         }
-        
+
         /// <summary>
         /// Name of the column.
         /// </summary>
