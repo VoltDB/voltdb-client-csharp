@@ -372,7 +372,7 @@ namespace VoltDB.Data.Client
         /// <remarks>Synchronous operations will limit the throughput of your aplication, as each of your request waits
         /// for completion before submitting a new call.  For maximum parallelization and throughput, asynchronous
         /// calls should be made (see BeginExecute).</remarks>
-        protected internal abstract Response<T> Execute<T>(int timeout, string procedure, byte[] procedureUtf8, params object[] parameters);
+        public abstract Response<T> Execute<T>(int timeout, string procedure, byte[] procedureUtf8, params object[] parameters);
 
         /// <summary>
         /// Wrapper for Execute that converts the procedure name into UTF8 bytes. Use only for Adhoc.
@@ -404,7 +404,7 @@ namespace VoltDB.Data.Client
         /// <param name="procedureUtf8">UTF-8 bytes of procedure name.</param>
         /// <param name="parameters">List of parameters to pass to the procedure.</param>
         /// <returns>The execution handle for the request.</returns>
-        protected internal abstract AsyncResponse<T> BeginExecute<T>(
+        public abstract AsyncResponse<T> BeginExecute<T>(
                                                                      ExecuteAsyncCallback<T> callback
                                                                    , object state
                                                                    , int timeout
