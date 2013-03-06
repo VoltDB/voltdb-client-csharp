@@ -140,10 +140,11 @@ namespace VoltDB.ThirdParty.Math
 #pragma warning disable  1591
     public struct BigDecimal
     {
-        private BigInteger biNumber;
-        private int iScale;
-        private static string DecimalSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyDecimalSeparator;
-        private static string GroupSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyGroupSeparator;
+        private readonly BigInteger biNumber;
+        private readonly int iScale;
+        private static readonly string DecimalSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyDecimalSeparator;
+        private static readonly string GroupSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyGroupSeparator;
+        private static readonly BigInteger ten = new BigInteger(10);
 
         public BigDecimal(long num)
         {
@@ -293,7 +294,7 @@ namespace VoltDB.ThirdParty.Math
 
         public BigDecimal setScale(int val)
         {
-            BigInteger ten = new BigInteger(10);
+            if (val == iScale) return this;
             BigInteger num = biNumber;
             if (val > iScale)
                 for (int i = 0; i < val - iScale; i++)
@@ -436,7 +437,6 @@ namespace VoltDB.ThirdParty.Math
                     return new BigDecimal(biNumber, iScale - n);
                 else
                 {
-                    BigInteger ten = new BigInteger(10);
                     BigInteger num = biNumber;
                     for (int i = 0; i < n - iScale; i++)
                         num *= ten;
@@ -491,8 +491,7 @@ namespace VoltDB.ThirdParty.Math
         }
         public byte[] ToBytes(int scale)
         {
-            this.setScale(scale);
-            return this.ToBytes();
+            return this.setScale(scale).ToBytes();
         }
     }
 }
