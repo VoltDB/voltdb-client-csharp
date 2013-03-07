@@ -121,7 +121,7 @@ namespace VoltDB.Data.Client
         /// <remarks>Synchronous operations will limit the throughput of your aplication, as each of your request waits
         /// for completion before submitting a new call.  For maximum parallelization and throughput, asynchronous
         /// calls should be made (see BeginExecute).</remarks>
-        protected internal override Response<T> Execute<T>(int timeout, string procedure, byte[] procedureUtf8, params object[] parameters)
+        public override Response<T> Execute<T>(int timeout, string procedure, byte[] procedureUtf8, params object[] parameters)
         {
             // Call the asynchronous method and immediately turn around to call .EndExecute.
             return VoltConnection.EndExecute<T>(this.BeginExecute<T>(null, null, timeout, procedure, procedureUtf8, parameters));
@@ -142,7 +142,7 @@ namespace VoltDB.Data.Client
         /// <param name="procedureUtf8">The UTF-8 bytes of the procedure name.</param>
         /// <param name="parameters">List of parameters to pass to the procedure.</param>
         /// <returns>The execution handle for the request.</returns>
-        protected internal override AsyncResponse<T> BeginExecute<T>(
+        public override AsyncResponse<T> BeginExecute<T>(
                                                                      ExecuteAsyncCallback<T> callback
                                                                    , object state
                                                                    , int timeout
