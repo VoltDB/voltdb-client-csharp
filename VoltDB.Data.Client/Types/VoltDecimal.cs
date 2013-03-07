@@ -117,8 +117,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(BigDecimal num)
         {
-            this.Value = num;
-            this.Value.setScale(FixedScale);
+            this.Value = num.setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -128,8 +127,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(long num)
         {
-            this.Value = new BigDecimal(num);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -139,8 +137,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(ulong num)
         {
-            this.Value = new BigDecimal(num);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -150,8 +147,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(double num)
         {
-            this.Value = new BigDecimal(num);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -161,8 +157,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(BigInteger num)
         {
-            this.Value = new BigDecimal(num);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -173,8 +168,7 @@ namespace VoltDB.Data.Client
         /// <param name="scale">Scale of the decimal value to create.</param>
         public VoltDecimal(BigInteger num, int scale)
         {
-            this.Value = new BigDecimal(num, scale);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num, scale).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
@@ -184,8 +178,7 @@ namespace VoltDB.Data.Client
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(string num)
         {
-            this.Value = new BigDecimal(num);
-            this.Value.setScale(FixedScale);
+            this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
         }
 
