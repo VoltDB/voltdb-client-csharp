@@ -1,0 +1,6 @@
+*.suo
+[Bb]in
+[Dd]ebug/
+[Rr]elease/
+*.docstates
+ReleaseBuild/

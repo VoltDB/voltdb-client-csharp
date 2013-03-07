@@ -283,11 +283,7 @@ namespace VoltDB.Data.Client
                 throw new VoltConnectionException(Resources.ConnectionFailure, x, endPoint);
             }
 
-            // Wrap a managed network stream on the socket, and make sure GC doesn't think the newly created socket
-            // should be discarded.
             ManagedNetworkStream stream = new ManagedNetworkStream(socket, true);
-            GC.SuppressFinalize(socket);
-            GC.SuppressFinalize(stream);
             return stream;
         }
     }
