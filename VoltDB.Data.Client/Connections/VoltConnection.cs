@@ -493,28 +493,20 @@ namespace VoltDB.Data.Client
         /// <summary>
         /// Internal flag tracking whether the object was disposed.
         /// </summary>
-		private bool IsDisposed = false;
-        /// <summary>
-        /// Ensures connected resources are disposed.
-        /// </summary>
-		~VoltConnection()
-		{
-			this.Dispose();
-		}
+        private bool IsDisposed = false;
         /// <summary>
         /// Ensures connected resources are disposed.
         /// </summary>
         public void Dispose()
         {
-			if (this.IsDisposed)
-				return;
+            if (this.IsDisposed)
+                return;
             try
             {
                 this.Close(true);
             }
             catch { }
-			this.IsDisposed = true;
-			GC.SuppressFinalize(this);
+            this.IsDisposed = true;
         }
         #endregion
     }
