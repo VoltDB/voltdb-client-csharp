@@ -211,6 +211,7 @@ namespace VoltDB.Data.Client
             socket.SendBufferSize = 1024 * 1024 * 256;
             socket.Blocking = true;
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, true);
 
             // Attempt to open asynchronously.
             IAsyncResult ias = socket.BeginConnect(endPoint, null, null);
