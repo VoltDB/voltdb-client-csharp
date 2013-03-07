@@ -204,9 +204,11 @@ namespace VoltDB.Data.Client
             // Prepare the socket
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.NoDelay = true;
-            //Really a bad idea to hard code these, either make configurable with sane default (8k is not sane) or take the OS configured default
+            //Really a bad idea to hard code these, either make configurable with sane default (8k is not sane)
+            //or take the OS configured default. Vista and later will try to autotune the receive buffer size. I am just going
+            //to pray that actually works well and choose a medium to large send buffer size
 //            socket.ReceiveBufferSize = ReceiveBufferSize;
-//            socket.SendBufferSize = SendBufferSize;
+            socket.SendBufferSize = 1024 * 1024 * 256;
             socket.Blocking = true;
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 
