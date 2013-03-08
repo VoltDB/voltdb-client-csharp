@@ -1,6 +1,4 @@
-﻿#define PROTOCOL_BUFFERING
-
-/* This file is part of VoltDB.
+﻿/* This file is part of VoltDB.
  * Copyright (C) 2008-2013 VoltDB Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -259,8 +257,11 @@ namespace VoltDB.Data.Client
             // Prepare the socket
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.NoDelay = false;
-            socket.ReceiveBufferSize = ReceiveBufferSize;
-            socket.SendBufferSize = SendBufferSize;
+            //Really a bad idea to hard code these, either make configurable with sane default (8k is not sane)
+            //or take the OS configured default. Vista and later will try to autotune the receive buffer size. I am just going
+            //to pray that actually works well (brief testing says it does) and choose a medium to large send buffer size
+//            socket.ReceiveBufferSize = ReceiveBufferSize;
+            socket.SendBufferSize = 1024 * 1024 * 256;
             socket.Blocking = true;
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
 
