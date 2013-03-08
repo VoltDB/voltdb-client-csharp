@@ -1,6 +1,4 @@
-﻿#define PROTOCOL_BUFFERING
-
-/* This file is part of VoltDB.
+﻿/* This file is part of VoltDB.
  * Copyright (C) 2008-2013 VoltDB Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -74,14 +72,6 @@ namespace VoltDB.Data.Client
         /// </summary>
         private Stream Out;
 
-#if PROTOCOL_BUFFERING
-        // Deal with buffered writes
-        long lastWrite = DateTime.MaxValue.Ticks;
-        System.Threading.Timer flushTimer;
-        readonly byte[] lenBuffer = new byte[5];
-        Exception outException = null;
-#endif
-
         /// <summary>
         /// Initializes a new instance of the <see cref="VoltProtocolStream"/> class.
         /// </summary>
@@ -90,38 +80,8 @@ namespace VoltDB.Data.Client
         {
             this.BaseStream = baseStream;
 
-#if PROTOCOL_BUFFERING
-            this.In = new BufferedStream(this.BaseStream, 64 * 1024);
-            this.Out = new BufferedStream(this.BaseStream, 4096);
-            flushTimer = new System.Threading.Timer(_ =>
-            {
-                var x = System.Threading.Interlocked.Read(ref lastWrite);
-                if (new TimeSpan(DateTime.UtcNow.Ticks - x).TotalMilliseconds > 1)
-                {
-                    lock (this.Out)
-                    {
-                         if (this.outException != null) return;
-                         x = System.Threading.Interlocked.Read(ref lastWrite);
-                         if (new TimeSpan(DateTime.UtcNow.Ticks - x).TotalMilliseconds > 1)
-                         {
-                             try
-                             {
-                                 this.Out.Flush();
-                             }
-                             catch (Exception ex)
-                             {
-                                 this.outException = ex;
-                             }
-                             lastWrite = DateTime.MaxValue.Ticks;
-                         }
-                    }
-                }
-            });
-            flushTimer.Change(10, 10);
-#else
             this.In = new BufferedStream(this.BaseStream, 8 * ReceiveBufferSize); // 8K socket receive is 64K buffer
             this.Out = new BufferedStream(this.BaseStream, SendBufferSize);
-#endif
         }
 
         /// <summary>
@@ -226,26 +186,11 @@ namespace VoltDB.Data.Client
         /// <param name="length">Number of bytes to send.</param>
         public void WriteMessage(byte[] message, int offset, int length)
         {
-#if PROTOCOL_BUFFERING
-            lock (this.Out)
-            {
-                if (this.outException != null)
-                {
-                    throw this.outException;
-                }
-                DataConverter.BigEndian.PutBytes(lenBuffer, 0, (int)(length + 1));
-                lenBuffer[4] = PROTOCOL_VERSION;
-                this.Out.Write(lenBuffer, 0, 5);
-                this.Out.Write(message, offset, length);
-                this.lastWrite = DateTime.UtcNow.Ticks;
-            }
-#else
             this.Out.Write(DataConverter.BigEndian.GetBytes((int)(length + 1)), 0, 4);
             this.Out.WriteByte(PROTOCOL_VERSION);
             this.Out.Write(message, offset, length);
             // Perf: Flush is because we use a bufferedstream to coalesce these 3 writes into one write to the socket
             this.Out.Flush();
-#endif
         }
 
         /// <summary>
@@ -258,11 +203,15 @@ namespace VoltDB.Data.Client
         {
             // Prepare the socket
             Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.NoDelay = false;
-            socket.ReceiveBufferSize = ReceiveBufferSize;
-            socket.SendBufferSize = SendBufferSize;
+            socket.NoDelay = true;
+            //Really a bad idea to hard code these, either make configurable with sane default (8k is not sane)
+            //or take the OS configured default. Vista and later will try to autotune the receive buffer size. I am just going
+            //to pray that actually works well and choose a medium to large send buffer size
+//            socket.ReceiveBufferSize = ReceiveBufferSize;
+            socket.SendBufferSize = 1024 * 1024 * 256;
             socket.Blocking = true;
             socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.NoDelay, true);
 
             // Attempt to open asynchronously.
             IAsyncResult ias = socket.BeginConnect(endPoint, null, null);
