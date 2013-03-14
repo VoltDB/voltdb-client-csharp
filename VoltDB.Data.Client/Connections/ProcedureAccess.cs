@@ -48,13 +48,12 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
-        /// Regular expression used to validate tokens (procedure names only for now) (will make sure the name doesn't
-        /// have any @ sign, or other invalid character for that matter).
+        /// Regular expression used to validate tokens
         /// </summary>
         private Regex TokenValidator = new Regex("^[a-zA-Z0-9_.$@]*$");
         
         /// <summary>
-        /// Validate the procedure name (alpahnumeric only, no @)
+        /// Validate the procedure name
         /// </summary>
         /// <param name="procedureName">Name of the procedure</param>
         private void ValidateProcedureName(string procedureName)
