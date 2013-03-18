@@ -2,8 +2,8 @@ Building the C# Client Library & Kits
 
 
 Software Requirements
- - Visual Studio 2008 or 2010 C# Express Edition
-   http://www.microsoft.com/express/Downloads/
+ - Visual Studio 2008, 2010, or 2012 C# Express Edition
+   http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-products
 
  - Sandcastle Help File Builder
    http://shfb.codeplex.com/releases/
@@ -14,9 +14,9 @@ Software Requirements
      + "MAML Schema IntelliSense" -> skip
      + "Sandcastle Help File Builder" -> install SHFB
 
- - Tortoise SVN
-   http://tortoisesvn.net/downloads.html
-     + needed to grab source code from SVN in Windows
+ - Github:Windows
+   http://windows.github.com/
+     + needed to clone source code from Github in Windows
 
  - 7z Compressor
    http://www.7-zip.org/download.html
@@ -24,8 +24,8 @@ Software Requirements
 
 Building the Client Library
 
-1. SVN Checkout:
-   svn://clientapi/csharp/trunk
+1. Github Clone:
+   https://github.com/VoltDB/voltdb-client-csharp
 
 2. Build Assemblies (Visual Studio)
    Open ./VoltDB.ClientLibrary.VS2010.sln
