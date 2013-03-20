@@ -129,7 +129,7 @@ namespace VoltDB.Data.Client
                     this.ServerApplicationStatusString = input.ReadString();
 
                 // Track query duration (ms).
-                this.ExecutionDuration = input.ReadInt();
+                this.ExecutionDuration = input.ReadInt32();
 
                 // Skip exception data (currently not used and initialized to the same value as the Status string!).
                 if ((this._HasFields & HasFields.Exception) == HasFields.Exception)

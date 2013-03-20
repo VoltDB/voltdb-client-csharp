@@ -56,15 +56,15 @@ namespace VoltDB.Data.Client
         internal TableBase(Deserializer input)
         {
             // Total byte length of the table data (ignored).
-            int tableLength = input.ReadInt();
+            int tableLength = input.ReadInt32();
 
             // Total byte length of the Table metadata.
-            int tableMetadataLength = input.ReadInt();
+            int tableMetadataLength = input.ReadInt32();
 
             // Status code (custom user-set value).
             this.Status = input.ReadSByte();
             // Column Count.
-            this.ColumnCount = input.ReadShort();
+            this.ColumnCount = input.ReadInt16();
 
             // Initialize column-driven data store.
             ColumnType = new DBType[this.ColumnCount];
@@ -78,7 +78,7 @@ namespace VoltDB.Data.Client
             this.ColumnNameData = input.ReadRaw(tableMetadataLength - 3 - this.ColumnCount);
 
             // Row count.
-            this.RowCount = input.ReadInt();
+            this.RowCount = input.ReadInt32();
         }
     }
 }

@@ -167,7 +167,7 @@ namespace VoltDB.ThirdParty.Math
 	1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999 };
 
 
-        private readonly uint[] data = null;             // stores bytes from the Big Integer
+        internal readonly uint[] data = null;             // stores bytes from the Big Integer
         public int dataLength;                 // number of actual chars used
 
 
@@ -457,7 +457,23 @@ namespace VoltDB.ThirdParty.Math
 
             //Console.WriteLine("Len = " + dataLength);
         }
+        // Constructor that takes an int array, to facilitate conversion from decimal
+        public BigInteger(int[] inData) {
+            dataLength = inData.Length;
 
+            if (dataLength > maxLength)
+                throw (new ArithmeticException("Byte overflow in constructor."));
+
+            data = new uint[maxLength];
+
+            for (int i = dataLength - 1, j = 0; i >= 0; i--, j++)
+                data[j] = (uint)inData[i];
+
+            while (dataLength > 1 && data[dataLength - 1] == 0)
+                dataLength--;
+
+            //Console.WriteLine("Len = " + dataLength);
+        }
 
         //***********************************************************************
         // Overloading of the typecast operator.

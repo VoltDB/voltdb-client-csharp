@@ -44,7 +44,7 @@ namespace VoltDB.Data.Client
                 return;
 
             // Total byte length of the row (ignored).
-            int rowLength = input.ReadInt();
+            int rowLength = input.ReadInt32();
 
             // Read data and push in storage.
             for (short c = 0; c < this.ColumnCount; c++)
@@ -52,28 +52,28 @@ namespace VoltDB.Data.Client
                 switch (ColumnType[c])
                 {
                     case DBType.TINYINT:
-                        Column.SetValue(input.ReadNullableSByte(), c);
+                        Column.SetValue(input.ReadSByteN(), c);
                         break;
                     case DBType.SMALLINT:
-                        Column.SetValue(input.ReadNullableShort(), c);
+                        Column.SetValue(input.ReadInt16N(), c);
                         break;
                     case DBType.INTEGER:
-                        Column.SetValue(input.ReadNullableInt(), c);
+                        Column.SetValue(input.ReadInt32N(), c);
                         break;
                     case DBType.BIGINT:
-                        Column.SetValue(input.ReadNullableLong(), c);
+                        Column.SetValue(input.ReadInt64N(), c);
                         break;
                     case DBType.FLOAT:
-                        Column.SetValue(input.ReadNullableDouble(), c);
+                        Column.SetValue(input.ReadDoubleN(), c);
                         break;
                     case DBType.DECIMAL:
-                        Column.SetValue(input.ReadNullableVoltDecimal(), c);
+                        Column.SetValue(input.ReadVoltDecimalN(), c);
                         break;
                     case DBType.TIMESTAMP:
-                        Column.SetValue(input.ReadNullableDateTime(), c);
+                        Column.SetValue(input.ReadDateTimeN(), c);
                         break;
                     case DBType.VARBINARY:
-                        Column.SetValue(input.ReadVarbinary(), c);
+                        Column.SetValue(input.ReadByteArray(), c);
                         break;
                     default:
                         Column.SetValue(input.ReadString(), c);

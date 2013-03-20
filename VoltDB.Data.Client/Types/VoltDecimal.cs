@@ -38,22 +38,27 @@ namespace VoltDB.Data.Client
         /// <summary>
         /// Fixed scale definition
         /// </summary>
-        private static int FixedScale = 12;
+        const int FixedScale = 12;
 
         /// <summary>
         /// MinValue definition
         /// </summary>
-        public static BigDecimal MinValue = new BigDecimal("-99999999999999999999999999.999999999999");
+        public static readonly BigDecimal MinValue = new BigDecimal("-99999999999999999999999999.999999999999");
 
         /// <summary>
         /// MaxValue definition
         /// </summary>
-        public static BigDecimal MaxValue = new BigDecimal("99999999999999999999999999.999999999999");
+        public static readonly BigDecimal MaxValue = new BigDecimal("99999999999999999999999999.999999999999");
 
         /// <summary>
         /// NullValue definition
         /// </summary>
-        public static BigDecimal NullValue = new BigDecimal("-170141183460469231731687303.715884105728");
+        public static readonly BigDecimal NullValue = new BigDecimal("-170141183460469231731687303.715884105728");
+
+        /// <summary>
+        /// Internal hack to avoid allocating byte array when writing null.
+        /// </summary>
+        internal static readonly byte[] NullValueBytes = NullValue.ToBytes();
 
         /// <summary>
         /// Returns whether the variable corresponds to a null VoltDB value.
@@ -146,6 +151,16 @@ namespace VoltDB.Data.Client
         /// </summary>
         /// <param name="num">Value used for initialization.</param>
         public VoltDecimal(double num)
+        {
+            this.Value = new BigDecimal(num).setScale(FixedScale);
+            ValidOrThrow(this.Value);
+        }
+
+        /// <summary>
+        /// Creates a new decimal from a decimal value.
+        /// </summary>
+        /// <param name="num">Value used for initialization.</param>
+        public VoltDecimal(decimal num) 
         {
             this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
@@ -406,6 +421,15 @@ namespace VoltDB.Data.Client
         /// </summary>
         /// <param name="val">Value to convert.</param>
         public static implicit operator VoltDecimal(double val)
+        {
+            return (new VoltDecimal(val));
+        }
+
+        /// <summary>
+        /// Operator definition: Conversion from (decimal)
+        /// </summary>
+        /// <param name="val">Value to convert.</param>
+        public static implicit operator VoltDecimal(decimal val) 
         {
             return (new VoltDecimal(val));
         }
