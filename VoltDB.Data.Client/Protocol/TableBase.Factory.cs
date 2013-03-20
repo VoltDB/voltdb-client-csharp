@@ -40,7 +40,7 @@ namespace VoltDB.Data.Client
         internal static object FromSingleColumn(Deserializer input, Type TResult)
         {
             // Skip table length, metadata length, status, get column count.
-            short columnCount = input.Skip(9).ReadShort();
+            short columnCount = input.Skip(9).ReadInt16();
 
             // Validate there is indeed only one column.
             if (columnCount != 1)
@@ -58,118 +58,124 @@ namespace VoltDB.Data.Client
                                                   );
 
             // Skip column name, get Row count.
-            int rowCount = input.SkipString().ReadInt();
+            int rowCount = input.SkipString().ReadInt32();
 
             // Load data.
-            switch (VoltType.ToNETType(TResult))
+            switch (VoltType.ToNetType(TResult))
             {
-                case VoltType.NETType.Byte:
+                case VoltType.NetType.Byte:
                     byte[] dataByte = new byte[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataByte[r] = input.Skip(4).ReadByte();
                     return dataByte;
 
-                case VoltType.NETType.NullableByte:
-                    byte?[] dataNullableByte = new byte?[rowCount];
+                case VoltType.NetType.ByteN:
+                    byte?[] dataByteN = new byte?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableByte[r] = input.Skip(4).ReadNullableByte();
-                    return dataNullableByte;
+                        dataByteN[r] = input.Skip(4).ReadByteN();
+                    return dataByteN;
 
-                case VoltType.NETType.SByte:
+                case VoltType.NetType.SByte:
                     sbyte[] dataSByte = new sbyte[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataSByte[r] = input.Skip(4).ReadSByte();
                     return dataSByte;
 
-                case VoltType.NETType.NullableSByte:
-                    sbyte?[] dataNullableSByte = new sbyte?[rowCount];
+                case VoltType.NetType.SByteN:
+                    sbyte?[] dataSByteN = new sbyte?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableSByte[r] = input.Skip(4).ReadNullableSByte();
-                    return dataNullableSByte;
+                        dataSByteN[r] = input.Skip(4).ReadSByteN();
+                    return dataSByteN;
 
-                case VoltType.NETType.Short:
-                    short[] dataShort = new short[rowCount];
+                case VoltType.NetType.Int16:
+                    short[] dataInt16 = new short[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataShort[r] = input.Skip(4).ReadShort();
-                    return dataShort;
+                        dataInt16[r] = input.Skip(4).ReadInt16();
+                    return dataInt16;
 
-                case VoltType.NETType.NullableShort:
-                    short?[] dataNullableShort = new short?[rowCount];
+                case VoltType.NetType.Int16N:
+                    short?[] dataInt16N = new short?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableShort[r] = input.Skip(4).ReadNullableShort();
-                    return dataNullableShort;
+                        dataInt16N[r] = input.Skip(4).ReadInt16N();
+                    return dataInt16N;
 
-                case VoltType.NETType.Int:
-                    int[] dataInt = new int[rowCount];
+                case VoltType.NetType.Int32:
+                    int[] dataInt32 = new int[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataInt[r] = input.Skip(4).ReadInt();
-                    return dataInt;
+                        dataInt32[r] = input.Skip(4).ReadInt32();
+                    return dataInt32;
 
-                case VoltType.NETType.NullableInt:
-                    int?[] dataNullableInt = new int?[rowCount];
+                case VoltType.NetType.Int32N:
+                    int?[] dataInt32N = new int?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableInt[r] = input.Skip(4).ReadNullableInt();
-                    return dataNullableInt;
+                        dataInt32N[r] = input.Skip(4).ReadInt32N();
+                    return dataInt32N;
 
-                case VoltType.NETType.Long:
-                    long[] dataLong = new long[rowCount];
+                case VoltType.NetType.Int64:
+                    long[] dataInt64 = new long[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataLong[r] = input.Skip(4).ReadLong();
-                    return dataLong;
+                        dataInt64[r] = input.Skip(4).ReadInt64();
+                    return dataInt64;
 
-                case VoltType.NETType.NullableLong:
-                    long?[] dataNullableLong = new long?[rowCount];
+                case VoltType.NetType.Int64N:
+                    long?[] dataInt64N = new long?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableLong[r] = input.Skip(4).ReadNullableLong();
-                    return dataNullableLong;
+                        dataInt64N[r] = input.Skip(4).ReadInt64N();
+                    return dataInt64N;
 
-                case VoltType.NETType.Double:
+                case VoltType.NetType.Double:
                     double[] dataDouble = new double[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataDouble[r] = input.Skip(4).ReadDouble();
                     return dataDouble;
 
-                case VoltType.NETType.NullableDouble:
-                    double?[] dataNullableDouble = new double?[rowCount];
+                case VoltType.NetType.DoubleN:
+                    double?[] dataDoubleN = new double?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableDouble[r] = input.Skip(4).ReadNullableDouble();
-                    return dataNullableDouble;
+                        dataDoubleN[r] = input.Skip(4).ReadDoubleN();
+                    return dataDoubleN;
 
-                case VoltType.NETType.DateTime:
+                case VoltType.NetType.DateTime:
                     DateTime[] dataDateTime = new DateTime[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataDateTime[r] = input.Skip(4).ReadDateTime();
                     return dataDateTime;
 
-                case VoltType.NETType.NullableDateTime:
-                    DateTime?[] dataNullableDateTime = new DateTime?[rowCount];
+                case VoltType.NetType.DateTimeN:
+                    DateTime?[] dataDateTimeN = new DateTime?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableDateTime[r] = input.Skip(4).ReadNullableDateTime();
-                    return dataNullableDateTime;
+                        dataDateTimeN[r] = input.Skip(4).ReadDateTimeN();
+                    return dataDateTimeN;
 
-                case VoltType.NETType.String:
+                case VoltType.NetType.String:
                     string[] dataString = new string[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataString[r] = input.Skip(4).ReadString();
                     return dataString;
 
-                case VoltType.NETType.VoltDecimal:
+                case VoltType.NetType.VoltDecimal:
                     VoltDecimal[] dataVoltDecimal = new VoltDecimal[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         dataVoltDecimal[r] = input.Skip(4).ReadVoltDecimal();
                     return dataVoltDecimal;
 
-                case VoltType.NETType.NullableVoltDecimal:
-                    VoltDecimal?[] dataNullableVoltDecimal = new VoltDecimal?[rowCount];
+                case VoltType.NetType.VoltDecimalN:
+                    VoltDecimal?[] dataVoltDecimalN = new VoltDecimal?[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataNullableVoltDecimal[r] = input.Skip(4).ReadNullableVoltDecimal();
-                    return dataNullableVoltDecimal;
+                        dataVoltDecimalN[r] = input.Skip(4).ReadVoltDecimalN();
+                    return dataVoltDecimalN;
 
-                case VoltType.NETType.Varbinary:
-                    byte[][] dataVarbinary = new byte[rowCount][];
+                case VoltType.NetType.Decimal:
+                    Decimal[] dataDecimal = new Decimal[rowCount];
                     for (int r = 0; r < rowCount; r++)
-                        dataVarbinary[r] = input.Skip(4).ReadVarbinary();
-                    return dataVarbinary;
+                        dataDecimal[r] = input.Skip(4).ReadDecimal();
+                    return dataDecimal;
+
+                case VoltType.NetType.DecimalN:
+                    Decimal?[] dataDecimalN = new Decimal?[rowCount];
+                    for (int r = 0; r < rowCount; r++)
+                        dataDecimalN[r] = input.Skip(4).ReadDecimalN();
+                    return dataDecimalN;
 
                 default:
                     throw new VoltUnsupportedTypeException(Resources.UnsupportedParameterNETType, TResult.ToString());
@@ -185,7 +191,7 @@ namespace VoltDB.Data.Client
         internal static TResult FromSingleValue<TResult>(Deserializer input)
         {
             // Skip basic metadata and get Column Count.
-            short columnCount = input.Skip(9).ReadShort();
+            short columnCount = input.Skip(9).ReadInt16();
 
             // Read column data type.
             DBType columnType = (DBType)input.ReadSByte();
@@ -199,68 +205,71 @@ namespace VoltDB.Data.Client
                                                   );
 
             // Skip column name and get Row count.
-            int rowCount = input.SkipString().ReadInt();
+            int rowCount = input.SkipString().ReadInt32();
             
             // Validate there is indeed only one column and row.
             if ((columnCount != 1) || (rowCount != 1))
                 throw new VoltInvalidDataException(Resources.InvalidRowAndColumnCount, rowCount, columnCount);
 
             // Load data (skip row length and load first value) - unfortunately, we do have to box this.
-            switch (VoltType.ToNETType(typeof(TResult)))
+            switch (VoltType.ToNetType(typeof(TResult)))
             {
-                case VoltType.NETType.Byte:
+                case VoltType.NetType.Byte:
                     return (TResult)(object)input.Skip(4).ReadByte();
 
-                case VoltType.NETType.NullableByte:
-                    return (TResult)(object)input.Skip(4).ReadNullableByte();
+                case VoltType.NetType.ByteN:
+                    return (TResult)(object)input.Skip(4).ReadByteN();
 
-                case VoltType.NETType.SByte:
+                case VoltType.NetType.SByte:
                     return (TResult)(object)input.Skip(4).ReadSByte();
 
-                case VoltType.NETType.NullableSByte:
-                    return (TResult)(object)input.Skip(4).ReadNullableSByte();
+                case VoltType.NetType.SByteN:
+                    return (TResult)(object)input.Skip(4).ReadSByteN();
 
-                case VoltType.NETType.Short:
-                    return (TResult)(object)input.Skip(4).ReadShort();
+                case VoltType.NetType.Int16:
+                    return (TResult)(object)input.Skip(4).ReadInt16();
 
-                case VoltType.NETType.NullableShort:
-                    return (TResult)(object)input.Skip(4).ReadNullableShort();
+                case VoltType.NetType.Int16N:
+                    return (TResult)(object)input.Skip(4).ReadInt16N();
 
-                case VoltType.NETType.Int:
-                    return (TResult)(object)input.Skip(4).ReadInt();
+                case VoltType.NetType.Int32:
+                    return (TResult)(object)input.Skip(4).ReadInt32();
 
-                case VoltType.NETType.NullableInt:
-                    return (TResult)(object)input.Skip(4).ReadNullableInt();
+                case VoltType.NetType.Int32N:
+                    return (TResult)(object)input.Skip(4).ReadInt32N();
 
-                case VoltType.NETType.Long:
-                    return (TResult)(object)input.Skip(4).ReadLong();
+                case VoltType.NetType.Int64:
+                    return (TResult)(object)input.Skip(4).ReadInt64();
 
-                case VoltType.NETType.NullableLong:
-                    return (TResult)(object)input.Skip(4).ReadNullableLong();
+                case VoltType.NetType.Int64N:
+                    return (TResult)(object)input.Skip(4).ReadInt64N();
 
-                case VoltType.NETType.Double:
+                case VoltType.NetType.Double:
                     return (TResult)(object)input.Skip(4).ReadDouble();
 
-                case VoltType.NETType.NullableDouble:
-                    return (TResult)(object)input.Skip(4).ReadNullableDouble();
+                case VoltType.NetType.DoubleN:
+                    return (TResult)(object)input.Skip(4).ReadDoubleN();
 
-                case VoltType.NETType.DateTime:
+                case VoltType.NetType.DateTime:
                     return (TResult)(object)input.Skip(4).ReadDateTime();
 
-                case VoltType.NETType.NullableDateTime:
-                    return (TResult)(object)input.Skip(4).ReadNullableDateTime();
+                case VoltType.NetType.DateTimeN:
+                    return (TResult)(object)input.Skip(4).ReadDateTimeN();
 
-                case VoltType.NETType.String:
+                case VoltType.NetType.String:
                     return (TResult)(object)input.Skip(4).ReadString();
 
-                case VoltType.NETType.VoltDecimal:
+                case VoltType.NetType.VoltDecimal:
                     return (TResult)(object)input.Skip(4).ReadVoltDecimal();
 
-                case VoltType.NETType.NullableVoltDecimal:
-                    return (TResult)(object)input.Skip(4).ReadNullableVoltDecimal();
+                case VoltType.NetType.VoltDecimalN:
+                    return (TResult)(object)input.Skip(4).ReadVoltDecimalN();
 
-                case VoltType.NETType.Varbinary:
-                    return (TResult)(object)input.Skip(4).ReadVarbinary();
+                case VoltType.NetType.Decimal:
+                    return (TResult)(object)input.Skip(4).ReadDecimal();
+
+                case VoltType.NetType.DecimalN:
+                    return (TResult)(object)input.Skip(4).ReadDecimalN();
 
                 default:
                     throw new VoltUnsupportedTypeException(

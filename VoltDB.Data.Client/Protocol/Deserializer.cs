@@ -109,7 +109,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable byte/Unsigned-Byte (VoltDB::Tinyint).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public byte? ReadNullableByte()
+        public byte? ReadByteN()
         {
             byte value = this.Input[this.Position++];
             if (unchecked((sbyte)value) == VoltType.NULL_TINYINT)
@@ -130,7 +130,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable sbyte/Signed-Byte (VoltDB::Tinyint).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public sbyte? ReadNullableSByte()
+        public sbyte? ReadSByteN()
         {
             sbyte value = unchecked((sbyte)this.Input[this.Position++]);
             if (value == VoltType.NULL_TINYINT)
@@ -143,7 +143,7 @@ namespace VoltDB.Data.Client
         /// Reads a Short (VoltDB::Smallint).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public short ReadShort()
+        public short ReadInt16()
         {
             short value = Cnv.GetInt16(this.Input, this.Position);
             this.Position += 2;
@@ -153,7 +153,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable Short (VoltDB::Smallint).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public short? ReadNullableShort()
+        public short? ReadInt16N()
         {
             short value = Cnv.GetInt16(this.Input, this.Position);
             this.Position += 2;
@@ -167,7 +167,7 @@ namespace VoltDB.Data.Client
         /// Reads a Int (VoltDB::Integer).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public int ReadInt()
+        public int ReadInt32()
         {
             int value = Cnv.GetInt32(this.Input, this.Position);
             this.Position += 4;
@@ -177,7 +177,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable Int (VoltDB::Integer).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public int? ReadNullableInt()
+        public int? ReadInt32N()
         {
             int value = Cnv.GetInt32(this.Input, this.Position);
             this.Position += 4;
@@ -191,7 +191,7 @@ namespace VoltDB.Data.Client
         /// Reads a Long (VoltDB::BigInt).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public long ReadLong()
+        public long ReadInt64()
         {
             long value = Cnv.GetInt64(this.Input, this.Position);
             this.Position += 8;
@@ -201,7 +201,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable Long (VoltDB::BigInt).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public long? ReadNullableLong()
+        public long? ReadInt64N()
         {
             long value = Cnv.GetInt64(this.Input, this.Position);
             this.Position += 8;
@@ -225,7 +225,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable Double (VoltDB::Float).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public double? ReadNullableDouble()
+        public double? ReadDoubleN()
         {
             double value = Cnv.GetDouble(this.Input, this.Position);
             this.Position += 8;
@@ -265,7 +265,7 @@ namespace VoltDB.Data.Client
         /// Reads a Nullable DateTime (VoltDB::Timestamp).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public DateTime? ReadNullableDateTime()
+        public DateTime? ReadDateTimeN()
         {
             long value = Cnv.GetInt64(this.Input, this.Position);
             this.Position += 8;
@@ -307,7 +307,7 @@ namespace VoltDB.Data.Client
         /// Reads a varbinary (VoltDB::Varbinary).
         /// </summary>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public byte[] ReadVarbinary()
+        public byte[] ReadByteArray()
         {
             int length = Cnv.GetInt32(this.Input, this.Position);
             this.Position += 4;
@@ -365,7 +365,7 @@ namespace VoltDB.Data.Client
         /// <remarks>No .NET support for the equivalent BigDecimal data type from Java. At this time, this data type is
         /// not supported by the .NET client library.</remarks>
         /// <returns>Value read from the underlying byte buffer.</returns>
-        public VoltDecimal? ReadNullableVoltDecimal()
+        public VoltDecimal? ReadVoltDecimalN()
         {
             // Remark: value = (read == -170141183460469231731687303715884105728.) ? null : read;
             byte[] buffer = new byte[16];
@@ -375,6 +375,14 @@ namespace VoltDB.Data.Client
             if (result.IsVoltDBNull())
                 return null;
             return result;
+        }
+
+        public decimal ReadDecimal() {
+            return (decimal)ReadVoltDecimal();
+        }
+
+        public decimal? ReadDecimalN() {
+            return (decimal?)ReadVoltDecimalN();
         }
 
         /// <summary>

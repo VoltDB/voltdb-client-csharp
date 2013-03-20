@@ -55,7 +55,7 @@ namespace VoltDB.Data.Client
         internal static object FromSingleColumn(Deserializer input, Type TResult)
         {
             // Skip table length, metadata length, status, get column count.
-            short columnCount = input.Skip(9).ReadShort();
+            short columnCount = input.Skip(9).ReadInt16();
 
             // Validate there is indeed only one column.
             if (columnCount != 1)
@@ -73,16 +73,16 @@ namespace VoltDB.Data.Client
                                                   );
 
             // Skip column name, get Row count.
-            int rowCount = input.SkipString().ReadInt();
+            int rowCount = input.SkipString().ReadInt32();
 
             // Load data.
-            switch (VoltType.ToNETType(TResult))
+            switch (VoltType.ToNetType(TResult))
             {
 <#
     foreach(KeyValuePair<string,string> pair in TypeMap)
     {
 #>
-                case VoltType.NETType.<#= pair.Key #>:
+                case VoltType.NetType.<#= pair.Key #>:
                     <#= pair.Value #>[] data<#= pair.Key #> = new <#= pair.Value #>[rowCount];
                     for (int r = 0; r < rowCount; r++)
                         data<#= pair.Key #>[r] = input.Skip(4).Read<#= pair.Key #>();
@@ -105,7 +105,7 @@ namespace VoltDB.Data.Client
         internal static TResult FromSingleValue<TResult>(Deserializer input)
         {
             // Skip basic metadata and get Column Count.
-            short columnCount = input.Skip(9).ReadShort();
+            short columnCount = input.Skip(9).ReadInt16();
 
             // Read column data type.
             DBType columnType = (DBType)input.ReadSByte();
@@ -119,20 +119,20 @@ namespace VoltDB.Data.Client
                                                   );
 
             // Skip column name and get Row count.
-            int rowCount = input.SkipString().ReadInt();
+            int rowCount = input.SkipString().ReadInt32();
             
             // Validate there is indeed only one column and row.
             if ((columnCount != 1) || (rowCount != 1))
                 throw new VoltInvalidDataException(Resources.InvalidRowAndColumnCount, rowCount, columnCount);
 
             // Load data (skip row length and load first value) - unfortunately, we do have to box this.
-            switch (VoltType.ToNETType(typeof(TResult)))
+            switch (VoltType.ToNetType(typeof(TResult)))
             {
 <#
     foreach(KeyValuePair<string,string> pair in TypeMap)
     {
 #>
-                case VoltType.NETType.<#= pair.Key #>:
+                case VoltType.NetType.<#= pair.Key #>:
                     return (TResult)(object)input.Skip(4).Read<#= pair.Key #>();
 
 <#
@@ -152,21 +152,23 @@ namespace VoltDB.Data.Client
 static Dictionary<string,string> TypeMap = new Dictionary<string,string>()
 {
   { "Byte", "byte" }
-, { "NullableByte", "byte?" }
+, { "ByteN", "byte?" }
 , { "SByte", "sbyte" }
-, { "NullableSByte", "sbyte?" }
-, { "Short", "short" }
-, { "NullableShort", "short?" }
-, { "Int", "int" }
-, { "NullableInt", "int?" }
-, { "Long", "long" }
-, { "NullableLong", "long?" }
+, { "SByteN", "sbyte?" }
+, { "Int16", "short" }
+, { "Int16N", "short?" }
+, { "Int32", "int" }
+, { "Int32N", "int?" }
+, { "Int64", "long" }
+, { "Int64N", "long?" }
 , { "Double", "double" }
-, { "NullableDouble", "double?" }
+, { "DoubleN", "double?" }
 , { "DateTime", "DateTime" }
-, { "NullableDateTime", "DateTime?" }
+, { "DateTimeN", "DateTime?" }
 , { "String", "string" }
 , { "VoltDecimal", "VoltDecimal" }
-, { "NullableVoltDecimal", "VoltDecimal?" }
+, { "VoltDecimalN", "VoltDecimal?" }
+, { "Decimal", "Decimal" }
+, { "DecimalN", "Decimal?" }
 };
 #>
