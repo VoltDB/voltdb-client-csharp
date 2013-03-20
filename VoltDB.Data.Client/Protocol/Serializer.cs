@@ -548,7 +548,8 @@ namespace VoltDB.Data.Client
         /// <returns>The serializer instance, ready to chain the next command.</returns>
         public Serializer Write(DateTime value)
         {
-            Cnv.PutBytes(_tempBuffer, 0, (((DateTime)value).ToUniversalTime().Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L);
+            if (value.Kind == DateTimeKind.Local) value = value.ToUniversalTime();
+            Cnv.PutBytes(_tempBuffer, 0, (value.Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L);
             writer.Write(_tempBuffer, 0, 8);
             return this;
         }
