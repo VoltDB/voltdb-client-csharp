@@ -20,7 +20,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
-
+ 
 using System;
 using System.Threading;
 using VoltDB.Data.Client.Properties;
@@ -65,7 +65,7 @@ namespace VoltDB.Data.Client
         /// <returns>Result of the procedure call</returns>
         public Response<TResult> Execute(T1 parameter1, T2 parameter2, T3 parameter3)
         {
-            return this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3);
+            return this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3));
         }
 
         /// <summary>
@@ -81,9 +81,9 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3)
         {
-            return this.Executor.BeginExecute<TResult>(this.Callback, null, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3);
+            return this.Executor.BeginExecute<TResult>(this.Callback, null, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3));
         }
-
+        
         /// <summary>
         /// Execute the procedure asynchronously and return an AsyncResponse that can be used to abort execution
         /// before it completes (using the Cancel method on the object itself).  This call will use the connection's
@@ -99,9 +99,9 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3, object state)
         {
-            return this.Executor.BeginExecute<TResult>(this.Callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3);
+            return this.Executor.BeginExecute<TResult>(this.Callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3));
         }
-
+        
         /// <summary>
         /// Execute the procedure asynchronously and return an AsyncResponse that can be used to abort execution
         /// before it completes (using the Cancel method on the object itself).  This call will use the connection's
@@ -119,7 +119,7 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3, ExecuteAsyncCallback<TResult> callback, object state)
         {
-            return this.Executor.BeginExecute<TResult>(callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3);
+            return this.Executor.BeginExecute<TResult>(callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3));
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace VoltDB.Data.Client
         {
             return this.EndExecute(asyncResult as AsyncResponse<TResult>);
         }
-
+        
         /// <summary>
         /// Cancels the request associated to this execution, causing triggerring of the Asynchronous callback with a
         /// VoltClientAbortException result.  Understand that this process merely lets you decide to "forget" about
@@ -188,7 +188,7 @@ namespace VoltDB.Data.Client
         {
             try
             {
-                response = this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3);
+                response = this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3));
                 return true;
             }
             catch { response = null; }

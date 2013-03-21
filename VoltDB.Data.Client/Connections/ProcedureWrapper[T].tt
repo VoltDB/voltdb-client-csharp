@@ -261,7 +261,7 @@ namespace VoltDB.Data.Client
         /// Regular expression used to validate tokens (procedure names only for now) (will make sure the name doesn't
         /// have any @ sign, or other invalid character for that matter).
         /// </summary>
-        private Regex TokenValidator = new Regex("^[a-zA-Z0-9_]*$");
+        private Regex TokenValidator = new Regex("^[a-zA-Z0-9_.$@]*$");
         
         /// <summary>
         /// Validate the procedure name (alpahnumeric only, no @)
@@ -441,7 +441,7 @@ namespace VoltDB.Data.Client
             return "";
         string result = "";
         for(int i = 1;i<count+1;i++)
-            result += string.Format(", parameter{0}", i);
+            result += string.Format(", VoltType.CoalesceNull(parameter{0})", i);
         return withComma ? result : result.Substring(2);
     }
     static string GetTypeParamComments(int count)
