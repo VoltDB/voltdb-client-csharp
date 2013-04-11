@@ -174,6 +174,38 @@ namespace VoltDB.ThirdParty.Math
             iScale = scale;
         }
 
+        public BigDecimal(decimal num) 
+        {
+            // Bits 16 to 23 must contain an exponent between 0 and 28, which indicates the power of 10 to divide the integer number.
+            // Bit 31 contains the sign: 0 mean positive, and 1 means negative.
+            var x = Decimal.GetBits(num);
+            var x3 = x[3];
+            var x1 = x[1];
+            x[3] = x[0];
+            x[0] = 0;
+            x[1] = x[2];
+            x[2] = x1;
+            biNumber = new BigInteger(x);
+            if ((x3 & 0x80000000) >> 31 != 0) biNumber = -biNumber;
+            iScale = (x3 & 0xFF0000) >> 16;
+        }
+
+        static readonly BigInteger biZero = new BigInteger(0);
+
+        public decimal ToDecimal()
+        {
+            if (iScale > 28) return this.setScale(28).ToDecimal();
+            var isPos = biNumber >= 0;
+            uint[] data;
+            if (isPos){
+                data = biNumber.data; 
+            } else{
+                data = (-biNumber).data;
+            }
+            if (data[3] != 0) throw new OverflowException("BigDecimal value outside the range of Decimal.");
+            return new Decimal((int)data[0], (int)data[1], (int)data[2], !isPos, (byte)iScale);
+        }
+
         public BigDecimal(string num)
         {
             string int_part;
@@ -393,7 +425,7 @@ namespace VoltDB.ThirdParty.Math
 
         public static explicit operator decimal(BigDecimal val)
         {
-            return decimal.Parse(val.ToString(), CultureInfo.InvariantCulture);
+            return val.ToDecimal(); 
         }
 
         public static implicit operator BigDecimal(long val)
@@ -417,6 +449,11 @@ namespace VoltDB.ThirdParty.Math
         }
 
         public static implicit operator BigDecimal(double val)
+        {
+            return (new BigDecimal(val));
+        }
+
+        public static implicit operator BigDecimal(decimal val) 
         {
             return (new BigDecimal(val));
         }

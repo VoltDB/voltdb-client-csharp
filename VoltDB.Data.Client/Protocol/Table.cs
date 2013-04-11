@@ -86,28 +86,28 @@ namespace VoltDB.Data.Client
                     switch (ColumnType[c])
                     {
                         case DBType.TINYINT:
-                            (Column[c] as sbyte?[])[r] = input.ReadNullableSByte();
+                            (Column[c] as sbyte?[])[r] = input.ReadSByteN();
                             break;
                         case DBType.SMALLINT:
-                            (Column[c] as short?[])[r] = input.ReadNullableShort();
+                            (Column[c] as short?[])[r] = input.ReadInt16N();
                             break;
                         case DBType.INTEGER:
-                            (Column[c] as int?[])[r] = input.ReadNullableInt();
+                            (Column[c] as int?[])[r] = input.ReadInt32N();
                             break;
                         case DBType.BIGINT:
-                            (Column[c] as long?[])[r] = input.ReadNullableLong();
+                            (Column[c] as long?[])[r] = input.ReadInt64N();
                             break;
                         case DBType.FLOAT:
-                            (Column[c] as double?[])[r] = input.ReadNullableDouble();
+                            (Column[c] as double?[])[r] = input.ReadDoubleN();
                             break;
                         case DBType.DECIMAL:
-                            (Column[c] as VoltDecimal?[])[r] = input.ReadNullableVoltDecimal();
+                            (Column[c] as VoltDecimal?[])[r] = input.ReadVoltDecimalN();
                             break;
                         case DBType.TIMESTAMP:
-                            (Column[c] as DateTime?[])[r] = input.ReadNullableDateTime();
+                            (Column[c] as DateTime?[])[r] = input.ReadDateTimeN();
                             break;
                         case DBType.VARBINARY:
-                            (Column[c] as byte[][])[r] = input.ReadVarbinary();
+                            (Column[c] as byte[][])[r] = input.ReadByteArray();
                             break;
                         default:
                             (Column[c] as string[])[r] = input.ReadString();

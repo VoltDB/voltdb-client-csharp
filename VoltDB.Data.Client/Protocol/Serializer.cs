@@ -162,6 +162,14 @@ namespace VoltDB.Data.Client
                     this.Write(VoltType.ARRAY).Write((VoltDecimal[])value);
                 else if (value is VoltDecimal?[])
                     this.Write(VoltType.ARRAY).Write((VoltDecimal?[])value);
+                else if (value is decimal?)
+                    this.Write(DBType.DECIMAL).Write((decimal?)value);
+                else if (value is decimal)
+                    this.Write(DBType.DECIMAL).Write((decimal)value);
+                else if (value is decimal[])
+                    this.Write(VoltType.ARRAY).Write((decimal[])value);
+                else if (value is decimal?[])
+                    this.Write(VoltType.ARRAY).Write((decimal?[])value);
                 else
                     throw new VoltUnsupportedTypeException(
                                                             Resources.UnsupportedParameterNETType
@@ -680,7 +688,7 @@ namespace VoltDB.Data.Client
         /// <returns>The serializer instance, ready to chain the next command.</returns>
         public Serializer Write(VoltDecimal? value)
         {
-            writer.Write((value == null) ? VoltDecimal.NullValue.ToBytes() : value.Value.ToBytes(), 0, 16);
+            writer.Write((value == null) ? VoltDecimal.NullValueBytes : value.Value.ToBytes(), 0, 16);
             return this;
         }
 
@@ -695,10 +703,39 @@ namespace VoltDB.Data.Client
             Cnv.PutBytes(_tempBuffer, 0, (short)value.Length);
             writer.Write(_tempBuffer, 0, 2);
             for (int i = 0; i < value.Length; i++)
-                writer.Write((value[i] == null) ? VoltDecimal.NullValue.ToBytes() : value[i].Value.ToBytes(), 0, 16);
+                writer.Write((value[i] == null) ? VoltDecimal.NullValueBytes : value[i].Value.ToBytes(), 0, 16);
             return this;
         }
 
+        public Serializer Write(decimal value)
+        {
+            return Write(new VoltDecimal(value));
+        }
+
+        public Serializer Write(decimal[] value)
+        {
+            writer.WriteByte(unchecked((byte)DBType.DECIMAL));
+            Cnv.PutBytes(_tempBuffer, 0, (short)value.Length);
+            writer.Write(_tempBuffer, 0, 2);
+            for (int i = 0; i < value.Length; i++)
+                writer.Write(((VoltDecimal)value[i]).ToBytes(), 0, 16);
+            return this;
+        }
+
+        public Serializer Write(decimal? value)
+        {
+            return Write((VoltDecimal?)value);
+        }
+
+       public Serializer Write(Decimal?[] value)
+        {
+            writer.WriteByte(unchecked((byte)DBType.DECIMAL));
+            Cnv.PutBytes(_tempBuffer, 0, (short)value.Length);
+            writer.Write(_tempBuffer, 0, 2);
+            for (int i = 0; i < value.Length; i++)
+                writer.Write((value[i] == null) ? VoltDecimal.NullValueBytes : ((VoltDecimal)(value[i].Value)).ToBytes(), 0, 16);
+            return this;
+        }
 
         #region IDisposable Members
         /// <summary>
