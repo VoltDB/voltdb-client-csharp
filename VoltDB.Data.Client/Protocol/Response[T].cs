@@ -86,6 +86,7 @@ namespace VoltDB.Data.Client
                         short count = input.ReadInt16();
                         if (count != 1)
                             throw new VoltInvalidDataException(Resources.InvalidResultsetSize, count);
+                        if (elementType == typeof(byte)) elementType = typeof(byte[]);
                         this._Result = (TResult)Table.FromSingleColumn(input, elementType);
                     }
                 }

@@ -27,8 +27,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using VoltDB.Data.Client.Properties;
 
-namespace VoltDB.Data.Client
-{
+namespace VoltDB.Data.Client {
     /// <summary>
     /// Provides enumerations and conversion support between core VoltDB data types and basic .NET data types.
     /// </summary>
@@ -77,7 +76,7 @@ namespace VoltDB.Data.Client
         /// Indicator for array data types (not for data storage - only for message serialization).
         /// </summary>
         public const sbyte ARRAY = -99;
-       
+
         /// <summary>
         /// Maps .NET data types to VoltDB storage data types.
         /// </summary>
@@ -107,6 +106,12 @@ namespace VoltDB.Data.Client
             String, VoltDecimal, VoltDecimalN, Decimal, DecimalN,
             ByteArray
         }
+
+        public class DateTimeDBNull { }
+        public class StringDBNull { }
+        public class ByteArrayDBNull { }
+
+        static object nullable<T>(T x) where T : struct { return new Nullable<T>(x); }
 
         static VoltType() {
             _toDbTypeCache = new Dictionary<Type, DBType>(){
@@ -153,10 +158,24 @@ namespace VoltDB.Data.Client
                 {typeof(Decimal?),  NetType.DecimalN},
                 {typeof(byte[]),    NetType.ByteArray},
             };
+            _nullValuessCache = new Dictionary<Type, object>() {
+                 {typeof(Byte?),     nullable(NULL_TINYINT)},
+                 {typeof(SByte?),    nullable(NULL_TINYINT)},
+                 {typeof(Int16?),    nullable(NULL_SMALLINT)},
+                 {typeof(Int32?),    nullable(NULL_INTEGER)},
+                 {typeof(Int64?),    nullable(NULL_BIGINT)},
+                 {typeof(Double?),   nullable(NULL_FLOAT)},
+                 {typeof(DateTime?), new DateTimeDBNull()},
+                 {typeof(String),    new StringDBNull()},
+                 {typeof(VoltDecimal?), nullable(VoltDecimal.NullValue)},
+                 {typeof(Decimal?),  nullable(VoltDecimal.NullValue)},
+                 {typeof(byte[]),    new ByteArrayDBNull()},
+            };
         }
 
         static readonly System.Collections.Generic.Dictionary<Type, DBType> _toDbTypeCache;
         static readonly Dictionary<Type, NetType> _toNetTypeCache;
+        static readonly Dictionary<Type, object> _nullValuessCache;
 
         /// <summary>
         /// Validates the given .NET data type as corresponding to a valid VoltDB storage data type, and return the
@@ -218,6 +237,13 @@ namespace VoltDB.Data.Client
                 case DBType.VARBINARY: return typeof(byte[][]);
                 default: throw new VoltUnsupportedTypeException(Resources.UnsupportedDBType, dbType);
             }
+        }
+
+        public static object CoalesceNull<T>(T x) {
+            if (x != null) return x;
+            object res;
+            if (_nullValuessCache.TryGetValue(typeof(T), out res)) return res;
+            throw new VoltUnsupportedTypeException(Resources.UnsupportedNETTypeToDBType, typeof(T).ToString());
         }
     }
 }
