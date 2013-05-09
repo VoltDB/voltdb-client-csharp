@@ -170,6 +170,12 @@ namespace VoltDB.Data.Client
                     this.Write(VoltType.ARRAY).Write((decimal[])value);
                 else if (value is decimal?[])
                     this.Write(VoltType.ARRAY).Write((decimal?[])value);
+                else if (value is VoltType.DateTimeDBNull)
+                    this.Write(DBType.TIMESTAMP).Write(VoltType.NULL_BIGINT);
+                else if (value is VoltType.StringDBNull)
+                    this.Write(DBType.STRING).Write((string)null);
+                else if (value is VoltType.ByteArrayDBNull)
+                    this.Write(DBType.VARBINARY).Write((string)null);
                 else
                     throw new VoltUnsupportedTypeException(
                                                             Resources.UnsupportedParameterNETType
@@ -221,9 +227,14 @@ namespace VoltDB.Data.Client
         public Serializer Write(byte[] value)
         {
             writer.WriteByte(unchecked((byte)DBType.TINYINT));
-            Cnv.PutBytes(_tempBuffer, 0, value.Length);
-            writer.Write(_tempBuffer, 0, 4);
-            writer.Write(value, 0, value.Length);
+            if (value == null) {
+                Cnv.PutBytes(_tempBuffer, 0, -1);
+                writer.Write(_tempBuffer, 0, 4);
+            } else {
+                Cnv.PutBytes(_tempBuffer, 0, value.Length);
+                writer.Write(_tempBuffer, 0, 4);
+                writer.Write(value, 0, value.Length);
+            }
             return this;
         }
 
@@ -617,12 +628,13 @@ namespace VoltDB.Data.Client
         /// <returns>The serializer instance, ready to chain the next command.</returns>
         public Serializer Write(string value)
         {
-            if (value == null)
-            {
+            if (value == null) {
                 Cnv.PutBytes(_tempBuffer, 0, (int)-1);
                 writer.Write(_tempBuffer, 0, 4);
+                return this;
+            } else {
+                return WriteStringInternal(Encoding.UTF8.GetBytes(value));
             }
-            return WriteStringInternal(Encoding.UTF8.GetBytes(value));
         }
         internal Serializer WriteStringInternal(byte[] data)
         {

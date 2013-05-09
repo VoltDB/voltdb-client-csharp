@@ -177,6 +177,10 @@ namespace VoltDB.Data.Client
                         dataDecimalN[r] = input.Skip(4).ReadDecimalN();
                     return dataDecimalN;
 
+                case VoltType.NetType.ByteArray:
+                    input.Skip(4);
+                    return input.ReadByteArray();
+
                 default:
                     throw new VoltUnsupportedTypeException(Resources.UnsupportedParameterNETType, TResult.ToString());
             }
