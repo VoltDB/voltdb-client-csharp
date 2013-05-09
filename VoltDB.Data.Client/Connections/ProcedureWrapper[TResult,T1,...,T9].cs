@@ -77,7 +77,7 @@ namespace VoltDB.Data.Client
         /// <returns>Result of the procedure call</returns>
         public Response<TResult> Execute(T1 parameter1, T2 parameter2, T3 parameter3, T4 parameter4, T5 parameter5, T6 parameter6, T7 parameter7, T8 parameter8, T9 parameter9)
         {
-            return this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9);
+            return this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3), VoltType.CoalesceNull(parameter4), VoltType.CoalesceNull(parameter5), VoltType.CoalesceNull(parameter6), VoltType.CoalesceNull(parameter7), VoltType.CoalesceNull(parameter8), VoltType.CoalesceNull(parameter9));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3, T4 parameter4, T5 parameter5, T6 parameter6, T7 parameter7, T8 parameter8, T9 parameter9)
         {
-            return this.Executor.BeginExecute<TResult>(this.Callback, null, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9);
+            return this.Executor.BeginExecute<TResult>(this.Callback, null, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3), VoltType.CoalesceNull(parameter4), VoltType.CoalesceNull(parameter5), VoltType.CoalesceNull(parameter6), VoltType.CoalesceNull(parameter7), VoltType.CoalesceNull(parameter8), VoltType.CoalesceNull(parameter9));
         }
         
         /// <summary>
@@ -123,7 +123,7 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3, T4 parameter4, T5 parameter5, T6 parameter6, T7 parameter7, T8 parameter8, T9 parameter9, object state)
         {
-            return this.Executor.BeginExecute<TResult>(this.Callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9);
+            return this.Executor.BeginExecute<TResult>(this.Callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3), VoltType.CoalesceNull(parameter4), VoltType.CoalesceNull(parameter5), VoltType.CoalesceNull(parameter6), VoltType.CoalesceNull(parameter7), VoltType.CoalesceNull(parameter8), VoltType.CoalesceNull(parameter9));
         }
         
         /// <summary>
@@ -149,7 +149,7 @@ namespace VoltDB.Data.Client
         /// <returns>AsyncResponse with which the caller may later cancel the execution</returns>
         public IAsyncResult BeginExecute(T1 parameter1, T2 parameter2, T3 parameter3, T4 parameter4, T5 parameter5, T6 parameter6, T7 parameter7, T8 parameter8, T9 parameter9, ExecuteAsyncCallback<TResult> callback, object state)
         {
-            return this.Executor.BeginExecute<TResult>(callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9);
+            return this.Executor.BeginExecute<TResult>(callback, state, this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3), VoltType.CoalesceNull(parameter4), VoltType.CoalesceNull(parameter5), VoltType.CoalesceNull(parameter6), VoltType.CoalesceNull(parameter7), VoltType.CoalesceNull(parameter8), VoltType.CoalesceNull(parameter9));
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace VoltDB.Data.Client
         {
             try
             {
-                response = this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, parameter1, parameter2, parameter3, parameter4, parameter5, parameter6, parameter7, parameter8, parameter9);
+                response = this.Executor.Execute<TResult>(this.CommandTimeout, this.Name, this.NameUtf8Bytes, VoltType.CoalesceNull(parameter1), VoltType.CoalesceNull(parameter2), VoltType.CoalesceNull(parameter3), VoltType.CoalesceNull(parameter4), VoltType.CoalesceNull(parameter5), VoltType.CoalesceNull(parameter6), VoltType.CoalesceNull(parameter7), VoltType.CoalesceNull(parameter8), VoltType.CoalesceNull(parameter9));
                 return true;
             }
             catch { response = null; }

@@ -441,7 +441,7 @@ namespace VoltDB.Data.Client
             return "";
         string result = "";
         for(int i = 1;i<count+1;i++)
-            result += string.Format(", parameter{0}", i);
+            result += string.Format(", VoltType.CoalesceNull(parameter{0})", i);
         return withComma ? result : result.Substring(2);
     }
     static string GetTypeParamComments(int count)

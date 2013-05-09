@@ -139,8 +139,8 @@ namespace VoltDB.Data.Client
                     // Parse the rest of the response the get core cluster information.
                     try
                     {
-                        this.ServerHostId = deserializer.ReadInt();
-                        this.ConnectionId = deserializer.ReadLong();
+                        this.ServerHostId = deserializer.ReadInt32();
+                        this.ConnectionId = deserializer.ReadInt64();
                         this.ClusterStartTimeStamp = deserializer.ReadDateTimeFromMilliseconds();
                         this.LeaderIPEndPoint = new IPEndPoint(
                                                                 new IPAddress(deserializer.ReadRaw(4))

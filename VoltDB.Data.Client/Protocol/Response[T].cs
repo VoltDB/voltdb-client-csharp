@@ -73,7 +73,7 @@ namespace VoltDB.Data.Client
                     // We have an array of single-column tables
                     else if (elementType.IsArray)
                     {
-                        short count = input.ReadShort();
+                        short count = input.ReadInt16();
                         Array result = Array.CreateInstance(elementType, count);
                         for (short i = 0; i < count; i++)
                             result.SetValue(Table.FromSingleColumn(input, elementType.GetElementType()), i);
@@ -83,9 +83,10 @@ namespace VoltDB.Data.Client
                     // We have a single single-column table
                     else
                     {
-                        short count = input.ReadShort();
+                        short count = input.ReadInt16();
                         if (count != 1)
                             throw new VoltInvalidDataException(Resources.InvalidResultsetSize, count);
+                        if (elementType == typeof(byte)) elementType = typeof(byte[]);
                         this._Result = (TResult)Table.FromSingleColumn(input, elementType);
                     }
                 }
@@ -100,7 +101,7 @@ namespace VoltDB.Data.Client
                     else
                     {
                         // Read count: there should be only 1 data set for those calls
-                        short count = input.ReadShort();
+                        short count = input.ReadInt16();
                         if (count != 1)
                             throw new VoltInvalidDataException(Resources.InvalidResultsetSize, count);
 
