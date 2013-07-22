@@ -178,6 +178,16 @@ namespace VoltDB.Data.Client
                 // This might fail (invalid parameters / exceeding max string length, for instance) - the equivalent of an
                 // ArgumentException, so we leave it outside of the try/catch block related to protecting ourselves against
                 // connectivity issues.
+                if (parameters.Length == 1 && parameters[0] is Array)
+                {
+                    parameters = (object[]) parameters[0];
+                    for (int i = 0; i < parameters.Length; i++)
+                    {
+                        parameters[i] = VoltType.CoalesceNull(parameters[i]);
+                    }
+                }
+
+
                 var message = GetProcedureCallMessage(executionId, procedureUtf8, parameters);
 
                 // Block if we reached queue capacity.
