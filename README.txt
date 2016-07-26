@@ -1,4 +1,4 @@
-VoltDB C# Client Library
+﻿VoltDB C# Client Library
 ========================
 
 The VoltDB client library implements the native VoltDB wire
@@ -6,7 +6,7 @@ protocol. You can use the library to connect to a VoltDB cluster,
 invoke stored procedures and read responses.
 
 For an introduction to using the C# library:
-[Introducting VoltDB.NET: C# Library for Your VoltDB Applications](http://blog.voltdb.com/introducing-voltdbnet-c-library-your-voltdb-applications/)
+[Introducting VoltDB.NET: C# Library for Your VoltDB Applications](https://voltdb.com/blog/introducing-voltdbnet-c-library-your-voltdb-applications)
 
 ## Getting Started ##
 
