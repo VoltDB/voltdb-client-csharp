@@ -1,4 +1,4 @@
-VoltDB C# Client Library
+﻿VoltDB C# Client Library
 ========================
 
 The VoltDB client library implements the native VoltDB wire
@@ -6,12 +6,12 @@ protocol. You can use the library to connect to a VoltDB cluster,
 invoke stored procedures and read responses.
 
 For an introduction to using the C# library:
-[Introducting VoltDB.NET: C# Library for Your VoltDB Applications](http://blog.voltdb.com/introducing-voltdbnet-c-library-your-voltdb-applications/)
+[Introducting VoltDB.NET: C# Library for Your VoltDB Applications](https://voltdb.com/blog/introducing-voltdbnet-c-library-your-voltdb-applications)
 
 ## Getting Started ##
 
 Download the driver:
-- Latest build with documentation: [Downloads](http://voltdb.com/tao-volt/downloads-home.php)
+- Latest build with documentation: [Downloads](https://downloads.voltdb.com/loader.php?kit=CsharpClient)
 - Full source on Github: [voltdb-client-csharp](https://github.com/VoltDB/voltdb-client-csharp)
 
 ## VoltDB.NET in a nutshell ##
@@ -41,9 +41,8 @@ Key considerations:
 
 ## Connecting to VoltDB ##
 
-Read the blog post: [VoltDB.NET: Optimizing your Connection Settiongs](http://blog.voltdb.com/blog-net-optimizing/).  Note the following in particular:
-- Use Cluster connections: this will provide a more resilient connection and will automatically reconnect if a connection to one of the servers in a cluster is lost.
-- Use Connectionstrings: this allows for more flexibility in defining which servers to connect to.
+Read the section "Creating a Database Connection" of blog post: [Introducting VoltDB.NET: C# Library for Your VoltDB Applications](https://voltdb.com/blog/introducing-voltdbnet-c-library-your-voltdb-applications).
+
 
 Key Connection Options:
 - Port – default: 21212
@@ -54,8 +53,6 @@ Key Connection Options:
 - AllowAdHocQueries (adhoc) – default: false
 
 ## Synchronous and Asynchronous Calls ##
-
-Another blog post, [VoltDB.NET: Synchronous vs. Asynchronous Request Processing](http://blog.voltdb.com/blog-voltdb-net/) covers the benefits of using asynchronous requests, and how this impacts .NET application development.
 
 Synchronous = Do nothing until you get the answer
 - Good: ‘Procedural’ model easier to understand/work with
