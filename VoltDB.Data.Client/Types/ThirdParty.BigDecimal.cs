@@ -140,22 +140,22 @@ namespace VoltDB.ThirdParty.Math
 #pragma warning disable  1591
     public struct BigDecimal
     {
-        private readonly BigInteger biNumber;
-        private readonly int iScale;
-        private static readonly string DecimalSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyDecimalSeparator;
-        private static readonly string GroupSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyGroupSeparator;
-        private static readonly BigInteger ten = new BigInteger(10);
+        private readonly BigInteger _BigIntegerNumber;
+        private readonly int _Scale;
+        private static readonly string _DecimalSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyDecimalSeparator;
+        private static readonly string _GroupSeparator = CultureInfo.InvariantCulture.NumberFormat.CurrencyGroupSeparator;
+        private static readonly BigInteger _BigIntegerTen = new BigInteger(10);
 
         public BigDecimal(long num)
         {
-            biNumber = new BigInteger(num);
-            iScale = 0;
+            _BigIntegerNumber = new BigInteger(num);
+            _Scale = 0;
         }
 
         public BigDecimal(ulong num)
         {
-            biNumber = new BigInteger(num);
-            iScale = 0;
+            _BigIntegerNumber = new BigInteger(num);
+            _Scale = 0;
         }
 
         public BigDecimal(double num)
@@ -170,11 +170,11 @@ namespace VoltDB.ThirdParty.Math
 
         public BigDecimal(BigInteger num, int scale)
         {
-            biNumber = num;
-            iScale = scale;
+            _BigIntegerNumber = num;
+            _Scale = scale;
         }
 
-        public BigDecimal(decimal num) 
+        public BigDecimal(decimal num)
         {
             // Bits 16 to 23 must contain an exponent between 0 and 28, which indicates the power of 10 to divide the integer number.
             // Bit 31 contains the sign: 0 mean positive, and 1 means negative.
@@ -185,25 +185,23 @@ namespace VoltDB.ThirdParty.Math
             x[0] = 0;
             x[1] = x[2];
             x[2] = x1;
-            biNumber = new BigInteger(x);
-            if ((x3 & 0x80000000) >> 31 != 0) biNumber = -biNumber;
-            iScale = (x3 & 0xFF0000) >> 16;
+            _BigIntegerNumber = new BigInteger(x);
+            if ((x3 & 0x80000000) >> 31 != 0) _BigIntegerNumber = -_BigIntegerNumber;
+            _Scale = (x3 & 0xFF0000) >> 16;
         }
-
-        static readonly BigInteger biZero = new BigInteger(0);
 
         public decimal ToDecimal()
         {
-            if (iScale > 28) return this.setScale(28).ToDecimal();
-            var isPos = biNumber >= 0;
+            if (_Scale > 28) return this.setScale(28).ToDecimal();
+            var isPos = _BigIntegerNumber >= 0;
             uint[] data;
             if (isPos){
-                data = biNumber.data; 
+                data = _BigIntegerNumber.data;
             } else{
-                data = (-biNumber).data;
+                data = (-_BigIntegerNumber).data;
             }
             if (data[3] != 0) throw new OverflowException("BigDecimal value outside the range of Decimal.");
-            return new Decimal((int)data[0], (int)data[1], (int)data[2], !isPos, (byte)iScale);
+            return new Decimal((int)data[0], (int)data[1], (int)data[2], !isPos, (byte)_Scale);
         }
 
         public BigDecimal(string num)
@@ -214,24 +212,24 @@ namespace VoltDB.ThirdParty.Math
             int cur_off = 0;
 
             // initially iScale = 0 and biNumber is null
-            iScale = 0;
+            _Scale = 0;
 
             // empty string = 0
             if (num.Trim().Length == 0)
             {
-                biNumber = new BigInteger(0);
+                _BigIntegerNumber = new BigInteger(0);
                 return;
             }
 
             // find the decimal separator and exponent position
-            num = num.Replace(GroupSeparator, string.Empty);
-            int dot_index = num.IndexOf(DecimalSeparator, cur_off);
+            num = num.Replace(_GroupSeparator, string.Empty);
+            int dot_index = num.IndexOf(_DecimalSeparator, cur_off);
             int exp_index = num.IndexOf('e', cur_off);
             if (exp_index < 0)
                 exp_index = num.IndexOf('E', cur_off);
 
             // check number format
-            if (num.IndexOf(DecimalSeparator, dot_index + 1) >= 0)
+            if (num.IndexOf(_DecimalSeparator, dot_index + 1) >= 0)
                 throw new FormatException();
             int last_exp_index = num.IndexOf('e', exp_index + 1);
             if (last_exp_index < 0)
@@ -254,12 +252,12 @@ namespace VoltDB.ThirdParty.Math
                         s = int.Parse(num.Substring(cur_off), CultureInfo.InvariantCulture);
 
                     if (int_part.Trim().Length == 0)
-                        biNumber = new BigInteger(0);
+                        _BigIntegerNumber = new BigInteger(0);
                     else
                     {
-                        biNumber = new BigInteger(int_part,10);
-                        if (biNumber != 0)
-                            iScale = -s;
+                        _BigIntegerNumber = new BigInteger(int_part,10);
+                        if (_BigIntegerNumber != 0)
+                            _Scale = -s;
                     }
                 }
                 else
@@ -267,9 +265,9 @@ namespace VoltDB.ThirdParty.Math
                     // just get integer part
                     int_part = num.TrimStart('0');
                     if (int_part.Trim().Length == 0)
-                        biNumber = new BigInteger(0);
+                        _BigIntegerNumber = new BigInteger(0);
                     else
-                        biNumber = new BigInteger(int_part, 10);
+                        _BigIntegerNumber = new BigInteger(int_part, 10);
                 }
 
                 return;
@@ -281,18 +279,18 @@ namespace VoltDB.ThirdParty.Math
 
             string float_num = int_part;
 
-            // if exponent doesn't exist just extract float part 
+            // if exponent doesn't exist just extract float part
             if (exp_index < 0)
             {
                 float_part = num.Substring(cur_off).TrimEnd('0');
                 float_num += float_part;
                 if (float_num.Trim().Length == 0)
-                    biNumber = new BigInteger(0);
+                    _BigIntegerNumber = new BigInteger(0);
                 else
                 {
-                    biNumber = new BigInteger(float_num, 10);
-                    if (biNumber != 0)
-                        iScale = float_part.Length;
+                    _BigIntegerNumber = new BigInteger(float_num, 10);
+                    if (_BigIntegerNumber != 0)
+                        _Scale = float_part.Length;
                 }
                 return;
             }
@@ -307,12 +305,12 @@ namespace VoltDB.ThirdParty.Math
 
             float_num += float_part;
             if (float_num.Trim().Length == 0)
-                biNumber = new BigInteger(0);
+                _BigIntegerNumber = new BigInteger(0);
             else
             {
-                biNumber = new BigInteger(float_num, 10);
-                if (biNumber != 0)
-                    iScale = float_part.Length - s;
+                _BigIntegerNumber = new BigInteger(float_num, 10);
+                if (_BigIntegerNumber != 0)
+                    _Scale = float_part.Length - s;
             }
         }
 
@@ -320,20 +318,20 @@ namespace VoltDB.ThirdParty.Math
         {
             get
             {
-                return iScale;
+                return _Scale;
             }
         }
 
         public BigDecimal setScale(int val)
         {
-            if (val == iScale) return this;
-            BigInteger num = biNumber;
-            if (val > iScale)
-                for (int i = 0; i < val - iScale; i++)
-                    num *= ten;
+            if (val == _Scale) return this;
+            BigInteger num = _BigIntegerNumber;
+            if (val > _Scale)
+                for (int i = 0; i < val - _Scale; i++)
+                    num *= _BigIntegerTen;
             else
-                for (int i = 0; i < iScale - val; i++)
-                    num /= ten;
+                for (int i = 0; i < _Scale - val; i++)
+                    num /= _BigIntegerTen;
             return new BigDecimal(num, val);
         }
 
@@ -341,7 +339,7 @@ namespace VoltDB.ThirdParty.Math
         {
             get
             {
-                return biNumber;
+                return _BigIntegerNumber;
             }
         }
 
@@ -425,7 +423,7 @@ namespace VoltDB.ThirdParty.Math
 
         public static explicit operator decimal(BigDecimal val)
         {
-            return val.ToDecimal(); 
+            return val.ToDecimal();
         }
 
         public static implicit operator BigDecimal(long val)
@@ -453,7 +451,7 @@ namespace VoltDB.ThirdParty.Math
             return (new BigDecimal(val));
         }
 
-        public static implicit operator BigDecimal(decimal val) 
+        public static implicit operator BigDecimal(decimal val)
         {
             return (new BigDecimal(val));
         }
@@ -461,7 +459,7 @@ namespace VoltDB.ThirdParty.Math
         public BigDecimal MovePointLeft(int n)
         {
             if (n >= 0)
-                return new BigDecimal(biNumber, iScale + n);
+                return new BigDecimal(_BigIntegerNumber, _Scale + n);
             else
                 return MovePointRight(-n);
         }
@@ -470,13 +468,13 @@ namespace VoltDB.ThirdParty.Math
         {
             if (n >= 0)
             {
-                if (iScale >= n)
-                    return new BigDecimal(biNumber, iScale - n);
+                if (_Scale >= n)
+                    return new BigDecimal(_BigIntegerNumber, _Scale - n);
                 else
                 {
-                    BigInteger num = biNumber;
-                    for (int i = 0; i < n - iScale; i++)
-                        num *= ten;
+                    BigInteger num = _BigIntegerNumber;
+                    for (int i = 0; i < n - _Scale; i++)
+                        num *= _BigIntegerTen;
 
                     return new BigDecimal(num);
                 }
@@ -487,9 +485,9 @@ namespace VoltDB.ThirdParty.Math
 
         public override string ToString()
         {
-            string s_num = biNumber.ToString();
-            int s_scale = iScale;
-            if (biNumber < 0)
+            string s_num = _BigIntegerNumber.ToString();
+            int s_scale = _Scale;
+            if (_BigIntegerNumber < 0)
                 s_num = s_num.Remove(0, 1);
             if (s_scale < 0)
             {
@@ -499,10 +497,10 @@ namespace VoltDB.ThirdParty.Math
             if (s_scale >= s_num.Length)
                 s_num = s_num.PadLeft(s_scale + 1, '0');
 
-            s_num = (biNumber >= 0 ? string.Empty : "-") + s_num.Insert(s_num.Length - s_scale, DecimalSeparator);
+            s_num = (_BigIntegerNumber >= 0 ? string.Empty : "-") + s_num.Insert(s_num.Length - s_scale, _DecimalSeparator);
 
-            if (s_num.EndsWith(DecimalSeparator))
-                s_num = s_num.Remove(s_num.Length - DecimalSeparator.Length, DecimalSeparator.Length);
+            if (s_num.EndsWith(_DecimalSeparator))
+                s_num = s_num.Remove(s_num.Length - _DecimalSeparator.Length, _DecimalSeparator.Length);
 
             return s_num;
         }
@@ -524,7 +522,7 @@ namespace VoltDB.ThirdParty.Math
 
         public byte[] ToBytes()
         {
-            return this.biNumber.GetSerializationBytes();
+            return this._BigIntegerNumber.GetSerializationBytes();
         }
         public byte[] ToBytes(int scale)
         {
