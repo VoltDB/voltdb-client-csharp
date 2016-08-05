@@ -20,7 +20,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using VoltDB.Data.Client.Properties;
 using VoltDB.ThirdParty.Math;
@@ -61,12 +61,17 @@ namespace VoltDB.Data.Client
         internal static readonly byte[] NullValueBytes = NullValue.ToBytes();
 
         /// <summary>
+        /// Underlying BigDecimal value that this instance wraps.
+        /// </summary>
+        private BigDecimal Value;
+
+        /// <summary>
         /// Returns whether the variable corresponds to a null VoltDB value.
         /// </summary>
         /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
         public bool IsVoltDBNull()
         {
-            return this.Value == VoltDecimal.NullValue;
+            return Value == VoltDecimal.NullValue;
         }
 
         /// <summary>
@@ -93,11 +98,6 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
-        /// Underlying BigDecimal value that this instance wraps.
-        /// </summary>
-        private BigDecimal Value;
-
-        /// <summary>
         /// Creates a new instance of the BigDecimal data type, from the deserialization data.
         /// </summary>
         /// <param name="data">Binary data as provided by the server's response.</param>
@@ -113,7 +113,7 @@ namespace VoltDB.Data.Client
         /// request.</returns>
         public byte[] ToBytes()
         {
-            return this.Value.ToBytes(12);
+            return this.Value.ToBytes(FixedScale);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace VoltDB.Data.Client
         /// Creates a new decimal from a decimal value.
         /// </summary>
         /// <param name="num">Value used for initialization.</param>
-        public VoltDecimal(decimal num) 
+        public VoltDecimal(decimal num)
         {
             this.Value = new BigDecimal(num).setScale(FixedScale);
             ValidOrThrow(this.Value);
@@ -429,7 +429,7 @@ namespace VoltDB.Data.Client
         /// Operator definition: Conversion from (decimal)
         /// </summary>
         /// <param name="val">Value to convert.</param>
-        public static implicit operator VoltDecimal(decimal val) 
+        public static implicit operator VoltDecimal(decimal val)
         {
             return (new VoltDecimal(val));
         }
@@ -460,10 +460,12 @@ namespace VoltDB.Data.Client
         /// <returns>String representation of the number</returns>
         public override string ToString()
         {
-            if (this.IsVoltDBNull())
+            if (this.IsVoltDBNull()) {
                 return "null";
-            else
+            }
+            else {
                 return this.Value.ToString();
+            }
         }
 
         /// <summary>
