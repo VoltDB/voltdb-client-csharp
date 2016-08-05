@@ -6,13 +6,13 @@ Software Requirements
    http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-products
 
  - Sandcastle Help File Builder
-   http://shfb.codeplex.com/releases/
-     + install the "Recommended Download", SHFB 1.9.3.0 as of 05/25/2011
-     + the kit contains "HTML Help 1" (.chm) files, the Microsoft Help 2 Compiler is not needed
-     + "Microsoft Sandcastle Tools" -> install Sandcastle Tools
-     + "Sandcastle Styles Project" -> skip all
-     + "MAML Schema IntelliSense" -> skip
-     + "Sandcastle Help File Builder" -> install SHFB
+   http://shfb.codeplex.com/  
+     + Click "Download" button to get the application. "Sandcastle Help File Builder v2015.1.12.0 (1.9.9.0)" was the version used for 
+	   generating help for kit. Installation kit contains various utilities packaged in it, only one needed is "Install SHFB". Below are 
+	   installation recommendations:
+		+ Kit contains "HTML Help" (.chm) files, the Microsoft Help Compiler is not needed and can be skipped
+		+ Make sure when on "Sandcastle Help File Builder and Tools" click "Install SHFB". This is required to install the application.
+		+ Others entries are not needed and can be skipped.
 
  - Github:Windows
    http://windows.github.com/
@@ -28,10 +28,14 @@ Building the Client Library
    https://github.com/VoltDB/voltdb-client-csharp
 
 2. Build Assemblies (Visual Studio)
-   Open ./VoltDB.ClientLibrary.VS2010.sln
+   Open ./VoltDB.ClientLibrary.VS2012.sln
    Check/Set Version
      Edit CommonAssemblyInfo.cs in VoltDB.Data.Client -> Properties
      Modify 2 version numbers in "AssemblyVersion" and "AssemblyFileVersion"
+   Check/Set year appriately in CopyRight
+	 Edit AssemblyInfo.cs in VoltDB.Data.Client -> Properties
+     Modify year to current year like "Copyright © VoltDB, Inc. 2016" in "AssemblyCopyright"
+	 If there are udpates in copyright information, please ensure the  copyright information for HelloWorld, KeyValue and Voter examples asre updated too (VoltDB.Examples.VS2012.sln)
    Ensure "Release" build configuration is set (this is visible in the toolbar, if not do the following 3 tasks).
      + "Expert Settings" must be enabled, Tools -> Settings -> Expert Settings
      + Go to Tools -> Options. In the dialog box, check the Show All Settings option in the bottom left.

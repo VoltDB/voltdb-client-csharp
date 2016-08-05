@@ -1,5 +1,5 @@
 set SEVENZIP=
-for %%X in (7z.exe) do (set SEVENZIP=%%~$PATH:X)
+
 if not defined SEVENZIP (
     if exist "C:\Program Files\7-Zip\7z.exe" (
         set SEVENZIP="C:\Program Files\7-Zip\7z.exe"
