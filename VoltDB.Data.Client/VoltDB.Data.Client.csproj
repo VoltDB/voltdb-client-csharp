@@ -14,8 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>Properties\VoltDB.Data.Client.snk</AssemblyOriginatorKeyFile>
-    <ApplicationIcon>Properties\icon.ico</ApplicationIcon>
-    <TargetFrameworkProfile />
+    <ApplicationIcon>Properties\icon.ico</ApplicationIcon>    
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,7 +27,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\Debug\VoltDB.Data.Client.XML</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -174,12 +172,7 @@
       <DependentUpon>ProcedureWrapper[T].tt</DependentUpon>
     </Compile>
     <Compile Include="Connections\StatisticsExtensions.cs" />
-    <Compile Include="FormatExtensions.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
+    <Compile Include="FormatExtensions.cs" />    
     <Compile Include="Types\AsyncResponse[T].cs" />
     <Compile Include="Connections\ProcedureWrapper.cs" />
     <Compile Include="Connections\ProcedureWrapper[T].cs">
@@ -695,11 +688,7 @@
     <None Include="Connections\ProcedureWrapper[T].tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ProcedureWrapper[T].cs</LastGenOutput>
-    </None>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    </None>    
     <None Include="Protocol\ManagedNetworkStream.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ManagedNetworkStream.cs</LastGenOutput>
