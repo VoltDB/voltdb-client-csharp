@@ -8,6 +8,10 @@ invoke stored procedures and read responses.
 For an introduction to using the C# library:
 [Introducting VoltDB.NET: C# Library for Your VoltDB Applications](https://voltdb.com/blog/introducing-voltdbnet-c-library-your-voltdb-applications)
 
+New Features in V6.0
+==================
+Fixes for VoltDecimal where some of the Decimal values were transmitted incorrectly over the wire.
+
 ## Getting Started ##
 
 Download the driver:

@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("VoltDB.Examples.Voter")]
-[assembly: AssemblyCopyright("Copyright © VoltDB, Inc. 2011")]
+[assembly: AssemblyCopyright("Copyright © VoltDB, Inc. 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
