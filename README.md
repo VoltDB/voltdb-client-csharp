@@ -1,5 +1,4 @@
-﻿VoltDB C# Client Library
-========================
+# VoltDB C# Client Library
 
 The VoltDB client library implements the native VoltDB wire
 protocol. You can use the library to connect to a VoltDB cluster,
@@ -77,20 +76,20 @@ VoltDB.NET implements:
 ## Calling Procedures ##
 
 Define Callback for Asynchronous call
-
-    void MyDelegate(Response<Table[]> response) {
-      if (response.Status == ResponseStatus.Success) {
-        … // Send response to client, update UI, etc.
-      }
-      else {
-        … // Deal with error
-      }
-    }
-
+```csharp
+void MyDelegate(Response<Table[]> response) {
+  if (response.Status == ResponseStatus.Success) {
+    … // Send response to client, update UI, etc.
+  }
+  else {
+    … // Deal with error
+  }
+}
+```
 Create Strongly-typed Wrappers
-
-    var my = conn.Procedures.Wrap<Table[],int,string>("MyProcedure", MyDelegate);
-
+```csharp
+var my = conn.Procedures.Wrap<Table[],int,string>("MyProcedure", MyDelegate);
+```
 Supported Data Types:
 
 * Result:
@@ -103,20 +102,20 @@ Supported Data Types:
     - int, long, …
 
 Execute the procedure
+```csharp
+Response<Table[]> r = myProc.Execute(1, "test");
 
-    Response<Table[]> r = myProc.Execute(1, “test”);
-
-    IAsyncResult h = my.BeginExecute(1, “test”);
-    IAsyncResult h = my.BeginExecute(1, “test”, state);
-
+IAsyncResult h = my.BeginExecute(1, "test");
+IAsyncResult h = my.BeginExecute(1, "test", state);
+```
 Cancel Async Execution
-
-    myProc.ExecuteCancelAsync(h);
-
+```csharp
+myProc.ExecuteCancelAsync(h);
+```
 Get Async results (if not using callback)
-
-    Response<Table[]> r = myProc.EndExecute(h);
-
+```csharp
+Response<Table[]> r = myProc.EndExecute(h);
+```
 Wrapper Rules:
 
 - Up to 35 input parameters
@@ -128,41 +127,41 @@ Wrapper Rules:
 
 
 Another option is to use Runtime Wrappers, but the type of runtime values must still be compatible.
-
-    conn.Procedures.Wrap<Table[],object,…,object>(…);
-
+```csharp
+conn.Procedures.Wrap<Table[],object,…,object>(…);
+```
 Per-execution callback delegate/closures
+```csharp
+IAsyncResult h = my.BeginExecute(1, "test", MyDelegate);
 
-    IAsyncResult h = my.BeginExecute(1, "test", MyDelegate);
-    
-    // or...
-    
-    h = my.BeginExecute( 1, "test", (r) => MyClosureFunction(r, …) );
+// or...
 
+h = my.BeginExecute( 1, "test", (r) => MyClosureFunction(r, …) );
+```
 Re-use Wrappers across connections (of course, executions still occur in the initiating context/connection).
-
-    my.SetConnection(otherVoltConnection);
-
+```csharp
+my.SetConnection(otherVoltConnection);
+```
 
 
 ## Consuming Results ##
 
 Access data directly...
+```csharp
+double? value = response.Result
+                        .GetValue<double?>(col, row);
 
-    double? value = response.Result
-                            .GetValue<double?>(col, row);
-
-    double? Value = response.Result
-                            .Rows
-                            .ElementAt(row)
-                            .GetValue<double?>(col);
-
+double? Value = response.Result
+                        .Rows
+                        .ElementAt(row)
+                        .GetValue<double?>(col);
+```
 ...or through Strongly-typed Table Wrappers
+```csharp
+var myTable = response.Result.Wrap<int?,…,double?>();
 
-    var myTable = response.Result.Wrap<int?,…,double?>();
-
-    double? value = myTable.Column7[row];
-
+double? value = myTable.Column7[row];
+```
 Wrapper Rules:
 
 - Up to 35 columns
@@ -170,56 +169,56 @@ Wrapper Rules:
     - sbyte?, short?, int?, long?, double?, VoltDecimal?, DateTime? and string
 
 Results are LINQ-friendly:
-
-    // On a strongly-typed VoltDB data table
-    myTable.Rows.Where(r => r.Column2 == "Books")
-                .Select(r => new { Title = r.Column2, Price = r.Column7 })
-                .OrderBy(p => p.Price);
-
-    // On a raw VoltDB data table
-    raw.Rows.Where(r => r.GetValue<string>(1) == "Books")
-            .Select(r => new { Title = r. GetValue<string>(1), Price = r. GetValue<double>(6) })
+```csharp
+// On a strongly-typed VoltDB data table
+myTable.Rows.Where(r => r.Column2 == "Books")
+            .Select(r => new { Title = r.Column2, Price = r.Column7 })
             .OrderBy(p => p.Price);
 
+// On a raw VoltDB data table
+raw.Rows.Where(r => r.GetValue<string>(1) == "Books")
+        .Select(r => new { Title = r. GetValue<string>(1), Price = r. GetValue<double>(6) })
+        .OrderBy(p => p.Price);
+```
 Access metadata:
+```csharp
+int count = myTable.RowCount;
+bool check = myTable.HasData;
 
-    int count = myTable.RowCount;
-    bool check = myTable.HasData;
+string name = raw.GetColumnName(idx);
+short idx = raw.GetColumnIndex(name);
 
-    string name = raw.GetColumnName(idx);
-    short idx = raw.GetColumnIndex(name);
+Type type = raw.GetColumnType(idx);
+DBType type = raw.GetColumnDBType(idx);
 
-    Type type = raw.GetColumnType(idx);
-    DBType type = raw.GetColumnDBType(idx);
-
-    int?[] column1Data = raw.GetColumnData<int?>(0);
-    object[] column1Data = raw.GetColumnData(0);
-
+int?[] column1Data = raw.GetColumnData<int?>(0);
+object[] column1Data = raw.GetColumnData(0);
+```
 Fill a (System.Data.)DataTable
-
-    Table raw = procedureWrapper.Execute().Result;
-    DataTable dt = new DataTable("Result");
-    for(short i = 0; i < raw.ColumnCount; i++)
-        dt.Columns.Add( raw.GetColumnName(i), raw.GetColumnType(i));
-    object[] values = new object[raw.ColumnCount];
-    foreach (Row row in raw.Rows) {
-        for (short i = 0; i < raw.ColumnCount; i++)
-            values[i] = row.GetValue(i);
-        dt.Rows.Add(values);
-    }
-
+```csharp
+Table raw = procedureWrapper.Execute().Result;
+DataTable dt = new DataTable("Result");
+for(short i = 0; i < raw.ColumnCount; i++)
+    dt.Columns.Add( raw.GetColumnName(i), raw.GetColumnType(i));
+object[] values = new object[raw.ColumnCount];
+foreach (Row row in raw.Rows) {
+    for (short i = 0; i < raw.ColumnCount; i++)
+        values[i] = row.GetValue(i);
+    dt.Rows.Add(values);
+}
+```
 Fill a (System.Windows.Forms.)DataGridView
-
-    view.Columns.Clear();
-    view.DataSource = null;
-    for (short i = 0; i &lt; raw.ColumnCount; i++)
-        view.Columns.Add(raw.GetColumnName(i), raw.GetColumnName(i));
-    foreach (Row row in raw.Rows) {
-        int n = view.Rows.Add();
-        for (short i = 0; i < row.ColumnCount; i++) {
-            view.Rows[n].Cells[i].Value = row.GetValue(i);
-            view.Rows[n].Cells[i].ValueType = row.GetColumnType(i);
-        }
-    } 
-
+```csharp
+view.Columns.Clear();
+view.DataSource = null;
+for (short i = 0; i &lt; raw.ColumnCount; i++)
+    view.Columns.Add(raw.GetColumnName(i), raw.GetColumnName(i));
+foreach (Row row in raw.Rows) {
+    int n = view.Rows.Add();
+    for (short i = 0; i < row.ColumnCount; i++) {
+        view.Rows[n].Cells[i].Value = row.GetValue(i);
+        view.Rows[n].Cells[i].ValueType = row.GetColumnType(i);
+    }
+} 
+```
 
