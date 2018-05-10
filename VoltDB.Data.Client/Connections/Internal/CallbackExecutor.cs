@@ -110,7 +110,11 @@ namespace VoltDB.Data.Client
                 // calculation)
                 int workerThreads;
                 int completionPortThreads;
-                ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+                // **** the no. of worker thread shall be the no. of processors and not the minimum no. of threads of pool.
+                // ThreadPool.GetMinThreads(out workerThreads, out completionPortThreads);
+                workerThreads = Environment.ProcessorCount;
+                completionPortThreads = Environment.ProcessorCount;
+                
                 int processingThreadCount = Math.Max(workerThreads - 3, 2); // -3 is for: 1 Client thread + at least 2 connection threads.
                 Threads = new Thread[processingThreadCount];
 
