@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltDB.Examples.Voter", "VoltDB.Examples\Voter\VoltDB.Examples.Voter.csproj", "{5A072211-56D9-4FFA-B776-B524744E8454}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltDB.Examples.HelloWorld", "VoltDB.Examples\HelloWorld\VoltDB.Examples.HelloWorld.csproj", "{655D5E0E-9A2E-4807-8A88-1A16DC082C69}"
@@ -8,10 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoltDB.Examples.KeyValue", "VoltDB.Examples\KeyValue\VoltDB.Examples.KeyValue.csproj", "{464AA9E7-02F2-4F05-826A-CE2630FBBCB1}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

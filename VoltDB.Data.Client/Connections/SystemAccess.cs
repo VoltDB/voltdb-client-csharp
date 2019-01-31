@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
-using VoltDB.Data.Client.Properties;
 
 namespace VoltDB.Data.Client
 {
