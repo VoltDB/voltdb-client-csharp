@@ -25,183 +25,206 @@ using System;
 
 namespace VoltDB.Data.Client
 {
-    /// <summary>
-    /// Provides extension methods on core .NET data type for easy data checking and conversions with the native VoltDB
-    /// data types.
-    /// </summary>
-    public static class VoltDBTypeExtensions
-    {
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this sbyte value)
-        {
-            return value == VoltType.NULL_TINYINT;
-        }
+	/// <summary>
+	/// Provides extension methods on core .NET data type for easy data checking and conversions with the native VoltDB
+	/// data types.
+	/// </summary>
+	public static class VoltDBTypeExtensions
+	{
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this sbyte value)
+		{
+			return value == VoltType.NULL_TINYINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this sbyte? value)
+		{
+			return !value.HasValue || value == VoltType.NULL_TINYINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this byte value)
+		{
+			return value == unchecked((byte)VoltType.NULL_TINYINT);
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this byte? value)
+		{
+			return !value.HasValue || value == unchecked((byte)VoltType.NULL_TINYINT);
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this short value)
+		{
+			return value == VoltType.NULL_SMALLINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this short? value)
+		{
+			return !value.HasValue || value == VoltType.NULL_SMALLINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this int value)
+		{
+			return value == VoltType.NULL_INTEGER;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this int? value)
+		{
+			return !value.HasValue || value == VoltType.NULL_INTEGER;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this long value)
+		{
+			return value == VoltType.NULL_BIGINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this long? value)
+		{
+			return !value.HasValue || value == VoltType.NULL_BIGINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this double value)
+		{
+			return value == VoltType.NULL_FLOAT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this double? value)
+		{
+			return !value.HasValue || value == VoltType.NULL_FLOAT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this DateTime value)
+		{
+			return value.ToVoltDBLong() == VoltType.NULL_BIGINT;
+		}
+
+		/// <summary>
+		/// Returns whether the variable corresponds to a null VoltDB value.
+		/// </summary>
+		/// <param name="value">The value to check.</param>
+		/// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
+		public static bool IsVoltDBNull(this DateTime? value)
+		{
+			return !value.HasValue || value.ToVoltDBLong() == VoltType.NULL_BIGINT;
+		}
+
+		/// <summary>
+		/// Converts a DateTime to a VoltDB long microsecond value.
+		/// </summary>
+		/// <param name="value">The date/time to convert.</param>
+		/// <returns>The long value as used for storage in a VoltDB database.</returns>
+		public static long ToVoltDBLong(this DateTime value)
+		{
+			return (((DateTime)value).ToUniversalTime().Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L;
+		}
+
+		/// <summary>
+		/// Converts a DateTime to a VoltDB long microsecond value.
+		/// </summary>
+		/// <param name="value">The date/time to convert.</param>
+		/// <returns>The long value as used for storage in a VoltDB database.</returns>
+		public static long ToVoltDBLong(this DateTime? value)
+		{
+			return (value == null)
+				   ? VoltType.NULL_BIGINT
+				   : (((DateTime)value).ToUniversalTime().Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L;
+		}
+
+		/// <summary>
+		/// Converts a long into a DateTime (assuming the long itself represents a VoltDB timestamp, as stored in a
+		/// long format, in microseconds since the UNIX Epoch).
+		/// </summary>
+		/// <param name="value">The long value to convert.</param>
+		/// <returns>The .NET-friendly DateTime object corresponding to the VoltDB time-stamp.</returns>
+		public static DateTime? ToVoltDDateTime(this long value)
+		{
+			return new DateTime(value * 10 + VoltType.TIMESTAMP_ORIGIN, DateTimeKind.Utc);
+		}
+
+		/// <summary>
+		/// Converts a boolean value to a VoltDB valid type (sbyte)
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static sbyte ToVoltDbType(this bool value)
+		{
+			return Convert.ToSByte(value);
+		}
 
         /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this sbyte? value)
+		/// Converts a nullable decimal value to a VoltDB valid type (VoltDecimal)
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static VoltDecimal ToVoltDbType(this decimal? value)
         {
-            return !value.HasValue || value == VoltType.NULL_TINYINT;
-        }
+            if (value == null)
+                return VoltDecimal.NullValue;
 
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this byte value)
-        {
-            return value == unchecked((byte)VoltType.NULL_TINYINT);
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this byte? value)
-        {
-            return !value.HasValue || value == unchecked((byte)VoltType.NULL_TINYINT);
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this short value)
-        {
-            return value == VoltType.NULL_SMALLINT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this short? value)
-        {
-            return !value.HasValue || value == VoltType.NULL_SMALLINT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this int value)
-        {
-            return value == VoltType.NULL_INTEGER;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this int? value)
-        {
-            return !value.HasValue || value == VoltType.NULL_INTEGER;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this long value)
-        {
-            return value == VoltType.NULL_BIGINT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this long? value)
-        {
-            return !value.HasValue || value == VoltType.NULL_BIGINT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this double value)
-        {
-            return value == VoltType.NULL_FLOAT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this double? value)
-        {
-            return !value.HasValue || value == VoltType.NULL_FLOAT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this DateTime value)
-        {
-            return value.ToVoltDBLong() == VoltType.NULL_BIGINT;
-        }
-
-        /// <summary>
-        /// Returns whether the variable corresponds to a null VoltDB value.
-        /// </summary>
-        /// <param name="value">The value to check.</param>
-        /// <returns>True if the value held by the variable converts to a null value in a VoltDB database.</returns>
-        public static bool IsVoltDBNull(this DateTime? value)
-        {
-            return !value.HasValue || value.ToVoltDBLong() == VoltType.NULL_BIGINT;
-        }
-
-        /// <summary>
-        /// Converts a DateTime to a VoltDB long microsecond value.
-        /// </summary>
-        /// <param name="value">The date/time to convert.</param>
-        /// <returns>The long value as used for storage in a VoltDB database.</returns>
-        public static long ToVoltDBLong(this DateTime value)
-        {
-            return (((DateTime)value).ToUniversalTime().Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L;
-        }
-
-        /// <summary>
-        /// Converts a DateTime to a VoltDB long microsecond value.
-        /// </summary>
-        /// <param name="value">The date/time to convert.</param>
-        /// <returns>The long value as used for storage in a VoltDB database.</returns>
-        public static long ToVoltDBLong(this DateTime? value)
-        {
-            return (value == null)
-                   ? VoltType.NULL_BIGINT
-                   : (((DateTime)value).ToUniversalTime().Ticks - VoltType.TIMESTAMP_ORIGIN) / 10L;
-        }
-
-        /// <summary>
-        /// Converts a long into a DateTime (assuming the long itself represents a VoltDB timestamp, as stored in a
-        /// long format, in microseconds since the UNIX Epoch).
-        /// </summary>
-        /// <param name="value">The long value to convert.</param>
-        /// <returns>The .NET-friendly DateTime object corresponding to the VoltDB time-stamp.</returns>
-        public static DateTime? ToVoltDDateTime(this long value)
-        {
-            return new DateTime(value * 10 + VoltType.TIMESTAMP_ORIGIN, DateTimeKind.Utc);
+            return new VoltDecimal(value.Value);
         }
     }
 }
