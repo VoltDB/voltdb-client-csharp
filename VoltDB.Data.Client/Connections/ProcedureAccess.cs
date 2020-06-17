@@ -48,12 +48,13 @@ namespace VoltDB.Data.Client
         }
 
         /// <summary>
-        /// Regular expression used to validate tokens
+        /// Regular expression used to validate tokens (procedure names only for now) (will make sure the name doesn't
+        /// have any @ sign, or other invalid character for that matter).
         /// </summary>
         private Regex TokenValidator = new Regex("^[a-zA-Z0-9_.$@]*$");
         
         /// <summary>
-        /// Validate the procedure name
+        /// Validate the procedure name (alpahnumeric only, no @)
         /// </summary>
         /// <param name="procedureName">Name of the procedure</param>
         private void ValidateProcedureName(string procedureName)
@@ -7621,6 +7622,654 @@ namespace VoltDB.Data.Client
         public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35>(string procedureName)
         {
             return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35>(procedureName, 0, null);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName, int timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            this.ValidateProcedureName(procedureName);
+            return new ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(this.Executor, procedureName, timeout, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName, TimeSpan timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(procedureName, (int)timeout.TotalMilliseconds, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(procedureName, 0, callback);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName, int timeout)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(procedureName, timeout, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName, TimeSpan timeout)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(procedureName, (int)timeout.TotalMilliseconds, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 36 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(string procedureName)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36>(procedureName, 0, null);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName, int timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            this.ValidateProcedureName(procedureName);
+            return new ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(this.Executor, procedureName, timeout, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <param name="timeout">Procedure-specific default command timeout in milliseconds or -1 or Timeout.Infinite
+        /// for infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName, TimeSpan timeout, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(procedureName, (int)timeout.TotalMilliseconds, callback);
+        }
+
+        /// <summary>
+        /// Creates a procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's procedures.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="callback">Callback to execute upon completion of the procedure execution (for Async calls).
+        ///  To use different callbacks, create multiple procedure wrappers for the same procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName, ExecuteAsyncCallback<TResult> callback)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(procedureName, 0, callback);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName, int timeout)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(procedureName, timeout, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <param name="timeout">Procedure-specific command timeout in milliseconds or -1 or Timeout.Infinite for
+        /// infinite timeout; 0 for connection's default command timeout.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName, TimeSpan timeout)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(procedureName, (int)timeout.TotalMilliseconds, null);
+        }
+
+        /// <summary>
+        /// Creates a callback-less procedure wrapper providing compact, strongly-typed access to a VoltDB catalog's
+        /// procedures.  The AsyncResponse will have to be picked up by calling the wrapper's .EndExecute(IAsyncResult)
+        /// method with the handle returned by one of the .BeginExecute(...) calls.
+        /// This method creates a wrapper for a procedure that takes 37 arguments.
+        /// The first type parameter defines the type of the result (for instance Table[] or Table or SingleRowTable,
+        /// etc...), the other type parameters define the type of the procedure's parameters themselves.
+        /// </summary>
+        /// <typeparam name="TResult">Return type of the procedure.</typeparam>
+        /// <typeparam name="T1">Type of parameter 1 of the procedure.</typeparam>
+        /// <typeparam name="T2">Type of parameter 2 of the procedure.</typeparam>
+        /// <typeparam name="T3">Type of parameter 3 of the procedure.</typeparam>
+        /// <typeparam name="T4">Type of parameter 4 of the procedure.</typeparam>
+        /// <typeparam name="T5">Type of parameter 5 of the procedure.</typeparam>
+        /// <typeparam name="T6">Type of parameter 6 of the procedure.</typeparam>
+        /// <typeparam name="T7">Type of parameter 7 of the procedure.</typeparam>
+        /// <typeparam name="T8">Type of parameter 8 of the procedure.</typeparam>
+        /// <typeparam name="T9">Type of parameter 9 of the procedure.</typeparam>
+        /// <typeparam name="T10">Type of parameter 10 of the procedure.</typeparam>
+        /// <typeparam name="T11">Type of parameter 11 of the procedure.</typeparam>
+        /// <typeparam name="T12">Type of parameter 12 of the procedure.</typeparam>
+        /// <typeparam name="T13">Type of parameter 13 of the procedure.</typeparam>
+        /// <typeparam name="T14">Type of parameter 14 of the procedure.</typeparam>
+        /// <typeparam name="T15">Type of parameter 15 of the procedure.</typeparam>
+        /// <typeparam name="T16">Type of parameter 16 of the procedure.</typeparam>
+        /// <typeparam name="T17">Type of parameter 17 of the procedure.</typeparam>
+        /// <typeparam name="T18">Type of parameter 18 of the procedure.</typeparam>
+        /// <typeparam name="T19">Type of parameter 19 of the procedure.</typeparam>
+        /// <typeparam name="T20">Type of parameter 20 of the procedure.</typeparam>
+        /// <typeparam name="T21">Type of parameter 21 of the procedure.</typeparam>
+        /// <typeparam name="T22">Type of parameter 22 of the procedure.</typeparam>
+        /// <typeparam name="T23">Type of parameter 23 of the procedure.</typeparam>
+        /// <typeparam name="T24">Type of parameter 24 of the procedure.</typeparam>
+        /// <typeparam name="T25">Type of parameter 25 of the procedure.</typeparam>
+        /// <typeparam name="T26">Type of parameter 26 of the procedure.</typeparam>
+        /// <typeparam name="T27">Type of parameter 27 of the procedure.</typeparam>
+        /// <typeparam name="T28">Type of parameter 28 of the procedure.</typeparam>
+        /// <typeparam name="T29">Type of parameter 29 of the procedure.</typeparam>
+        /// <typeparam name="T30">Type of parameter 30 of the procedure.</typeparam>
+        /// <typeparam name="T31">Type of parameter 31 of the procedure.</typeparam>
+        /// <typeparam name="T32">Type of parameter 32 of the procedure.</typeparam>
+        /// <typeparam name="T33">Type of parameter 33 of the procedure.</typeparam>
+        /// <typeparam name="T34">Type of parameter 34 of the procedure.</typeparam>
+        /// <typeparam name="T35">Type of parameter 35 of the procedure.</typeparam>
+        /// <typeparam name="T36">Type of parameter 36 of the procedure.</typeparam>
+        /// <typeparam name="T37">Type of parameter 37 of the procedure.</typeparam>
+        /// <param name="procedureName">Name of the procedure.</param>
+        /// <returns>A strongly-typed procedure wrapper that can be executed against this connection.</returns>
+        public ProcedureWrapper<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37> Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(string procedureName)
+        {
+            return this.Wrap<TResult, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29, T30, T31, T32, T33, T34, T35, T36, T37>(procedureName, 0, null);
         }
 
     }

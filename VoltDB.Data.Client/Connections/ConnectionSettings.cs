@@ -369,9 +369,9 @@ namespace VoltDB.Data.Client
                 //    the endpoint for each IP address found in the original connection string.
                 //  - Build and return the array
                 return this.HostAddresses.Select(a => new ConnectionSettings(connectionString)
-                                                      {
-                                                          HostList = a.ToString()
-                                                      }
+                {
+                    HostList = a.ToString()
+                }
                                                 ).ToArray();
             }
         }
@@ -515,6 +515,12 @@ namespace VoltDB.Data.Client
             set { SetValue(CS_DisplayName_AllowAdhocQueries, value); }
         }
         static readonly string CS_DisplayName_AllowAdhocQueries = Resources.CS_DisplayName_AllowAdhocQueries;
+
+        /// <summary>Gets or sets the use pooling.</summary>
+        public bool? UsePooling { get; set; }
+
+        /// <summary>Gets or sets the maximum connections in pool.</summary>
+        public int MaxConnectionsInPool { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating how many requests may be queued up in "pending" state before blocking

@@ -20,13 +20,15 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
  * OTHER DEALINGS IN THE SOFTWARE.
  */
- 
-using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using Newtonsoft.Json;
+using VoltDB.Data.Client.Connections;
 
+// ReSharper disable CheckNamespace
 namespace VoltDB.Data.Client
 {
     /// <summary>
@@ -68,7 +70,6 @@ namespace VoltDB.Data.Client
                 this.Executor.Execute<long>(Timeout.Infinite, "@Shutdown");
             }
             catch (VoltConnectionException) { }
-            catch (Exception) { throw; }
         }
 
         /// <summary>
@@ -78,13 +79,17 @@ namespace VoltDB.Data.Client
         /// <returns>Status of the delete operations.</returns>
         public Response<Table> SnapshotDelete(IEnumerable<SnapshotReference> snapshotReferences)
         {
+            var references = snapshotReferences as SnapshotReference[] ?? snapshotReferences.ToArray();
+
             return this.Executor.Execute<Table>(
                                                  Timeout.Infinite
                                                , "@SnapshotDelete"
-                                               , snapshotReferences.Select(i => i.DirectoryPath).ToArray()
-                                               , snapshotReferences.Select(i => i.UniqueId).ToArray()
+                                               , references.Select(i => i.DirectoryPath).ToArray()
+                                               , references.Select(i => i.UniqueId).ToArray()
                                                );
         }
+
+
 
         /// <summary>
         /// Restores a database from disk.
@@ -95,11 +100,26 @@ namespace VoltDB.Data.Client
         public Response<Table[]> SnapshotRestore(SnapshotReference snapshotReference)
         {
             return this.Executor.Execute<Table[]>(
-                                                   Timeout.Infinite
-                                                 , "@SnapshotRestore"
-                                                 , snapshotReference.DirectoryPath
-                                                 , snapshotReference.UniqueId
-                                                 );
+                Timeout.Infinite
+                , "@SnapshotRestore"
+                , snapshotReference.DirectoryPath
+                , snapshotReference.UniqueId
+            );
+        }
+
+        /// <summary>
+        /// Restores a database from disk.
+        /// </summary>
+        /// <param name="options">Key <see cref="SnapshotSaveOptions"/>
+        /// Describes all possible options when creating a snapshot </param>
+        /// <returns>Detailed status information on the initiated restore operation.</returns>
+        public Response<Table> SnapshotRestore(SnapshotRestoreOptions options)
+        {
+            var jsonString = JsonConvert.SerializeObject(options);
+            return this.Executor.Execute<Table>(
+                Timeout.Infinite
+                , "@SnapshotRestore"
+                , jsonString);
         }
 
         /// <summary>
@@ -113,12 +133,27 @@ namespace VoltDB.Data.Client
         public Response<Table> SnapshotSave(SnapshotReference snapshotReference, bool blocking)
         {
             return this.Executor.Execute<Table>(
-                                                 Timeout.Infinite
-                                               , "@SnapshotSave"
-                                               , snapshotReference.DirectoryPath
-                                               , snapshotReference.UniqueId
-                                               , blocking ? 1 : 0
-                                               );
+                Timeout.Infinite
+                , "@SnapshotSave"
+                , snapshotReference.DirectoryPath
+                , snapshotReference.UniqueId
+                , blocking ? 1 : 0
+            );
+        }
+
+        /// <summary>
+        /// Saves the current database contents to disk.
+        /// </summary>
+        /// <param name="options">Key <see cref="SnapshotSaveOptions"/>
+        /// Describes all possible options when creating a snapshot </param>
+        /// <returns>Detailed status information on the initiated save operation.</returns>
+        public Response<Table> SnapshotSave(SnapshotSaveOptions options)
+        {
+            var jsonString = JsonConvert.SerializeObject(options);
+            return this.Executor.Execute<Table>(
+                Timeout.Infinite
+                , "@SnapshotSave"
+                , jsonString);
         }
 
         /// <summary>
@@ -255,7 +290,7 @@ namespace VoltDB.Data.Client
         {
             this.Executor.Execute<long>(Timeout.Infinite, "@Resume");
         }
-        
+
         /// <summary>
         /// Promotes the cluster from a replica to a master
         /// The cluster will start accepting write transactions
