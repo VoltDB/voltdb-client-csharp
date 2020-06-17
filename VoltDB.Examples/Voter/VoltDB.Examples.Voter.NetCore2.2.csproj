@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <ProductVersion>9.0.30729</ProductVersion>
+        <OutputType>Exe</OutputType>
+        <AssemblyName>Voter</AssemblyName>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <AssemblyTitle>VoltDB.Examples.Voter</AssemblyTitle>
+        <Product>VoltDB.Examples.Voter</Product>
+        <Copyright>Copyright © VoltDB, Inc. 2016</Copyright>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugType>full</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <DebugType>pdbonly</DebugType>
+        <DefineConstants />
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="VoltDB.Data.Client">
+            <HintPath>..\..\VoltDB.Data.Client\bin\Debug\netstandard2.0\VoltDB.Data.Client.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+</Project>

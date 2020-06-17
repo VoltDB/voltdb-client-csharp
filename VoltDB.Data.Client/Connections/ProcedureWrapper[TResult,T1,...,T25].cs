@@ -22,7 +22,6 @@
  */
  
 using System;
-using System.Threading;
 using VoltDB.Data.Client.Properties;
 
 namespace VoltDB.Data.Client
